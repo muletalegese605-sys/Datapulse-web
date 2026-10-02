@@ -1,0 +1,124 @@
+{
+  "timestamp": "2026-10-01T21:40:09.508Z",
+  "system": "DataPulse Enterprise",
+  "collections": {
+    "cleaned_business_records": [
+      {
+        "id": "0CeFImNndcS0tAxsGmw4",
+        "date": "2026-10-01",
+        "category": "Agricultural",
+        "itemName": "Refined Palm Oil (20L)",
+        "unitPrice": 100,
+        "totalSales": 21000,
+        "quantity": 210
+      },
+      {
+        "id": "6uVq8iKppWTASKQtTfNv",
+        "unitPrice": 100,
+        "itemName": "Refined Palm Oil (20L)",
+        "category": "Agricultural",
+        "totalSales": 21000,
+        "date": "2026-10-01",
+        "quantity": 210
+      },
+      {
+        "id": "7THtQr0BSrOl7BbQZXLF",
+        "date": "2026-10-01",
+        "quantity": 180,
+        "totalSales": 117000,
+        "unitPrice": 650,
+        "itemName": "Processed Organic Butter",
+        "category": "Livestock"
+      },
+      {
+        "id": "9aRRvcLJRNRKYtiu7tbC",
+        "category": "Livestock",
+        "itemName": "Processed Organic Butter",
+        "totalSales": 117000,
+        "quantity": 180,
+        "unitPrice": 650,
+        "date": "2026-10-01"
+      },
+      {
+        "id": "Lpp32Mj1VlCrJMgLwg4C",
+        "category": "Agricultural",
+        "itemName": "Organic Aloe Vera Gel",
+        "unitPrice": 3500,
+        "totalSales": 3500,
+        "quantity": 1,
+        "date": "2026-10-01"
+      },
+      {
+        "id": "MxwoEvIZPR6DAdp7pk4z",
+        "totalSales": 210000,
+        "quantity": 350,
+        "itemName": "Natural Milk Extract",
+        "category": "Livestock",
+        "date": "2026-10-01",
+        "unitPrice": 600
+      },
+      {
+        "id": "i4lYjDcn8XCycUV3eLDs",
+        "totalSales": 270000,
+        "itemName": "Liquid Laundry Detergent (25L)",
+        "category": "Manufacturing",
+        "unitPrice": 1800,
+        "date": "2026-10-01",
+        "quantity": 150
+      },
+      {
+        "id": "kWbC9Am8WJ27Dbeefhqj",
+        "itemName": "Natural Milk Extract",
+        "category": "Livestock",
+        "unitPrice": 600,
+        "quantity": 350,
+        "totalSales": 210000,
+        "date": "2026-10-01"
+      },
+      {
+        "id": "y6DyKoEIyG66Vi1EtfgY",
+        "quantity": 1,
+        "date": "2026-10-01",
+        "totalSales": 3500,
+        "unitPrice": 3500,
+        "itemName": "Organic Aloe Vera Gel",
+        "category": "Agricultural"
+      },
+      {
+        "id": "ym3UkGkvb6iC60muO2Y7",
+        "category": "Manufacturing",
+        "itemName": "Liquid Laundry Detergent (25L)",
+        "date": "2026-10-01",
+        "totalSales": 270000,
+        "quantity": 150,
+        "unitPrice": 1800
+      }
+    ],
+    "launch_readiness_audit": [
+      {
+        "id": "2lshHWRVOfZPtDl26nlc",
+        "layoutStrategy": "Single-column stacked view, bottom navigation bar",
+        "device": "Mobile Phone (Samsung Galaxy A06 / M13)",
+        "testedAt": "2026-10-01T21:13:28.567Z",
+        "status": "PASSED - Optimized",
+        "resolution": "360x800"
+      },
+      {
+        "id": "YvQSKfNjfrvOqfvqUahi",
+        "status": "PASSED - Optimized",
+        "resolution": "768x1024",
+        "device": "Tablet (iPad / Galaxy Tab)",
+        "layoutStrategy": "Two-column grid, collapsible sidebar navigation",
+        "testedAt": "2026-10-01T21:13:28.568Z"
+      },
+      {
+        "id": "cFBdt2ZypNOrGIgcPe3C",
+        "status": "PASSED - Optimized",
+        "device": "Desktop / Large Enterprise Monitor",
+        "resolution": "1920x1080",
+        "layoutStrategy": "Full dashboard grid, multi-pane charts & real-time tables",
+        "testedAt": "2026-10-01T21:13:28.568Z"
+      }
+    ]
+  }
+}

@@ -1,0 +1,1744 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5,user-scalable=yes">
+<meta name="theme-color" content="#0b0f19">
+<meta name="description" content="DataPulse Enterprise — Admin Control Center">
+<meta name="robots" content="noindex,nofollow">
+<title>Admin Center — DataPulse Enterprise v7.1</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js" defer></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js" defer></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js" defer></script>
+<script>
+tailwind.config = { darkMode:'class', theme:{ extend:{
+  colors:{ bg:{deep:'#0b0f19',card:'#0e1626',soft:'#0f172a'},
+    brand:{e:'#10b981',n:'#00e676'} },
+  fontFamily:{ sans:['Inter','system-ui','sans-serif'], mono:['JetBrains Mono','monospace'] }
+}}};
+(function(){
+  try {
+    const t = localStorage.getItem('dp_theme') || 'dark';
+    document.documentElement.classList.toggle('dark', t==='dark');
+    document.documentElement.classList.toggle('light', t==='light');
+  } catch(e){}
+})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{font-family:'Inter',system-ui,sans-serif;background:#0b0f19;color:#e6edf3;min-height:100vh;transition:background .2s,color .2s;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+.mono{font-family:'JetBrains Mono',monospace}
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:#0b0f19}
+::-webkit-scrollbar-thumb{background:#334155;border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:#475569}
+.fade{animation:fd .3s ease-out}
+@keyframes fd{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.toast-in{animation:tin .3s ease}
+@keyframes tin{from{opacity:0;transform:translateX(60px)}to{opacity:1;transform:none}}
+.modal-in{animation:mi .25s ease-out}
+@keyframes mi{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
+.tab-active{background:linear-gradient(135deg,rgba(168,85,247,.25),rgba(168,85,247,.08));color:#c084fc;border:1px solid rgba(168,85,247,.5)}
+.pulse-dot{width:8px;height:8px;border-radius:50%;animation:pl 1.8s infinite;display:inline-block}
+@keyframes pl{0%,100%{opacity:1}50%{opacity:.4}}
+.skeleton{background:linear-gradient(90deg,#1e293b 25%,#334155 50%,#1e293b 75%);background-size:200% 100%;animation:sk 1.4s infinite;border-radius:8px}
+@keyframes sk{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.progress-bar{background:linear-gradient(90deg,#a855f7,#c084fc);height:100%;transition:width .3s;border-radius:9999px}
+.spin{animation:sp 1s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.hero-glow{position:absolute;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(168,85,247,.25),transparent 70%);filter:blur(60px);pointer-events:none;z-index:0}
+.stat-card{background:linear-gradient(135deg,rgba(168,85,247,.08),rgba(168,85,247,.02));border:1px solid rgba(168,85,247,.2);transition:all .3s}
+.stat-card:hover{transform:translateY(-3px);border-color:rgba(168,85,247,.5)}
+.role-badge{padding:3px 8px;border-radius:6px;font-size:9px;font-weight:800;letter-spacing:.03em;border:1px solid;display:inline-block}
+.role-badge.individual{background:rgba(59,130,246,.15);color:#60a5fa;border-color:rgba(59,130,246,.3)}
+.role-badge.smb{background:rgba(245,158,11,.15);color:#fbbf24;border-color:rgba(245,158,11,.3)}
+.role-badge.enterprise{background:rgba(168,85,247,.15);color:#c084fc;border-color:rgba(168,85,247,.3)}
+.plan-badge{padding:3px 8px;border-radius:6px;font-size:9px;font-weight:800;letter-spacing:.03em;border:1px solid;display:inline-block}
+.plan-badge.free{background:rgba(148,163,184,.15);color:#94a3b8;border-color:rgba(148,163,184,.3)}
+.plan-badge.starter{background:rgba(16,185,129,.15);color:#34d399;border-color:rgba(16,185,129,.3)}
+.plan-badge.pro{background:rgba(59,130,246,.15);color:#60a5fa;border-color:rgba(59,130,246,.3)}
+.plan-badge.enterprise{background:rgba(168,85,247,.15);color:#c084fc;border-color:rgba(168,85,247,.3)}
+.status-badge{padding:3px 8px;border-radius:6px;font-size:9px;font-weight:800;letter-spacing:.03em;border:1px solid;display:inline-block}
+.status-badge.active{background:rgba(16,185,129,.15);color:#34d399;border-color:rgba(16,185,129,.3)}
+.status-badge.cancelled{background:rgba(244,63,94,.15);color:#fb7185;border-color:rgba(244,63,94,.3)}
+.status-badge.expired{background:rgba(245,158,11,.15);color:#fbbf24;border-color:rgba(245,158,11,.3)}
+.status-badge.trial{background:rgba(56,189,248,.15);color:#38bdf8;border-color:rgba(56,189,248,.3)}
+.btn{padding:8px 14px;border-radius:10px;font-size:11px;font-weight:700;cursor:pointer;border:1px solid transparent;transition:all .2s}
+.btn:hover{transform:translateY(-1px)}
+.btn-primary{background:#a855f7;color:#0b0f19;border-color:#a855f7}
+.btn-primary:hover{background:#c084fc}
+.btn-danger{background:rgba(244,63,94,.2);color:#fb7185;border-color:rgba(244,63,94,.5)}
+.btn-danger:hover{background:rgba(244,63,94,.35)}
+.btn-ghost{background:#0e1626;color:#cbd5e1;border-color:#1e293b}
+.btn-ghost:hover{border-color:rgba(168,85,247,.5);color:#c084fc}
+.btn-emerald{background:#10b981;color:#0b0f19;border-color:#10b981}
+.btn-emerald:hover{background:#34d399}
+.input{width:100%;background:#0b0f19;border:1px solid #1e293b;border-radius:10px;padding:10px 14px;font-size:12px;color:#e6edf3;transition:all .2s}
+.input:focus{outline:none;border-color:#a855f7;box-shadow:0 0 0 3px rgba(168,85,247,.15)}
+.input.mono{font-family:'JetBrains Mono',monospace}
+.chip{padding:4px 10px;border-radius:8px;font-size:10px;font-weight:700;border:1px solid;cursor:pointer;transition:all .2s;white-space:nowrap;display:inline-block}
+.chip:hover{transform:scale(1.05)}
+.chip.active{background:#a855f7;color:#0b0f19;border-color:#a855f7}
+html.light body{background:#f1f5f9;color:#0f172a}
+html.light .bg-slate-950{background:#f8fafc!important}
+html.light .bg-slate-900,html.light .bg-slate-900\/90,html.light .bg-slate-900\/95,html.light .bg-slate-900\/80{background:#ffffff!important}
+html.light .bg-slate-800{background:#e2e8f0!important}
+html.light .border-slate-800{border-color:#e2e8f0!important}
+html.light .border-slate-700{border-color:#cbd5e1!important}
+html.light .text-white{color:#0f172a!important}
+html.light .text-slate-300{color:#334155!important}
+html.light .text-slate-400{color:#475569!important}
+html.light header{background:rgba(255,255,255,.95)!important}
+html.light .input{background:#ffffff;color:#0f172a;border-color:#cbd5e1}
+html.light .btn-ghost{background:#f1f5f9;color:#334155;border-color:#cbd5e1}
+html.light .stat-card{background:linear-gradient(135deg,rgba(168,85,247,.08),rgba(168,85,247,.02));border-color:rgba(168,85,247,.3)}
+.skip-link{position:absolute;left:-9999px;top:0;background:#a855f7;color:#000;padding:8px 16px;z-index:1000;font-weight:700}
+.skip-link:focus{left:0}
+.kbd{display:inline-block;padding:2px 6px;border-radius:4px;background:#1e293b;border:1px solid #334155;font-family:'JetBrains Mono',monospace;font-size:10px;color:#94a3b8}
+.dp-table thead{background:#0b0f19}
+.dp-table tbody tr:hover{background:rgba(30,41,59,.4)}
+.dp-table td{white-space:nowrap}
+.line-clamp-2{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+@media (max-width:767px){
+  .dp-table thead{display:none}
+  .dp-table tr{display:block;border:1px solid #1e293b;border-radius:12px;margin-bottom:8px;padding:8px;background:#0e1626}
+  .dp-table td{display:flex;justify-content:space-between;padding:6px 8px;border:none;font-size:12px;align-items:center;white-space:normal}
+  .dp-table td::before{content:attr(data-l);color:#64748b;font-weight:600;text-transform:uppercase;font-size:10px;letter-spacing:.05em;margin-right:8px;flex-shrink:0}
+}
+@media print{.no-print{display:none!important}}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<a href="#adminMain" class="skip-link">Skip to main content</a>
+
+<!-- ============ BOOT ============ -->
+<div id="bootSkeleton" class="min-h-screen flex items-center justify-center p-4 bg-slate-950">
+  <div class="w-full max-w-md space-y-4">
+    <div class="skeleton h-16 w-16 mx-auto rounded-2xl"></div>
+    <div class="skeleton h-6 w-2/3 mx-auto"></div>
+    <div class="skeleton h-40 w-full rounded-3xl mt-6"></div>
+    <p class="text-center text-[11px] text-slate-500 mt-4"><i class="fa-solid fa-spinner spin mr-1"></i> Loading Admin Center v7.1…</p>
+  </div>
+</div>
+
+<!-- ============ LOGIN ============ -->
+<div id="loginScreen" class="hidden min-h-screen flex items-center justify-center p-4 bg-slate-950 relative overflow-hidden">
+  <div class="hero-glow" style="top:-150px;left:-100px"></div>
+  <div class="hero-glow" style="bottom:-200px;right:-100px;background:radial-gradient(circle,rgba(16,185,129,.2),transparent 70%)"></div>
+  <div class="w-full max-w-md space-y-4 relative fade z-10">
+    <div class="text-center space-y-2">
+      <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-400 to-purple-600 text-slate-950 shadow-2xl shadow-purple-500/30">
+        <i class="fa-solid fa-shield-halved text-2xl"></i>
+      </div>
+      <h1 class="text-2xl font-black text-white">DataPulse Admin</h1>
+      <p class="text-xs text-purple-400 mono font-bold">CONTROL CENTER · RESTRICTED ACCESS</p>
+    </div>
+    <div class="bg-slate-900/90 border border-purple-500/40 rounded-3xl p-5 sm:p-6 space-y-4">
+      <div class="p-3 rounded-xl bg-purple-500/10 border border-purple-500/30 flex items-start gap-2">
+        <i class="fa-solid fa-triangle-exclamation text-amber-400 mt-0.5"></i>
+        <p class="text-[11px] text-slate-300 leading-relaxed">This area is restricted. All access attempts are logged and audited.</p>
+      </div>
+      <form id="adminLoginForm" onsubmit="adminDoLogin(event)" class="space-y-3" novalidate>
+        <div>
+          <label for="adminEmail" class="text-xs font-semibold text-slate-300 block mb-1.5">Admin Email</label>
+          <input type="email" id="adminEmail" required autocomplete="email" placeholder="admin@datapulse.app" class="input mono">
+        </div>
+        <div>
+          <label for="adminPass" class="text-xs font-semibold text-slate-300 block mb-1.5">Master Password</label>
+          <div class="relative">
+            <input type="password" id="adminPass" required autocomplete="current-password" placeholder="••••••••" class="input mono pr-10">
+            <button type="button" aria-label="Show password" onclick="togglePw('adminPass',this)" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-purple-400"><i class="fa-solid fa-eye"></i></button>
+          </div>
+        </div>
+        <div>
+          <label for="admin2FA" class="text-xs font-semibold text-slate-300 block mb-1.5">2FA Code <span class="text-slate-500 font-normal">(optional in demo)</span></label>
+          <input type="text" id="admin2FA" maxlength="6" inputmode="numeric" placeholder="000000" class="input mono text-center tracking-[.5em]">
+        </div>
+        <p id="adminLoginMsg" class="text-rose-400 text-[11px] font-bold text-center" role="alert"></p>
+        <button type="submit" class="w-full py-3 bg-purple-500 hover:bg-purple-400 text-slate-950 font-extrabold text-xs rounded-xl">
+          <i class="fa-solid fa-right-to-bracket mr-2"></i>Authenticate
+        </button>
+      </form>
+      <div class="flex items-center gap-2"><div class="flex-1 border-t border-slate-800"></div><span class="text-[10px] text-slate-500">SECURE</span><div class="flex-1 border-t border-slate-800"></div></div>
+      <a href="index.html" class="block text-center py-2.5 bg-slate-950 hover:bg-slate-800 border border-slate-700 text-slate-300 font-bold text-xs rounded-xl">
+        <i class="fa-solid fa-arrow-left mr-1"></i>Back to App
+      </a>
+      <p class="text-[9px] text-slate-500 text-center leading-relaxed">
+        <i class="fa-solid fa-lock text-purple-500/60 mr-1"></i>
+        AES-256 session encryption · Auto-expires after 30 minutes idle
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ ADMIN APP ============ -->
+<div id="adminApp" class="hidden min-h-screen pb-20 md:pb-0">
+  <header class="bg-slate-900/95 border-b border-slate-800 sticky top-0 z-40 backdrop-blur">
+    <div class="max-w-[1600px] mx-auto px-3 sm:px-4 py-2.5 sm:py-3 flex items-center justify-between gap-2">
+      <div class="flex items-center gap-2 sm:gap-3 min-w-0">
+        <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-purple-400 to-purple-600 flex items-center justify-center text-slate-950 font-black shrink-0">
+          <i class="fa-solid fa-shield-halved text-sm sm:text-base"></i>
+        </div>
+        <div class="min-w-0">
+          <div class="flex items-center gap-1.5">
+            <span class="font-extrabold text-white text-xs sm:text-sm">Admin Center</span>
+            <span class="text-[8px] sm:text-[9px] mono px-1 py-0.5 rounded bg-purple-500/20 text-purple-400 border border-purple-500/30 font-bold">v7.1</span>
+          </div>
+          <p class="text-[9px] sm:text-[10px] text-slate-400 mono truncate max-w-[120px] sm:max-w-[200px]">DataPulse Enterprise</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-1 sm:gap-1.5">
+        <span id="netBadge" class="hidden sm:flex items-center text-[10px] px-2 py-1.5 rounded-lg bg-slate-800 text-emerald-400 border border-slate-700 font-bold"><i class="fa-solid fa-wifi"></i></span>
+        <select id="currencySel" onchange="setCurrency(this.value)" aria-label="Currency" class="text-[10px] mono px-1.5 py-1.5 rounded-lg bg-slate-800 text-purple-400 border border-slate-700 font-bold focus:outline-none">
+          <option value="ETB">🇪🇹 ETB</option><option value="USD">🇺🇸 USD</option><option value="EUR">🇪🇺 EUR</option>
+        </select>
+        <button onclick="toggleTheme()" aria-label="Toggle theme" class="text-[10px] px-2 py-1.5 rounded-lg bg-slate-800 text-slate-300 border border-slate-700"><i class="fa-solid fa-moon" id="appThemeIcon"></i></button>
+        <a href="index.html" aria-label="Back to app" class="hidden sm:flex items-center text-[10px] px-2 py-1.5 rounded-lg bg-slate-800 text-emerald-400 border border-slate-700 font-bold"><i class="fa-solid fa-chart-simple"></i></a>
+        <button onclick="adminLogout()" aria-label="Logout" class="px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-rose-400 border border-slate-700 text-xs font-bold rounded-xl">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i>
+        </button>
+      </div>
+    </div>
+    <div class="bg-slate-950/80 border-t border-slate-800 px-3 sm:px-4 py-1.5 flex items-center justify-between gap-2 text-xs">
+      <div class="flex items-center gap-1.5 flex-1 min-w-0">
+        <span id="backendDot" class="w-2 h-2 rounded-full bg-amber-400 pulse-dot shrink-0"></span>
+        <span class="text-slate-300 font-bold hidden sm:inline shrink-0">Backend:</span>
+        <input id="backendUrl" aria-label="Backend URL" class="bg-slate-900 border border-slate-800 text-emerald-400 mono text-[10px] rounded-lg px-2 py-1 flex-1 min-w-0 max-w-xs focus:outline-none focus:border-purple-500">
+        <span id="backendStatus" class="text-[9px] text-slate-500 uppercase font-bold hidden sm:inline shrink-0">(checking…)</span>
+      </div>
+      <button onclick="syncBackend()" class="px-2 py-1 bg-purple-500/20 hover:bg-purple-500/30 text-purple-400 border border-purple-500/40 rounded-lg font-bold text-[10px] shrink-0">
+        <i class="fa-solid fa-rotate" id="syncIcon"></i> <span class="hidden sm:inline">Sync</span>
+      </button>
+    </div>
+    <nav class="bg-slate-950/60 border-t border-slate-800 overflow-x-auto" aria-label="Admin navigation">
+      <div class="max-w-[1600px] mx-auto px-2 sm:px-4 py-2 flex items-center gap-1.5 min-w-max" id="navBar"></div>
+    </nav>
+  </header>
+  <main class="max-w-[1600px] mx-auto px-3 sm:px-4 py-4 sm:py-6" id="adminMain" role="main"></main>
+  <div class="fixed bottom-0 left-0 right-0 z-50 bg-slate-900/95 border-t border-slate-800 backdrop-blur flex items-center justify-around py-2 md:hidden" id="mobileDock" role="navigation" aria-label="Mobile navigation"></div>
+</div>
+
+<!-- ============ MODAL: ORG EDIT ============ -->
+<div id="orgModal" class="hidden fixed inset-0 z-[90] bg-slate-950/80 backdrop-blur flex items-center justify-center p-3 sm:p-4 overflow-y-auto" role="dialog" aria-modal="true">
+  <div class="bg-slate-900 border border-purple-500/40 rounded-3xl p-4 sm:p-5 max-w-lg w-full my-8 modal-in">
+    <div class="flex justify-between items-start mb-4">
+      <div><h3 id="orgModalTitle" class="text-base font-bold text-white">Edit Organization</h3><p class="text-[11px] text-slate-400">Update organization details</p></div>
+      <button onclick="closeOrgModal()" aria-label="Close" class="text-slate-400 hover:text-rose-400 text-lg"><i class="fa-solid fa-times"></i></button>
+    </div>
+    <input type="hidden" id="orgFormId">
+    <div class="space-y-3">
+      <div>
+        <label for="orgFormName" class="text-xs font-semibold text-slate-300 block mb-1.5">Organization Name</label>
+        <input id="orgFormName" class="input">
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div>
+          <label for="orgFormAdmin" class="text-xs font-semibold text-slate-300 block mb-1.5">Admin Name</label>
+          <input id="orgFormAdmin" class="input">
+        </div>
+        <div>
+          <label for="orgFormEmail" class="text-xs font-semibold text-slate-300 block mb-1.5">Email</label>
+          <input id="orgFormEmail" type="email" class="input mono">
+        </div>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div>
+          <label for="orgFormPhone" class="text-xs font-semibold text-slate-300 block mb-1.5">Phone</label>
+          <input id="orgFormPhone" class="input mono">
+        </div>
+        <div>
+          <label for="orgFormType" class="text-xs font-semibold text-slate-300 block mb-1.5">Account Type</label>
+          <select id="orgFormType" class="input">
+            <option value="individual">👤 Individual</option>
+            <option value="smb">🏢 Small Business</option>
+            <option value="enterprise">🏛️ Enterprise</option>
+          </select>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div>
+          <label for="orgFormPlan" class="text-xs font-semibold text-slate-300 block mb-1.5">Plan</label>
+          <select id="orgFormPlan" class="input">
+            <option value="free">Free</option>
+            <option value="starter">Starter</option>
+            <option value="pro">Professional</option>
+            <option value="enterprise">Enterprise</option>
+          </select>
+        </div>
+        <div>
+          <label for="orgFormStatus" class="text-xs font-semibold text-slate-300 block mb-1.5">Status</label>
+          <select id="orgFormStatus" class="input">
+            <option value="active">Active</option>
+            <option value="suspended">Suspended</option>
+          </select>
+        </div>
+      </div>
+      <div>
+        <label for="orgFormVerified" class="text-xs font-semibold text-slate-300 block mb-1.5">Email Verified</label>
+        <div class="flex items-center gap-2">
+          <input type="checkbox" id="orgFormVerified" class="w-4 h-4 accent-purple-500">
+          <label for="orgFormVerified" class="text-xs text-slate-400">Mark email as verified</label>
+        </div>
+      </div>
+    </div>
+    <div class="grid grid-cols-2 gap-2 mt-5">
+      <button onclick="closeOrgModal()" class="btn btn-ghost">Cancel</button>
+      <button onclick="saveOrgModal()" class="btn btn-primary"><i class="fa-solid fa-floppy-disk mr-1"></i>Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ MODAL: CONTRACT ============ -->
+<div id="ctrModal" class="hidden fixed inset-0 z-[90] bg-slate-950/80 backdrop-blur flex items-center justify-center p-3 sm:p-4 overflow-y-auto" role="dialog" aria-modal="true">
+  <div class="bg-slate-900 border border-emerald-500/40 rounded-3xl p-4 sm:p-5 max-w-md w-full my-8 modal-in">
+    <div class="flex justify-between items-start mb-4">
+      <div><h3 class="text-base font-bold text-white">New Contract</h3><p class="text-[11px] text-slate-400">Activate a plan for an organization</p></div>
+      <button onclick="closeCtrModal()" aria-label="Close" class="text-slate-400 hover:text-rose-400 text-lg"><i class="fa-solid fa-times"></i></button>
+    </div>
+    <div class="space-y-3">
+      <div>
+        <label for="ctrOrg" class="text-xs font-semibold text-slate-300 block mb-1.5">Organization</label>
+        <select id="ctrOrg" class="input"></select>
+      </div>
+      <div>
+        <label for="ctrPlan" class="text-xs font-semibold text-slate-300 block mb-1.5">Plan</label>
+        <select id="ctrPlan" class="input"></select>
+      </div>
+      <div class="grid grid-cols-2 gap-3">
+        <div>
+          <label for="ctrMonths" class="text-xs font-semibold text-slate-300 block mb-1.5">Months</label>
+          <input id="ctrMonths" type="number" value="1" min="1" max="36" class="input mono">
+        </div>
+        <div>
+          <label for="ctrMethod" class="text-xs font-semibold text-slate-300 block mb-1.5">Method</label>
+          <select id="ctrMethod" class="input">
+            <option value="paypal">PayPal</option>
+            <option value="ebc">EBC Bank</option>
+            <option value="telebirr">TeleBirr</option>
+            <option value="manual">Manual / Comp</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="grid grid-cols-2 gap-2 mt-5">
+      <button onclick="closeCtrModal()" class="btn btn-ghost">Cancel</button>
+      <button onclick="saveCtrModal()" class="btn btn-emerald"><i class="fa-solid fa-file-signature mr-1"></i>Activate</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ MODAL: CONFIRM ============ -->
+<div id="confirmModal" class="hidden fixed inset-0 z-[95] bg-slate-950/90 backdrop-blur flex items-center justify-center p-3 sm:p-4" role="dialog" aria-modal="true">
+  <div class="bg-slate-900 border-2 border-rose-500/60 rounded-3xl p-5 max-w-sm w-full modal-in text-center">
+    <div class="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-rose-500/20 text-rose-400 text-2xl mb-3"><i class="fa-solid fa-triangle-exclamation"></i></div>
+    <h3 id="confirmTitle" class="text-base font-black text-white mb-2">Are you sure?</h3>
+    <p id="confirmText" class="text-xs text-slate-400 mb-4">This action cannot be undone.</p>
+    <div class="grid grid-cols-2 gap-2">
+      <button onclick="closeConfirm()" class="btn btn-ghost">Cancel</button>
+      <button id="confirmYes" class="btn btn-danger">Confirm</button>
+    </div>
+  </div>
+</div>
+
+<div id="toasts" class="fixed top-3 right-3 left-3 sm:left-auto sm:top-4 sm:right-4 z-[100] flex flex-col gap-2 pointer-events-none items-end" role="status" aria-live="polite"></div>
+
+<script>
+/* ============================================================
+   DATAPULSE ADMIN CENTER v7.1
+   Shared localStorage with index.html for state consistency
+   ============================================================ */
+'use strict';
+window.ADM = window.ADM || {};
+
+/* ---------- CONFIG (must match index.html) ---------- */
+const FIREBASE_CONFIG = {
+  apiKey: "",
+  authDomain: "",
+  projectId: "",
+  storageBucket: "",
+  messagingSenderId: "",
+  appId: ""
+};
+const FIREBASE_ENABLED = !!(FIREBASE_CONFIG.apiKey && FIREBASE_CONFIG.projectId);
+
+const ADMIN_EMAIL    = 'muletalegese605@gmail.com';
+const ADMIN_PASSWORD = 'Mlt@0909';
+const BACKEND_URL    = 'https://datapulse-web-backend-2.onrender.com';
+const SESSION_KEY    = 'dp_admin_session';
+const SESSION_TTL_MS = 30 * 60 * 1000; // 30 minutes
+
+let firebaseReady = false, fbAuth = null, fbDb = null;
+
+ADM.config = {
+  backendDefault: BACKEND_URL,
+  requestTimeout: 12000,
+  healthTimeout: 2500,
+  freeTrialDays: 14,
+  rateLimitAttempts: 5,
+  rateLimitWindowMs: 60000,
+  maxAudits: 500
+};
+
+const PLANS = [
+  { id:'free',       name:'Free',         usd:0,   color:'free' },
+  { id:'starter',    name:'Starter',      usd:29,  color:'starter' },
+  { id:'pro',        name:'Professional', usd:99,  color:'pro' },
+  { id:'enterprise', name:'Enterprise',   usd:499, color:'enterprise' }
+];
+
+ADM.CURRENCIES = { ETB:{symbol:'ETB',flag:'🇪🇹'}, USD:{symbol:'$',flag:'🇺🇸'}, EUR:{symbol:'€',flag:'🇪🇺'} };
+
+/* ---------- UTILITIES ---------- */
+function esc(s) {
+  return String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+function fmtDate(iso) { try { return new Date(iso).toLocaleString(); } catch(e){ return '—'; } }
+function fmtDateShort(iso) { try { return new Date(iso).toLocaleDateString(); } catch(e){ return '—'; } }
+function fmtTime(iso) { try { return new Date(iso).toLocaleTimeString(); } catch(e){ return '—'; } }
+
+const LS = {
+  get(k,d){ try{ const v = localStorage.getItem(k); return v === null ? d : JSON.parse(v); }catch(e){ return d; } },
+  set(k,v){ try{ localStorage.setItem(k, JSON.stringify(v)); return true; }catch(e){ console.warn('LS.set failed', e); return false; } },
+  del(k){ try{ localStorage.removeItem(k); }catch(e){} }
+};
+
+ADM.theme = {
+  current(){ try { return localStorage.getItem('dp_theme') || 'dark'; } catch(e){ return 'dark'; } },
+  apply(t){
+    document.documentElement.classList.toggle('dark', t==='dark');
+    document.documentElement.classList.toggle('light', t==='light');
+    document.querySelectorAll('#appThemeIcon').forEach(i => i.className = t==='dark' ? 'fa-solid fa-moon' : 'fa-solid fa-sun');
+  },
+  toggle(){
+    const t = this.current()==='dark' ? 'light' : 'dark';
+    try { localStorage.setItem('dp_theme', t); } catch(e){}
+    this.apply(t);
+    if (state.loggedIn) render();
+  },
+  init(){ this.apply(this.current()); }
+};
+function toggleTheme(){ ADM.theme.toggle(); }
+
+ADM.currency = {
+  get(){ try { return localStorage.getItem('dp_currency') || 'ETB'; } catch(e){ return 'ETB'; } },
+  set(c){
+    try { localStorage.setItem('dp_currency', c); } catch(e){}
+    document.querySelectorAll('#currencySel').forEach(s => s.value = c);
+    if (state.loggedIn) render();
+  },
+  convert(usd, tgt){
+    if (tgt==='ETB') return Math.round(usd*57.5);
+    if (tgt==='EUR') return Math.round(usd/1.087);
+    return Math.round(usd);
+  },
+  format(usd){
+    const c = this.get(); const val = this.convert(usd, c); const curr = ADM.CURRENCIES[c];
+    if (c==='USD') return `$ ${val.toLocaleString()}`;
+    if (c==='EUR') return `€ ${val.toLocaleString()}`;
+    return `${curr.symbol} ${val.toLocaleString()}`;
+  }
+};
+function setCurrency(c){ ADM.currency.set(c); toast(`Currency: ${c}`, 'info'); }
+
+ADM.fetch = async (url, opts={}) => {
+  const attempts = opts._retries ?? 0;
+  const ctrl = new AbortController();
+  const timeoutMs = opts._timeout || ADM.config.requestTimeout;
+  const t = setTimeout(() => ctrl.abort(), timeoutMs);
+  try {
+    const { _timeout, _retries, ...rest } = opts;
+    const res = await fetch(url, { ...rest, signal: ctrl.signal });
+    clearTimeout(t);
+    return res;
+  } catch(err) {
+    clearTimeout(t);
+    if (attempts < 2 && err.name !== 'AbortError') {
+      await new Promise(r => setTimeout(r, 800 * (attempts+1)));
+      return ADM.fetch(url, { ...opts, _retries: attempts+1 });
+    }
+    throw err;
+  }
+};
+
+/* ---------- TOAST ---------- */
+function toast(msg, type='info') {
+  const c = document.getElementById('toasts'); if (!c) return;
+  const colors = { success:'border-emerald-500 text-emerald-300', error:'border-rose-500 text-rose-300', info:'border-sky-500 text-sky-300', warn:'border-amber-500 text-amber-300' };
+  const icons = { success:'fa-circle-check', error:'fa-circle-exclamation', info:'fa-circle-info', warn:'fa-triangle-exclamation' };
+  const t = document.createElement('div');
+  t.className = `pointer-events-auto flex items-center gap-3 px-4 py-3 rounded-xl border shadow-xl backdrop-blur text-xs font-semibold max-w-xs bg-slate-900/90 ${colors[type]||colors.info} toast-in`;
+  t.setAttribute('role', type === 'error' ? 'alert' : 'status');
+  t.innerHTML = `<i class="fa-solid ${icons[type]||icons.info}"></i><span>${esc(msg)}</span>`;
+  c.appendChild(t);
+  setTimeout(() => { t.style.opacity='0'; t.style.transform='translateX(60px)'; setTimeout(()=>t.remove(), 300); }, 3400);
+}
+
+/* ---------- STATE ---------- */
+const state = {
+  loggedIn:false,
+  admin:{ email:'', name:'Admin', role:'super-admin' },
+  orgs: [],
+  contracts: [],
+  audits: [],
+  records: {},
+  tab:'overview',
+  charts:{},
+  filter:'all',
+  searchOrg:'',
+  searchAudit:'',
+  confirmCb:null,
+  backendOnline:false,
+  backendChecking:false,
+  online: navigator.onLine,
+  sessionExpiresAt: 0
+};
+
+function loadAll() {
+  state.orgs = LS.get('dp_orgs', []);
+  state.contracts = LS.get('dp_contracts', []);
+  state.audits = LS.get('dp_audits', []);
+  state.records = {};
+  state.orgs.forEach(o => {
+    state.records[o.id] = LS.get('dp_records_'+o.id, []);
+  });
+}
+
+function persistOrgs(){ LS.set('dp_orgs', state.orgs); }
+function persistContracts(){ LS.set('dp_contracts', state.contracts); }
+function persistAudits(){ LS.set('dp_audits', state.audits.slice(0, 500)); }
+
+/* ---------- AUDIT ---------- */
+function auditLog(action, target='N/A', payload=null) {
+  const entry = {
+    id:'LOG-'+Date.now().toString().slice(-6),
+    action, target: String(target).slice(0, 100),
+    org: 'ADMIN',
+    status:'SUCCESS',
+    at: new Date().toISOString(),
+    performed_at: new Date().toISOString(),
+    item_id: String(target).slice(0,100),
+    payload: payload || {}
+  };
+  state.audits.unshift(entry);
+  if (state.audits.length > ADM.config.maxAudits) state.audits.pop();
+  persistAudits();
+}
+
+/* ---------- SECURITY ---------- */
+ADM.security = {
+  attemptKey: 'dp_admin_attempts',
+  checkRateLimit(){
+    const now = Date.now();
+    const a = LS.get(this.attemptKey, []).filter(t => now - t < ADM.config.rateLimitWindowMs);
+    LS.set(this.attemptKey, a);
+    if (a.length >= ADM.config.rateLimitAttempts) {
+      return { blocked:true, wait: Math.ceil((ADM.config.rateLimitWindowMs - (now - a[0]))/1000) };
+    }
+    return { blocked:false };
+  },
+  recordAttempt(){
+    const a = LS.get(this.attemptKey, []); a.push(Date.now()); LS.set(this.attemptKey, a);
+  },
+  clearAttempts(){ LS.del(this.attemptKey); }
+};
+
+/* ---------- SESSION ---------- */
+ADM.session = {
+  set(){
+    const session = {
+      email: ADMIN_EMAIL,
+      name: 'Muleta Legese Gemeda',
+      role: 'super-admin',
+      startedAt: Date.now(),
+      expiresAt: Date.now() + SESSION_TTL_MS
+    };
+    LS.set(SESSION_KEY, session);
+    state.sessionExpiresAt = session.expiresAt;
+  },
+  check(){
+    const s = LS.get(SESSION_KEY, null);
+    if (!s || Date.now() > s.expiresAt) { LS.del(SESSION_KEY); return null; }
+    return s;
+  },
+  clear(){ LS.del(SESSION_KEY); },
+  refresh(){
+    const s = LS.get(SESSION_KEY, null);
+    if (s) { s.expiresAt = Date.now() + SESSION_TTL_MS; LS.set(SESSION_KEY, s); state.sessionExpiresAt = s.expiresAt; }
+  }
+};
+
+/* ---------- TRIAL HELPERS ---------- */
+function getTrial(orgId) {
+  return LS.get('dp_trial_'+orgId, null);
+}
+function trialDaysLeft(orgId) {
+  const t = getTrial(orgId);
+  if (!t) return 0;
+  return Math.max(0, Math.ceil((new Date(t.endsAt) - Date.now()) / 86400000));
+}
+function isPaid(orgId) {
+  const t = getTrial(orgId);
+  if (t && t.paid) return true;
+  return state.contracts.some(c => c.orgId === orgId && c.status === 'active' && c.plan !== 'free');
+}
+function markPaid(orgId) {
+  const t = getTrial(orgId) || { startedAt:new Date().toISOString(), endsAt:new Date().toISOString(), paid:false };
+  t.paid = true; t.paidAt = new Date().toISOString();
+  LS.set('dp_trial_'+orgId, t);
+}
+
+/* ---------- LOGIN ---------- */
+function togglePw(id, btn) {
+  const el = document.getElementById(id);
+  el.type = el.type==='password' ? 'text' : 'password';
+  btn.innerHTML = el.type==='password' ? '<i class="fa-solid fa-eye"></i>' : '<i class="fa-solid fa-eye-slash"></i>';
+}
+async function adminDoLogin(e) {
+  e.preventDefault();
+  const rl = ADM.security.checkRateLimit();
+  if (rl.blocked) {
+    document.getElementById('adminLoginMsg').textContent = `Too many attempts. Wait ${rl.wait}s`;
+    return;
+  }
+  const email = document.getElementById('adminEmail').value.trim().toLowerCase();
+  const pw = document.getElementById('adminPass').value;
+  const tfa = document.getElementById('admin2FA').value.trim();
+  document.getElementById('adminLoginMsg').textContent = '';
+  if (!email || !pw) { toast('Fill all required fields','error'); return; }
+  if (email !== ADMIN_EMAIL || pw !== ADMIN_PASSWORD) {
+    ADM.security.recordAttempt();
+    document.getElementById('adminLoginMsg').textContent = 'Invalid credentials.';
+    toast('Access denied', 'error');
+    return;
+  }
+  // Optional 2FA check (any 6-digit code accepted in demo)
+  if (tfa && !/^\d{6}$/.test(tfa)) {
+    toast('2FA must be 6 digits','error'); return;
+  }
+  const btn = e.target.querySelector('button[type="submit"]');
+  btn.disabled = true; const orig = btn.innerHTML;
+  btn.innerHTML = '<i class="fa-solid fa-spinner spin mr-2"></i>Authenticating…';
+  try {
+    // Try Firebase admin login if enabled
+    if (firebaseReady) {
+      try { await fbAuth.signInWithEmailAndPassword(ADMIN_EMAIL, ADMIN_PASSWORD); } catch(e){ console.warn('FB admin login:', e.message); }
+    }
+    ADM.security.clearAttempts();
+    ADM.session.set();
+    state.admin = { email: ADMIN_EMAIL, name: 'Muleta Legese Gemeda', role: 'super-admin' };
+    state.loggedIn = true;
+    loadAll();
+    auditLog('ADMIN_LOGIN', ADMIN_EMAIL);
+    enterAdmin();
+    toast('👑 Admin access granted', 'success');
+  } catch(err) {
+    toast('Login failed: ' + err.message, 'error');
+    btn.disabled = false; btn.innerHTML = orig;
+  }
+}
+function adminLogout() {
+  if (!confirm('End admin session?')) return;
+  ADM.session.clear();
+  auditLog('ADMIN_LOGOUT', ADMIN_EMAIL);
+  state.loggedIn = false;
+  state.admin = { email:'', name:'', role:'' };
+  destroyCharts();
+  document.getElementById('adminApp').classList.add('hidden');
+  document.getElementById('loginScreen').classList.remove('hidden');
+  document.getElementById('loginScreen').classList.add('flex');
+  toast('Logged out', 'info');
+}
+
+function enterAdmin() {
+  document.getElementById('loginScreen').classList.add('hidden');
+  document.getElementById('loginScreen').classList.remove('flex');
+  document.getElementById('adminApp').classList.remove('hidden');
+  document.getElementById('backendUrl').value = LS.get('dp_backend', BACKEND_URL);
+  const cs = document.getElementById('currencySel'); if (cs) cs.value = ADM.currency.get();
+  renderNav();
+  renderDock();
+  go('overview');
+  checkBackendHealth(true);
+  startSessionTimer();
+}
+function startSessionTimer() {
+  setInterval(() => {
+    if (!state.loggedIn) return;
+    const s = ADM.session.check();
+    if (!s) {
+      toast('Session expired. Please log in again.', 'warn');
+      state.loggedIn = false;
+      document.getElementById('adminApp').classList.add('hidden');
+      document.getElementById('loginScreen').classList.remove('hidden');
+      document.getElementById('loginScreen').classList.add('flex');
+    }
+  }, 30000);
+  // Idle refresh on activity
+  ['click','keydown','mousemove'].forEach(ev => {
+    document.addEventListener(ev, () => { if (state.loggedIn) ADM.session.refresh(); }, { passive:true });
+  });
+}
+
+/* ---------- NAV ---------- */
+const TABS = [
+  { id:'overview',    key:'Overview',     icon:'fa-gauge-high' },
+  { id:'orgs',        key:'Organizations',icon:'fa-building' },
+  { id:'users',       key:'Users',        icon:'fa-users' },
+  { id:'contracts',   key:'Contracts',    icon:'fa-file-signature' },
+  { id:'datasets',    key:'Datasets',     icon:'fa-database' },
+  { id:'audit',       key:'Audit Logs',   icon:'fa-clipboard-list' },
+  { id:'payments',    key:'Payments',     icon:'fa-credit-card' },
+  { id:'settings',    key:'Settings',     icon:'fa-sliders' }
+];
+function renderNav() {
+  document.getElementById('navBar').innerHTML = TABS.map(t => `
+    <button data-tab="${t.id}" onclick="go('${t.id}')" class="nav-tab px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap text-slate-400">
+      <i class="fa-solid ${t.icon} mr-1"></i>${esc(t.key)}
+    </button>
+  `).join('');
+}
+function renderDock() {
+  const d = [
+    { id:'overview', key:'Home', icon:'fa-gauge-high' },
+    { id:'orgs', key:'Orgs', icon:'fa-building' },
+    { id:'contracts', key:'Contracts', icon:'fa-file-signature' },
+    { id:'audit', key:'Audit', icon:'fa-clipboard-list' },
+    { id:'settings', key:'Settings', icon:'fa-sliders' }
+  ];
+  document.getElementById('mobileDock').innerHTML = d.map(x => `
+    <button data-tab="${x.id}" onclick="go('${x.id}')" class="nav-tab flex flex-col items-center gap-0.5 text-slate-400">
+      <i class="fa-solid ${x.icon}"></i><span class="text-[10px]">${esc(x.key)}</span>
+    </button>
+  `).join('');
+}
+function destroyCharts(){
+  Object.values(state.charts).forEach(c => { try { c.destroy(); } catch(e){} });
+  state.charts = {};
+}
+function go(tab) {
+  state.tab = tab;
+  document.querySelectorAll('.nav-tab').forEach(b => {
+    const on = b.dataset.tab === tab;
+    b.classList.toggle('tab-active', on);
+    b.classList.toggle('text-slate-400', !on);
+    b.classList.toggle('text-purple-400', on);
+  });
+  try { render(); } catch(e) { console.error(e); toast('Render error: '+e.message, 'error'); }
+  window.scrollTo({ top:0, behavior:'smooth' });
+}
+
+/* ---------- AGGREGATED STATS ---------- */
+function aggStats() {
+  const totalOrgs = state.orgs.length;
+  const activeOrgs = state.orgs.filter(o => o.status !== 'suspended').length;
+  const suspendedOrgs = state.orgs.filter(o => o.status === 'suspended').length;
+  const verifiedOrgs = state.orgs.filter(o => o.emailVerified).length;
+  const paidOrgs = state.orgs.filter(o => isPaid(o.id)).length;
+  const activeContracts = state.contracts.filter(c => c.status === 'active').length;
+  const cancelledContracts = state.contracts.filter(c => c.status === 'cancelled').length;
+  const totalRecords = Object.values(state.records).reduce((s, r) => s + r.length, 0);
+  const mrr = state.contracts
+    .filter(c => c.status === 'active')
+    .reduce((s, c) => {
+      const plan = PLANS.find(p => p.id === c.plan);
+      return s + (plan ? plan.usd : 0);
+    }, 0);
+  const arr = mrr * 12;
+  const byPlan = {};
+  PLANS.forEach(p => byPlan[p.id] = 0);
+  state.orgs.forEach(o => { byPlan[o.plan] = (byPlan[o.plan]||0) + 1; });
+  const byType = { individual:0, smb:0, enterprise:0 };
+  state.orgs.forEach(o => { if (o.accountType in byType) byType[o.accountType]++; });
+  const recentAudits = state.audits.slice(0, 5);
+  return {
+    totalOrgs, activeOrgs, suspendedOrgs, verifiedOrgs, paidOrgs,
+    activeContracts, cancelledContracts, totalRecords, mrr, arr,
+    byPlan, byType, recentAudits
+  };
+}
+
+/* ---------- RENDER ---------- */
+function render() {
+  const el = document.getElementById('adminMain'); if (!el) return;
+  destroyCharts();
+  switch (state.tab) {
+    case 'overview':   el.innerHTML = vOverview(); drawOverviewCharts(); break;
+    case 'orgs':       el.innerHTML = vOrgs(); break;
+    case 'users':      el.innerHTML = vUsers(); break;
+    case 'contracts':  el.innerHTML = vContracts(); break;
+    case 'datasets':   el.innerHTML = vDatasets(); break;
+    case 'audit':      el.innerHTML = vAudit(); break;
+    case 'payments':   el.innerHTML = vPayments(); break;
+    case 'settings':   el.innerHTML = vSettings(); break;
+  }
+}
+
+/* ---------- OVERVIEW ---------- */
+function vOverview() {
+  const s = aggStats();
+  return `
+  <div class="space-y-4 sm:space-y-6 fade">
+    <div class="bg-gradient-to-br from-purple-500/15 via-emerald-500/5 to-sky-500/10 border border-purple-500/30 rounded-3xl p-5 sm:p-6">
+      <div class="flex items-start justify-between flex-wrap gap-3">
+        <div class="min-w-0">
+          <div class="text-[11px] mono text-purple-400 font-bold mb-1">ADMIN CONTROL CENTER</div>
+          <h1 class="text-xl sm:text-3xl font-black text-white">Welcome, ${esc(state.admin.name)} 👑</h1>
+          <p class="text-xs text-slate-400 mt-1">Full platform oversight · ${esc(state.admin.email)}</p>
+        </div>
+        <div class="flex gap-2">
+          <button onclick="exportAllOrgs()" class="px-3 py-2 bg-slate-900 border border-slate-700 text-emerald-400 font-bold text-xs rounded-xl"><i class="fa-solid fa-download mr-1"></i>Export</button>
+          <button onclick="go('orgs')" class="px-3 py-2 bg-purple-500 text-slate-950 font-bold text-xs rounded-xl"><i class="fa-solid fa-plus mr-1"></i>Manage</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+      <div class="stat-card p-4 rounded-2xl">
+        <div class="flex justify-between items-center mb-1"><span class="text-[10px] text-slate-400 uppercase mono">Organizations</span><i class="fa-solid fa-building text-purple-400"></i></div>
+        <div class="text-2xl font-black text-purple-400 mono">${s.totalOrgs}</div>
+        <div class="text-[10px] text-slate-500 mt-1">${s.verifiedOrgs} verified</div>
+      </div>
+      <div class="stat-card p-4 rounded-2xl">
+        <div class="flex justify-between items-center mb-1"><span class="text-[10px] text-slate-400 uppercase mono">Active Contracts</span><i class="fa-solid fa-file-signature text-emerald-400"></i></div>
+        <div class="text-2xl font-black text-emerald-400 mono">${s.activeContracts}</div>
+        <div class="text-[10px] text-slate-500 mt-1">${s.cancelledContracts} cancelled</div>
+      </div>
+      <div class="stat-card p-4 rounded-2xl">
+        <div class="flex justify-between items-center mb-1"><span class="text-[10px] text-slate-400 uppercase mono">MRR</span><i class="fa-solid fa-dollar-sign text-amber-400"></i></div>
+        <div class="text-2xl font-black text-amber-400 mono">${ADM.currency.format(s.mrr)}</div>
+        <div class="text-[10px] text-slate-500 mt-1">ARR ${ADM.currency.format(s.arr)}</div>
+      </div>
+      <div class="stat-card p-4 rounded-2xl">
+        <div class="flex justify-between items-center mb-1"><span class="text-[10px] text-slate-400 uppercase mono">Total Records</span><i class="fa-solid fa-database text-sky-400"></i></div>
+        <div class="text-2xl font-black text-sky-400 mono">${s.totalRecords.toLocaleString()}</div>
+        <div class="text-[10px] text-slate-500 mt-1">across all orgs</div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-3">
+      <div class="lg:col-span-2 bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-5">
+        <div class="flex justify-between items-center mb-3">
+          <span class="text-xs font-bold text-white"><i class="fa-solid fa-chart-column text-purple-400 mr-2"></i>Plan Distribution</span>
+          <span class="text-[10px] mono text-slate-500">${s.totalOrgs} orgs</span>
+        </div>
+        <div style="height:220px"><canvas id="planChart"></canvas></div>
+      </div>
+      <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-5">
+        <div class="flex justify-between items-center mb-3">
+          <span class="text-xs font-bold text-white"><i class="fa-solid fa-user-tag text-emerald-400 mr-2"></i>By Account Type</span>
+        </div>
+        <div style="height:220px"><canvas id="typeChart"></canvas></div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-3">
+      <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-5">
+        <div class="flex justify-between items-center mb-3">
+          <span class="text-xs font-bold text-white"><i class="fa-solid fa-clock-rotate-left text-sky-400 mr-2"></i>Recent Activity</span>
+          <button onclick="go('audit')" class="text-[11px] text-purple-400 font-bold">All →</button>
+        </div>
+        <div class="space-y-2">
+          ${s.recentAudits.length ? s.recentAudits.map(a => `
+            <div class="p-2 rounded-lg bg-slate-950 border border-slate-800">
+              <div class="flex items-center justify-between gap-2">
+                <span class="text-[10px] font-bold text-purple-400 truncate">${esc(a.action)}</span>
+                <span class="text-[9px] mono text-slate-500 shrink-0">${fmtTime(a.performed_at||a.at)}</span>
+              </div>
+              <div class="text-[10px] text-slate-400 truncate mt-0.5">${esc(a.target||a.item_id)} · ${esc(a.org)}</div>
+            </div>
+          `).join('') : '<div class="text-xs text-slate-500">No activity yet.</div>'}
+        </div>
+      </div>
+      <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-5">
+        <div class="flex justify-between items-center mb-3">
+          <span class="text-xs font-bold text-white"><i class="fa-solid fa-fire text-amber-400 mr-2"></i>Top Organizations</span>
+        </div>
+        <div class="space-y-2">
+          ${[...state.orgs].sort((a,b) => (b.dataCount||0)-(a.dataCount||0)).slice(0,5).map(o => `
+            <div class="p-2 rounded-lg bg-slate-950 border border-slate-800 flex items-center justify-between gap-2">
+              <div class="min-w-0">
+                <div class="text-[11px] font-bold text-white truncate">${esc(o.name)}</div>
+                <div class="text-[9px] mono text-slate-500 truncate">${esc(o.id)}</div>
+              </div>
+              <span class="text-[10px] mono text-emerald-400 font-bold shrink-0">${(o.dataCount||0).toLocaleString()} rows</span>
+            </div>
+          `).join('') || '<div class="text-xs text-slate-500">No orgs yet.</div>'}
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+      <button onclick="go('orgs')" class="p-4 rounded-2xl bg-slate-900 border border-slate-800 hover:border-purple-500/50 text-left">
+        <i class="fa-solid fa-building text-purple-400 text-lg mb-2 block"></i>
+        <div class="text-xs font-bold text-white">Organizations</div>
+        <div class="text-[10px] text-slate-500">Manage all orgs</div>
+      </button>
+      <button onclick="go('contracts')" class="p-4 rounded-2xl bg-slate-900 border border-slate-800 hover:border-emerald-500/50 text-left">
+        <i class="fa-solid fa-file-signature text-emerald-400 text-lg mb-2 block"></i>
+        <div class="text-xs font-bold text-white">Contracts</div>
+        <div class="text-[10px] text-slate-500">Plans & billing</div>
+      </button>
+      <button onclick="go('audit')" class="p-4 rounded-2xl bg-slate-900 border border-slate-800 hover:border-sky-500/50 text-left">
+        <i class="fa-solid fa-clipboard-list text-sky-400 text-lg mb-2 block"></i>
+        <div class="text-xs font-bold text-white">Audit Logs</div>
+        <div class="text-[10px] text-slate-500">All activity</div>
+      </button>
+      <button onclick="go('settings')" class="p-4 rounded-2xl bg-slate-900 border border-slate-800 hover:border-amber-500/50 text-left">
+        <i class="fa-solid fa-sliders text-amber-400 text-lg mb-2 block"></i>
+        <div class="text-xs font-bold text-white">Settings</div>
+        <div class="text-[10px] text-slate-500">System config</div>
+      </button>
+    </div>
+  </div>`;
+}
+async function drawOverviewCharts() {
+  if (typeof Chart === 'undefined') {
+    try { await new Promise((res, rej) => { const s=document.createElement('script'); s.src='https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js'; s.onload=res; s.onerror=rej; document.head.appendChild(s); }); } catch(e){ return; }
+  }
+  const s = aggStats();
+  Chart.defaults.color = ADM.theme.current()==='dark' ? '#94a3b8' : '#475569';
+
+  const pc = document.getElementById('planChart');
+  if (pc) {
+    state.charts.plan = new Chart(pc, {
+      type:'bar',
+      data:{
+        labels: PLANS.map(p => p.name),
+        datasets:[{
+          label:'Organizations',
+          data: PLANS.map(p => s.byPlan[p.id]||0),
+          backgroundColor:['rgba(148,163,184,.6)','rgba(16,185,129,.7)','rgba(59,130,246,.7)','rgba(168,85,247,.7)'],
+          borderRadius:6
+        }]
+      },
+      options:{ responsive:true, maintainAspectRatio:false, plugins:{ legend:{display:false} } }
+    });
+  }
+  const tc = document.getElementById('typeChart');
+  if (tc) {
+    state.charts.type = new Chart(tc, {
+      type:'doughnut',
+      data:{
+        labels:['Individual','Small Business','Enterprise'],
+        datasets:[{
+          data:[s.byType.individual, s.byType.smb, s.byType.enterprise],
+          backgroundColor:['rgba(59,130,246,.8)','rgba(245,158,11,.8)','rgba(168,85,247,.8)'],
+          borderColor:'rgba(15,23,42,1)',
+          borderWidth:3
+        }]
+      },
+      options:{ responsive:true, maintainAspectRatio:false, plugins:{ legend:{position:'bottom', labels:{boxWidth:10, font:{size:10}}} } }
+    });
+  }
+}
+
+/* ---------- ORGANIZATIONS ---------- */
+function vOrgs() {
+  const q = state.searchOrg.toLowerCase();
+  const list = state.orgs.filter(o => {
+    if (!q) return true;
+    return (o.name||'').toLowerCase().includes(q) ||
+           (o.email||'').toLowerCase().includes(q) ||
+           (o.id||'').toLowerCase().includes(q) ||
+           (o.adminName||'').toLowerCase().includes(q);
+  });
+  return `
+  <div class="space-y-4 fade">
+    <div class="flex flex-wrap justify-between items-center gap-3 bg-slate-900/90 border border-purple-500/40 rounded-2xl p-4">
+      <div>
+        <h3 class="text-base font-bold text-white"><i class="fa-solid fa-building text-purple-400 mr-2"></i>Organizations (${state.orgs.length})</h3>
+        <p class="text-xs text-slate-400 mt-0.5">Manage all registered organizations</p>
+      </div>
+      <div class="flex gap-2 flex-wrap">
+        <input id="orgSearch" oninput="state.searchOrg=this.value;render()" value="${esc(state.searchOrg)}" placeholder="Search orgs…" class="input !w-40 sm:!w-56">
+        <button onclick="openOrgModal()" class="btn btn-primary"><i class="fa-solid fa-plus mr-1"></i>New Org</button>
+        <button onclick="exportAllOrgs()" class="btn btn-ghost"><i class="fa-solid fa-download"></i></button>
+      </div>
+    </div>
+
+    <div class="bg-slate-900/80 border border-slate-800 rounded-2xl overflow-x-auto">
+      <table class="w-full text-xs dp-table">
+        <thead class="text-slate-400 uppercase text-[10px] mono border-b border-slate-800">
+          <tr>
+            <th class="p-3 text-left">ID</th>
+            <th class="p-3 text-left">Organization</th>
+            <th class="p-3 text-left">Contact</th>
+            <th class="p-3 text-left">Type</th>
+            <th class="p-3 text-left">Plan</th>
+            <th class="p-3 text-left">Status</th>
+            <th class="p-3 text-right">Data</th>
+            <th class="p-3 text-right">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-800/60 mono text-slate-300">
+          ${list.length ? list.map(o => {
+            const paid = isPaid(o.id);
+            const days = trialDaysLeft(o.id);
+            let status = 'active';
+            let statusCls = 'active';
+            let statusLbl = 'Active';
+            if (o.status === 'suspended') { statusCls = 'cancelled'; statusLbl = 'Suspended'; }
+            else if (!paid && days <= 0) { statusCls = 'expired'; statusLbl = 'Trial Ended'; }
+            else if (!paid) { statusCls = 'trial'; statusLbl = `Trial ${days}d`; }
+            return `
+            <tr>
+              <td data-l="ID" class="p-3 text-slate-400 text-[10px]">${esc(o.id)}</td>
+              <td data-l="Org" class="p-3">
+                <div class="font-sans font-bold text-white text-xs">${esc(o.name)}</div>
+                <div class="text-[10px] text-slate-500 font-sans">${esc(o.adminName||'—')}</div>
+              </td>
+              <td data-l="Contact" class="p-3 font-sans">
+                <div class="text-[10px] text-slate-300">${esc(o.email||'—')}</div>
+                <div class="text-[10px] text-slate-500">${esc(o.phone||'—')}</div>
+              </td>
+              <td data-l="Type" class="p-3"><span class="role-badge ${o.accountType||'individual'}">${esc((o.accountType||'—').toUpperCase())}</span></td>
+              <td data-l="Plan" class="p-3"><span class="plan-badge ${o.plan||'free'}">${esc((o.plan||'free').toUpperCase())}</span></td>
+              <td data-l="Status" class="p-3"><span class="status-badge ${statusCls}">${esc(statusLbl)}</span></td>
+              <td data-l="Data" class="p-3 text-right text-emerald-400 font-bold">${(o.dataCount||0).toLocaleString()}</td>
+              <td data-l="Actions" class="p-3 text-right">
+                <div class="inline-flex gap-1">
+                  <button onclick="openOrgModal('${esc(o.id)}')" title="Edit" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 text-sky-400 rounded-lg text-[10px]"><i class="fa-solid fa-pen"></i></button>
+                  <button onclick="openCtrForOrg('${esc(o.id)}')" title="New Contract" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 text-emerald-400 rounded-lg text-[10px]"><i class="fa-solid fa-file-signature"></i></button>
+                  <button onclick="viewOrgData('${esc(o.id)}')" title="View Data" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 text-amber-400 rounded-lg text-[10px]"><i class="fa-solid fa-database"></i></button>
+                  <button onclick="confirmDeleteOrg('${esc(o.id)}')" title="Delete" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 text-rose-400 rounded-lg text-[10px]"><i class="fa-solid fa-trash"></i></button>
+                </div>
+              </td>
+            </tr>`;
+          }).join('') : `<tr><td colspan="8" class="p-8 text-center text-slate-500">No organizations found. Click <b>New Org</b> to create one.</td></tr>`}
+        </tbody>
+      </table>
+    </div>
+  </div>`;
+}
+
+/* ---------- ORG MODAL ---------- */
+function openOrgModal(orgId) {
+  const isEdit = !!orgId;
+  document.getElementById('orgModalTitle').textContent = isEdit ? 'Edit Organization' : 'New Organization';
+  document.getElementById('orgFormId').value = orgId || '';
+  const o = isEdit ? state.orgs.find(x => x.id === orgId) : null;
+  document.getElementById('orgFormName').value   = o ? (o.name||'') : '';
+  document.getElementById('orgFormAdmin').value  = o ? (o.adminName||'') : '';
+  document.getElementById('orgFormEmail').value  = o ? (o.email||'') : '';
+  document.getElementById('orgFormPhone').value  = o ? (o.phone||'') : '';
+  document.getElementById('orgFormType').value   = o ? (o.accountType||'smb') : 'smb';
+  document.getElementById('orgFormPlan').value   = o ? (o.plan||'free') : 'free';
+  document.getElementById('orgFormStatus').value = o ? (o.status||'active') : 'active';
+  document.getElementById('orgFormVerified').checked = o ? !!o.emailVerified : false;
+  document.getElementById('orgModal').classList.remove('hidden');
+  document.getElementById('orgModal').classList.add('flex');
+}
+function closeOrgModal() {
+  document.getElementById('orgModal').classList.add('hidden');
+  document.getElementById('orgModal').classList.remove('flex');
+}
+function saveOrgModal() {
+  const id = document.getElementById('orgFormId').value;
+  const name = document.getElementById('orgFormName').value.trim();
+  const adminName = document.getElementById('orgFormAdmin').value.trim();
+  const email = document.getElementById('orgFormEmail').value.trim().toLowerCase();
+  const phone = document.getElementById('orgFormPhone').value.trim();
+  const accountType = document.getElementById('orgFormType').value;
+  const plan = document.getElementById('orgFormPlan').value;
+  const status = document.getElementById('orgFormStatus').value;
+  const emailVerified = document.getElementById('orgFormVerified').checked;
+  if (!name || !email) { toast('Name and email required','error'); return; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { toast('Invalid email','error'); return; }
+
+  if (id) {
+    const o = state.orgs.find(x => x.id === id);
+    if (!o) { toast('Organization not found','error'); return; }
+    Object.assign(o, { name, adminName, email, phone, accountType, plan, status, emailVerified });
+    auditLog('ORG_UPDATE', o.id, { name, plan, status });
+    toast('Organization updated ✓', 'success');
+  } else {
+    const newOrg = {
+      id:'ORG-'+Date.now().toString().slice(-6),
+      uid:null,
+      name, adminName, email, phone, accountType,
+      plan, status, emailVerified,
+      createdAt: new Date().toISOString(),
+      dataCount:0,
+      apiKey:'dp_'+Math.random().toString(36).slice(2,14)
+    };
+    state.orgs.push(newOrg);
+    state.records[newOrg.id] = [];
+    LS.set('dp_records_'+newOrg.id, []);
+    auditLog('ORG_CREATE', newOrg.id, { name });
+    toast('Organization created ✓', 'success');
+  }
+  persistOrgs();
+  closeOrgModal();
+  render();
+}
+function confirmDeleteOrg(orgId) {
+  const o = state.orgs.find(x => x.id === orgId);
+  if (!o) return;
+  openConfirm('Delete Organization?', `Delete "${o.name}" (${o.id})? This also removes their records and contracts.`, () => {
+    state.orgs = state.orgs.filter(x => x.id !== orgId);
+    state.contracts = state.contracts.filter(c => c.orgId !== orgId);
+    LS.del('dp_records_'+orgId);
+    LS.del('dp_trial_'+orgId);
+    delete state.records[orgId];
+    persistOrgs(); persistContracts();
+    auditLog('ORG_DELETE', orgId, { name:o.name });
+    toast('Organization deleted', 'warn');
+    render();
+  });
+}
+function openConfirm(title, text, cb) {
+  document.getElementById('confirmTitle').textContent = title;
+  document.getElementById('confirmText').textContent = text;
+  state.confirmCb = cb;
+  document.getElementById('confirmModal').classList.remove('hidden');
+  document.getElementById('confirmModal').classList.add('flex');
+  const yes = document.getElementById('confirmYes');
+  yes.onclick = () => { closeConfirm(); if (state.confirmCb) state.confirmCb(); };
+}
+function closeConfirm() {
+  document.getElementById('confirmModal').classList.add('hidden');
+  document.getElementById('confirmModal').classList.remove('flex');
+  state.confirmCb = null;
+}
+function viewOrgData(orgId) {
+  state.tab = 'datasets';
+  state.currentDataset = orgId;
+  go('datasets');
+}
+function exportAllOrgs() {
+  try {
+    const rows = state.orgs.map(o => ({
+      ID:o.id, Name:o.name, Admin:o.adminName, Email:o.email, Phone:o.phone,
+      Type:o.accountType, Plan:o.plan, Status:o.status||'active',
+      Verified:o.emailVerified ? 'yes':'no',
+      Records:o.dataCount||0, Created:o.createdAt
+    }));
+    if (!rows.length) { toast('No data to export','warn'); return; }
+    const h = Object.keys(rows[0]);
+    const csv = '\uFEFF' + [h.join(','), ...rows.map(r => h.map(k => `"${String(r[k]??'').replace(/"/g,'""')}"`).join(','))].join('\n');
+    download(new Blob([csv], { type:'text/csv;charset=utf-8' }), `datapulse-orgs-${Date.now()}.csv`);
+    toast('Exported ✓','success');
+    auditLog('EXPORT_ORGS');
+  } catch(e){ toast('Export failed: '+e.message,'error'); }
+}
+function download(blob, filename) {
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob); a.download = filename;
+  document.body.appendChild(a); a.click();
+  setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 5000);
+}
+
+/* ---------- USERS ---------- */
+function vUsers() {
+  const users = [];
+  state.orgs.forEach(o => {
+    if (o.email) users.push({ orgId:o.id, orgName:o.name, name:o.adminName||'—', email:o.email, phone:o.phone||'—', role:'Owner', type:o.accountType, status:o.status||'active' });
+  });
+  return `
+  <div class="space-y-4 fade">
+    <div class="bg-slate-900/90 border border-emerald-500/40 rounded-2xl p-4">
+      <h3 class="text-base font-bold text-white"><i class="fa-solid fa-users text-emerald-400 mr-2"></i>Users (${users.length})</h3>
+      <p class="text-xs text-slate-400 mt-0.5">Derived from organization owners</p>
+    </div>
+    <div class="bg-slate-900/80 border border-slate-800 rounded-2xl overflow-x-auto">
+      <table class="w-full text-xs dp-table">
+        <thead class="text-slate-400 uppercase text-[10px] mono border-b border-slate-800">
+          <tr>
+            <th class="p-3 text-left">Name</th>
+            <th class="p-3 text-left">Email</th>
+            <th class="p-3 text-left">Phone</th>
+            <th class="p-3 text-left">Org</th>
+            <th class="p-3 text-left">Role</th>
+            <th class="p-3 text-left">Status</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-800/60 mono text-slate-300">
+          ${users.length ? users.map(u => `
+            <tr>
+              <td data-l="Name" class="p-3 text-white font-sans">${esc(u.name)}</td>
+              <td data-l="Email" class="p-3 text-[10px]">${esc(u.email)}</td>
+              <td data-l="Phone" class="p-3 text-[10px]">${esc(u.phone)}</td>
+              <td data-l="Org" class="p-3 text-[10px] text-slate-400">${esc(u.orgName)}</td>
+              <td data-l="Role" class="p-3"><span class="role-badge ${u.type||'individual'}">${esc((u.type||'—').toUpperCase())}</span></td>
+              <td data-l="Status" class="p-3"><span class="status-badge ${u.status==='suspended'?'cancelled':'active'}">${esc(u.status.toUpperCase())}</span></td>
+            </tr>
+          `).join('') : `<tr><td colspan="6" class="p-8 text-center text-slate-500">No users yet.</td></tr>`}
+        </tbody>
+      </table>
+    </div>
+  </div>`;
+}
+
+/* ---------- CONTRACTS ---------- */
+function vContracts() {
+  const filter = state.filter;
+  const list = state.contracts.filter(c => filter==='all' || c.status === filter);
+  return `
+  <div class="space-y-4 fade">
+    <div class="flex flex-wrap justify-between items-center gap-3 bg-slate-900/90 border border-emerald-500/40 rounded-2xl p-4">
+      <div>
+        <h3 class="text-base font-bold text-white"><i class="fa-solid fa-file-signature text-emerald-400 mr-2"></i>Contracts (${state.contracts.length})</h3>
+        <p class="text-xs text-slate-400 mt-0.5">All plan subscriptions across organizations</p>
+      </div>
+      <div class="flex gap-2 flex-wrap">
+        <select onchange="state.filter=this.value;render()" class="input !w-auto">
+          <option value="all" ${filter==='all'?'selected':''}>All</option>
+          <option value="active" ${filter==='active'?'selected':''}>Active</option>
+          <option value="cancelled" ${filter==='cancelled'?'selected':''}>Cancelled</option>
+        </select>
+        <button onclick="openCtrModal()" class="btn btn-emerald"><i class="fa-solid fa-plus mr-1"></i>New</button>
+        <button onclick="exportContracts()" class="btn btn-ghost"><i class="fa-solid fa-download"></i></button>
+      </div>
+    </div>
+    <div class="bg-slate-900/80 border border-slate-800 rounded-2xl overflow-x-auto">
+      <table class="w-full text-xs dp-table">
+        <thead class="text-slate-400 uppercase text-[10px] mono border-b border-slate-800">
+          <tr>
+            <th class="p-3 text-left">Contract ID</th>
+            <th class="p-3 text-left">Organization</th>
+            <th class="p-3 text-left">Plan</th>
+            <th class="p-3 text-left">Amount</th>
+            <th class="p-3 text-left">Method</th>
+            <th class="p-3 text-left">Started</th>
+            <th class="p-3 text-left">Expires</th>
+            <th class="p-3 text-left">Status</th>
+            <th class="p-3 text-right">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-800/60 mono text-slate-300">
+          ${list.length ? list.map(c => `
+            <tr>
+              <td data-l="ID" class="p-3 text-slate-400 text-[10px]">${esc(c.id)}</td>
+              <td data-l="Org" class="p-3">
+                <div class="font-sans font-bold text-white text-xs truncate max-w-[180px]">${esc(c.orgName)}</div>
+                <div class="text-[10px] text-slate-500">${esc(c.orgId)}</div>
+              </td>
+              <td data-l="Plan" class="p-3"><span class="plan-badge ${c.plan}">${esc(c.planName||c.plan.toUpperCase())}</span></td>
+              <td data-l="Amount" class="p-3 text-emerald-400 font-bold">${esc(c.displayAmount || ADM.currency.format(c.usd||0))}</td>
+              <td data-l="Method" class="p-3 text-[10px] uppercase">${esc(c.method||'—')}</td>
+              <td data-l="Started" class="p-3 text-[10px]">${fmtDateShort(c.startedAt)}</td>
+              <td data-l="Expires" class="p-3 text-[10px]">${fmtDateShort(c.expiresAt)}</td>
+              <td data-l="Status" class="p-3"><span class="status-badge ${c.status}">${esc(c.status.toUpperCase())}</span></td>
+              <td data-l="Actions" class="p-3 text-right">
+                <div class="inline-flex gap-1">
+                  ${c.status==='active' ? `<button onclick="cancelContract('${esc(c.id)}')" title="Cancel" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 text-rose-400 rounded-lg text-[10px]"><i class="fa-solid fa-ban"></i></button>` : ''}
+                  <button onclick="deleteContract('${esc(c.id)}')" title="Delete" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 text-rose-400 rounded-lg text-[10px]"><i class="fa-solid fa-trash"></i></button>
+                </div>
+              </td>
+            </tr>
+          `).join('') : `<tr><td colspan="9" class="p-8 text-center text-slate-500">No contracts found.</td></tr>`}
+        </tbody>
+      </table>
+    </div>
+  </div>`;
+}
+function openCtrModal() {
+  const sel = document.getElementById('ctrOrg');
+  sel.innerHTML = '<option value="">— Select organization —</option>' +
+    state.orgs.map(o => `<option value="${esc(o.id)}">${esc(o.name)} (${esc(o.id)})</option>`).join('');
+  const planSel = document.getElementById('ctrPlan');
+  planSel.innerHTML = PLANS.map(p => `<option value="${p.id}">${esc(p.name)} — ${p.usd>0?ADM.currency.format(p.usd):'Free'}</option>`).join('');
+  document.getElementById('ctrModal').classList.remove('hidden');
+  document.getElementById('ctrModal').classList.add('flex');
+}
+function openCtrForOrg(orgId) {
+  openCtrModal();
+  document.getElementById('ctrOrg').value = orgId;
+}
+function closeCtrModal() {
+  document.getElementById('ctrModal').classList.add('hidden');
+  document.getElementById('ctrModal').classList.remove('flex');
+}
+function saveCtrModal() {
+  const orgId = document.getElementById('ctrOrg').value;
+  const planId = document.getElementById('ctrPlan').value;
+  const months = Math.max(1, parseInt(document.getElementById('ctrMonths').value)||1);
+  const method = document.getElementById('ctrMethod').value;
+  if (!orgId) { toast('Select an organization','error'); return; }
+  const org = state.orgs.find(o => o.id === orgId);
+  const plan = PLANS.find(p => p.id === planId);
+  if (!org || !plan) { toast('Invalid selection','error'); return; }
+  const c = {
+    id:'CTR-'+Date.now().toString().slice(-6),
+    orgId, orgName: org.name,
+    plan: plan.id, planName: plan.name,
+    usd: plan.usd, currency: ADM.currency.get(),
+    displayAmount: plan.usd>0 ? ADM.currency.format(plan.usd) : 'Free',
+    method, months, total: plan.usd*months, status:'active',
+    startedAt: new Date().toISOString(),
+    expiresAt: new Date(Date.now() + months*30*86400000).toISOString()
+  };
+  state.contracts.push(c);
+  org.plan = plan.id;
+  if (plan.id !== 'free') markPaid(org.id);
+  persistContracts(); persistOrgs();
+  auditLog('CONTRACT_CREATE', c.id, { orgId, plan:plan.id, method, months });
+  closeCtrModal();
+  toast(`Contract activated: ${plan.name} for ${org.name}`, 'success');
+  render();
+}
+function cancelContract(id) {
+  const c = state.contracts.find(x => x.id === id);
+  if (!c) return;
+  openConfirm('Cancel Contract?', `Cancel ${c.id} for ${c.orgName}?`, () => {
+    c.status = 'cancelled';
+    c.cancelledAt = new Date().toISOString();
+    const org = state.orgs.find(o => o.id === c.orgId);
+    if (org) org.plan = 'free';
+    persistContracts(); persistOrgs();
+    auditLog('CONTRACT_CANCEL', id);
+    toast('Contract cancelled', 'warn');
+    render();
+  });
+}
+function deleteContract(id) {
+  openConfirm('Delete Contract?', 'Permanently remove this contract record?', () => {
+    state.contracts = state.contracts.filter(c => c.id !== id);
+    persistContracts();
+    auditLog('CONTRACT_DELETE', id);
+    toast('Contract deleted', 'warn');
+    render();
+  });
+}
+function exportContracts() {
+  try {
+    const rows = state.contracts.map(c => ({
+      ID:c.id, OrgId:c.orgId, Org:c.orgName, Plan:c.plan,
+      AmountUsd:c.usd||0, Method:c.method, Months:c.months,
+      Started:c.startedAt, Expires:c.expiresAt, Status:c.status
+    }));
+    if (!rows.length) { toast('No data to export','warn'); return; }
+    const h = Object.keys(rows[0]);
+    const csv = '\uFEFF' + [h.join(','), ...rows.map(r => h.map(k => `"${String(r[k]??'').replace(/"/g,'""')}"`).join(','))].join('\n');
+    download(new Blob([csv], { type:'text/csv;charset=utf-8' }), `datapulse-contracts-${Date.now()}.csv`);
+    toast('Exported ✓','success');
+  } catch(e){ toast('Export failed: '+e.message,'error'); }
+}
+
+/* ---------- DATASETS ---------- */
+function vDatasets() {
+  const current = state.currentDataset || (state.orgs[0] && state.orgs[0].id);
+  if (!state.currentDataset && current) state.currentDataset = current;
+  const org = state.orgs.find(o => o.id === state.currentDataset);
+  const records = org ? (state.records[org.id] || LS.get('dp_records_'+org.id, [])) : [];
+  return `
+  <div class="space-y-4 fade">
+    <div class="flex flex-wrap justify-between items-center gap-3 bg-slate-900/90 border border-sky-500/40 rounded-2xl p-4">
+      <div class="min-w-0">
+        <h3 class="text-base font-bold text-white"><i class="fa-solid fa-database text-sky-400 mr-2"></i>Datasets</h3>
+        <p class="text-xs text-slate-400 mt-0.5">View per-organization data (read-only admin view)</p>
+      </div>
+      <select onchange="state.currentDataset=this.value;render()" class="input !w-auto">
+        ${state.orgs.length ? state.orgs.map(o => `<option value="${esc(o.id)}" ${state.currentDataset===o.id?'selected':''}>${esc(o.name)} (${esc(o.id)})</option>`).join('') : '<option>No orgs</option>'}
+      </select>
+    </div>
+    ${org ? `
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+        <div class="stat-card p-3 rounded-xl"><span class="text-[10px] text-slate-400 mono uppercase">Records</span><div class="text-lg font-bold text-sky-400 mono mt-1">${records.length}</div></div>
+        <div class="stat-card p-3 rounded-xl"><span class="text-[10px] text-slate-400 mono uppercase">Plan</span><div class="text-lg font-bold text-purple-400 mono mt-1 uppercase">${esc(org.plan||'free')}</div></div>
+        <div class="stat-card p-3 rounded-xl"><span class="text-[10px] text-slate-400 mono uppercase">Paid</span><div class="text-lg font-bold ${isPaid(org.id)?'text-emerald-400':'text-amber-400'} mono mt-1">${isPaid(org.id)?'Yes':'No'}</div></div>
+        <div class="stat-card p-3 rounded-xl"><span class="text-[10px] text-slate-400 mono uppercase">Trial Left</span><div class="text-lg font-bold text-amber-400 mono mt-1">${trialDaysLeft(org.id)}d</div></div>
+      </div>
+      <div class="bg-slate-900/80 border border-slate-800 rounded-2xl overflow-x-auto">
+        <table class="w-full text-xs dp-table">
+          <thead class="text-slate-400 uppercase text-[10px] mono border-b border-slate-800">
+            <tr>
+              <th class="p-3 text-left">ID</th>
+              <th class="p-3 text-left">Name</th>
+              <th class="p-3 text-left">Category</th>
+              <th class="p-3 text-right">Price</th>
+              <th class="p-3 text-right">Cost</th>
+              <th class="p-3 text-right">Stock</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-800/60 mono text-slate-300">
+            ${records.length ? records.slice(0, 100).map(r => `
+              <tr>
+                <td data-l="ID" class="p-3 text-slate-400">${esc(r.id)}</td>
+                <td data-l="Name" class="p-3 text-white font-sans">${esc(r.name)}</td>
+                <td data-l="Category" class="p-3"><span class="px-2 py-0.5 rounded bg-slate-800 text-[10px]">${esc(r.category||'—')}</span></td>
+                <td data-l="Price" class="p-3 text-right text-emerald-400 font-bold">${(+r.price||0).toLocaleString()}</td>
+                <td data-l="Cost" class="p-3 text-right">${(+r.cost||0).toLocaleString()}</td>
+                <td data-l="Stock" class="p-3 text-right">${esc(r.stock)}</td>
+              </tr>
+            `).join('') : `<tr><td colspan="6" class="p-8 text-center text-slate-500">No records for this organization.</td></tr>`}
+          </tbody>
+        </table>
+        ${records.length > 100 ? `<div class="p-3 text-center text-[10px] text-slate-500 border-t border-slate-800">Showing 100 of ${records.length}</div>` : ''}
+      </div>
+    ` : `<div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-8 text-center text-slate-500 text-xs">No organizations registered yet.</div>`}
+  </div>`;
+}
+
+/* ---------- AUDIT ---------- */
+function vAudit() {
+  const q = state.searchAudit.toLowerCase();
+  const list = state.audits.filter(a => {
+    if (!q) return true;
+    return (a.action||'').toLowerCase().includes(q) ||
+           (a.target||a.item_id||'').toLowerCase().includes(q) ||
+           (a.org||'').toLowerCase().includes(q);
+  });
+  return `
+  <div class="space-y-4 fade">
+    <div class="flex flex-wrap justify-between items-center gap-3 bg-slate-900/90 border border-sky-500/40 rounded-2xl p-4">
+      <div>
+        <h3 class="text-base font-bold text-white"><i class="fa-solid fa-clipboard-list text-sky-400 mr-2"></i>Audit Logs (${state.audits.length})</h3>
+        <p class="text-xs text-slate-400 mt-0.5">Complete activity trail across all orgs & admin</p>
+      </div>
+      <div class="flex gap-2 flex-wrap">
+        <input oninput="state.searchAudit=this.value;render()" value="${esc(state.searchAudit)}" placeholder="Search…" class="input !w-40 sm:!w-56">
+        <button onclick="exportAudit()" class="btn btn-ghost"><i class="fa-solid fa-download"></i></button>
+        <button onclick="clearAudits()" class="btn btn-danger"><i class="fa-solid fa-trash mr-1"></i>Clear</button>
+      </div>
+    </div>
+    <div class="bg-slate-900/80 border border-slate-800 rounded-2xl overflow-x-auto">
+      <table class="w-full text-xs dp-table">
+        <thead class="text-slate-400 uppercase text-[10px] mono border-b border-slate-800">
+          <tr>
+            <th class="p-3 text-left">Time</th>
+            <th class="p-3 text-left">Action</th>
+            <th class="p-3 text-left">Target</th>
+            <th class="p-3 text-left">Org</th>
+            <th class="p-3 text-left">Status</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-800/60 mono text-slate-300">
+          ${list.length ? list.slice(0, 200).map(a => `
+            <tr>
+              <td data-l="Time" class="p-3 text-[10px] text-slate-400">${fmtDate(a.performed_at||a.at)}</td>
+              <td data-l="Action" class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-purple-500/20 text-purple-400 border border-purple-500/30">${esc(a.action)}</span></td>
+              <td data-l="Target" class="p-3 text-slate-200 truncate max-w-xs">${esc(a.target||a.item_id)}</td>
+              <td data-l="Org" class="p-3 text-slate-400 text-[10px]">${esc(a.org)}</td>
+              <td data-l="Status" class="p-3"><span class="status-badge active">${esc(a.status||'SUCCESS')}</span></td>
+            </tr>
+          `).join('') : `<tr><td colspan="5" class="p-8 text-center text-slate-500">No audit entries.</td></tr>`}
+        </tbody>
+      </table>
+    </div>
+  </div>`;
+}
+function exportAudit() {
+  try {
+    const rows = state.audits.map(a => ({
+      ID:a.id, Action:a.action, Target:a.target||a.item_id, Org:a.org, Status:a.status||'SUCCESS', Time:a.performed_at||a.at
+    }));
+    if (!rows.length) { toast('No data','warn'); return; }
+    const h = Object.keys(rows[0]);
+    const csv = '\uFEFF' + [h.join(','), ...rows.map(r => h.map(k => `"${String(r[k]??'').replace(/"/g,'""')}"`).join(','))].join('\n');
+    download(new Blob([csv], { type:'text/csv;charset=utf-8' }), `datapulse-audit-${Date.now()}.csv`);
+    toast('Audit exported ✓','success');
+  } catch(e){ toast('Export failed: '+e.message,'error'); }
+}
+function clearAudits() {
+  openConfirm('Clear All Audit Logs?', 'This permanently removes all audit entries.', () => {
+    state.audits = [];
+    persistAudits();
+    toast('Audit logs cleared','warn');
+    render();
+  });
+}
+
+/* ---------- PAYMENTS ---------- */
+function vPayments() {
+  const totalCollected = state.contracts
+    .filter(c => c.status === 'active')
+    .reduce((s, c) => s + (c.total || c.usd || 0), 0);
+  return `
+  <div class="space-y-4 fade">
+    <div class="bg-slate-900/90 border border-amber-500/40 rounded-2xl p-4">
+      <h3 class="text-base font-bold text-white"><i class="fa-solid fa-credit-card text-amber-400 mr-2"></i>Payment Configuration</h3>
+      <p class="text-xs text-slate-400 mt-0.5">Payment methods shown to end-users during checkout</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+      <div class="p-4 rounded-2xl bg-slate-900 border border-slate-800">
+        <div class="flex items-center gap-2 mb-3"><i class="fa-brands fa-paypal text-2xl text-[#003087]"></i><span class="text-sm font-bold text-white">PayPal</span></div>
+        <div class="text-[11px] text-slate-400 mb-2">Account Email:</div>
+        <div class="text-xs mono text-emerald-400 break-all">muletalegese605@gmail.com</div>
+      </div>
+      <div class="p-4 rounded-2xl bg-slate-900 border border-slate-800">
+        <div class="flex items-center gap-2 mb-3"><i class="fa-solid fa-building-columns text-2xl text-amber-400"></i><span class="text-sm font-bold text-white">EBC Bank</span></div>
+        <div class="text-[11px] text-slate-400 mb-1">Account:</div>
+        <div class="text-xs mono text-amber-400 mb-2">1000600617129</div>
+        <div class="text-[11px] text-slate-400">Name: <span class="text-white">DataPulse Enterprise</span></div>
+      </div>
+      <div class="p-4 rounded-2xl bg-slate-900 border border-slate-800">
+        <div class="flex items-center gap-2 mb-3"><i class="fa-solid fa-mobile-screen-button text-2xl text-emerald-400"></i><span class="text-sm font-bold text-white">TeleBirr</span></div>
+        <div class="text-[11px] text-slate-400 mb-1">Phone:</div>
+        <div class="text-xs mono text-emerald-400 mb-2">+251 966 765 131</div>
+        <div class="text-[11px] text-slate-400">Name: <span class="text-white">DataPulse Enterprise</span></div>
+      </div>
+    </div>
+    <div class="bg-gradient-to-br from-emerald-500/15 to-emerald-500/5 border border-emerald-500/40 rounded-2xl p-4 sm:p-5">
+      <div class="flex justify-between items-center flex-wrap gap-3">
+        <div>
+          <div class="text-[10px] mono text-emerald-400 uppercase font-bold">Total Collected (Active Contracts)</div>
+          <div class="text-2xl font-black text-emerald-400 mono mt-1">${ADM.currency.format(totalCollected)}</div>
+        </div>
+        <button onclick="exportContracts()" class="btn btn-emerald"><i class="fa-solid fa-download mr-1"></i>Export Ledger</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+/* ---------- SETTINGS ---------- */
+function vSettings() {
+  return `
+  <div class="space-y-4 fade">
+    <div class="bg-slate-900/90 border border-purple-500/40 rounded-2xl p-4">
+      <h3 class="text-base font-bold text-white"><i class="fa-solid fa-sliders text-purple-400 mr-2"></i>System Settings</h3>
+      <p class="text-xs text-slate-400 mt-0.5">Configure admin panel & shared app state</p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-3">
+      <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 sm:p-5">
+        <h4 class="text-sm font-bold text-white mb-3"><i class="fa-solid fa-server text-emerald-400 mr-2"></i>Backend</h4>
+        <label class="text-[11px] text-slate-400 block mb-1.5">Backend URL</label>
+        <input id="setBackend" value="${esc(LS.get('dp_backend', BACKEND_URL))}" class="input mono mb-2">
+        <button onclick="saveBackend()" class="btn btn-emerald w-full"><i class="fa-solid fa-floppy-disk mr-1"></i>Save Backend</button>
+      </div>
+
+      <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 sm:p-5">
+        <h4 class="text-sm font-bold text-white mb-3"><i class="fa-solid fa-brain text-sky-400 mr-2"></i>AI Configuration</h4>
+        <label class="text-[11px] text-slate-400 block mb-1.5">Mode</label>
+        <select id="setAiMode" class="input mb-2">
+          <option value="local" ${LS.get('dp_ai_mode','local')==='local'?'selected':''}>Local (offline)</option>
+          <option value="remote" ${LS.get('dp_ai_mode','local')==='remote'?'selected':''}>Remote API</option>
+        </select>
+        <label class="text-[11px] text-slate-400 block mb-1.5">Endpoint</label>
+        <input id="setAiEndpoint" value="${esc(LS.get('dp_ai_endpoint',''))}" placeholder="https://api.example.com/chat" class="input mono mb-2">
+        <button onclick="saveAiConfig()" class="btn btn-emerald w-full"><i class="fa-solid fa-floppy-disk mr-1"></i>Save AI Config</button>
+      </div>
+
+      <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 sm:p-5">
+        <h4 class="text-sm font-bold text-white mb-3"><i class="fa-solid fa-database text-amber-400 mr-2"></i>Data Management</h4>
+        <p class="text-[11px] text-slate-400 mb-3">Backup, restore, or reset admin state.</p>
+        <div class="grid grid-cols-2 gap-2">
+          <button onclick="backupAllData()" class="btn btn-ghost"><i class="fa-solid fa-download mr-1"></i>Backup</button>
+          <button onclick="document.getElementById('restoreFile').click()" class="btn btn-ghost"><i class="fa-solid fa-upload mr-1"></i>Restore</button>
+          <input type="file" id="restoreFile" accept=".json" onchange="restoreAllData(event)" class="hidden">
+          <button onclick="confirmResetAll()" class="btn btn-danger col-span-2"><i class="fa-solid fa-triangle-exclamation mr-1"></i>Reset All Data</button>
+        </div>
+      </div>
+
+      <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 sm:p-5">
+        <h4 class="text-sm font-bold text-white mb-3"><i class="fa-solid fa-shield-halved text-purple-400 mr-2"></i>Admin Session</h4>
+        <div class="space-y-2 text-xs">
+          <div class="flex justify-between"><span class="text-slate-400">Signed in as:</span><span class="text-white mono">${esc(state.admin.email)}</span></div>
+          <div class="flex justify-between"><span class="text-slate-400">Role:</span><span class="text-purple-400 mono uppercase">${esc(state.admin.role)}</span></div>
+          <div class="flex justify-between"><span class="text-slate-400">Session TTL:</span><span class="text-white mono">30 min idle</span></div>
+        </div>
+        <button onclick="adminLogout()" class="btn btn-danger w-full mt-3"><i class="fa-solid fa-arrow-right-from-bracket mr-1"></i>Sign Out</button>
+      </div>
+    </div>
+
+    <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 sm:p-5">
+      <h4 class="text-sm font-bold text-white mb-3"><i class="fa-solid fa-info-circle text-sky-400 mr-2"></i>System Information</h4>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px] mono">
+        <div class="flex justify-between"><span class="text-slate-400">Version:</span><span class="text-white">v7.1</span></div>
+        <div class="flex justify-between"><span class="text-slate-400">Storage:</span><span class="text-white">localStorage</span></div>
+        <div class="flex justify-between"><span class="text-slate-400">Firebase:</span><span class="${firebaseReady?'text-emerald-400':'text-slate-500'}">${firebaseReady?'Enabled':'Disabled'}</span></div>
+        <div class="flex justify-between"><span class="text-slate-400">Backend:</span><span class="${state.backendOnline?'text-emerald-400':'text-rose-400'}">${state.backendOnline?'Online':'Offline'}</span></div>
+        <div class="flex justify-between"><span class="text-slate-400">Orgs:</span><span class="text-white">${state.orgs.length}</span></div>
+        <div class="flex justify-between"><span class="text-slate-400">Contracts:</span><span class="text-white">${state.contracts.length}</span></div>
+      </div>
+    </div>
+  </div>`;
+}
+function saveBackend() {
+  const url = (document.getElementById('setBackend').value||'').trim().replace(/\/$/,'');
+  if (!/^https?:\/\//.test(url)) { toast('Invalid URL','error'); return; }
+  LS.set('dp_backend', url);
+  ADM.config.backendDefault = url;
+  const bu = document.getElementById('backendUrl'); if (bu) bu.value = url;
+  auditLog('SETTINGS_BACKEND', url);
+  toast('Backend URL saved ✓','success');
+  checkBackendHealth(true);
+}
+function saveAiConfig() {
+  const mode = document.getElementById('setAiMode').value;
+  const endpoint = document.getElementById('setAiEndpoint').value.trim();
+  LS.set('dp_ai_mode', mode);
+  LS.set('dp_ai_endpoint', endpoint);
+  auditLog('SETTINGS_AI', mode);
+  toast('AI config saved ✓','success');
+}
+function backupAllData() {
+  try {
+    const backup = {
+      exportedAt: new Date().toISOString(),
+      version: '7.1',
+      data: {
+        orgs: state.orgs,
+        contracts: state.contracts,
+        audits: state.audits,
+        records: state.records,
+        theme: ADM.theme.current(),
+        currency: ADM.currency.get(),
+        backend: LS.get('dp_backend', BACKEND_URL)
+      }
+    };
+    download(new Blob([JSON.stringify(backup, null, 2)], { type:'application/json' }), `datapulse-backup-${Date.now()}.json`);
+    auditLog('BACKUP_ALL');
+    toast('Backup downloaded ✓','success');
+  } catch(e){ toast('Backup failed: '+e.message,'error'); }
+}
+function restoreAllData(ev) {
+  const f = ev.target.files[0]; if (!f) return;
+  const reader = new FileReader();
+  reader.onload = () => {
+    try {
+      const b = JSON.parse(reader.result);
+      if (!b.data) throw new Error('Invalid backup file');
+      openConfirm('Restore Backup?', `Restore from ${new Date(b.exportedAt).toLocaleString()}? Current data will be replaced.`, () => {
+        state.orgs = b.data.orgs || [];
+        state.contracts = b.data.contracts || [];
+        state.audits = b.data.audits || [];
+        state.records = b.data.records || {};
+        persistOrgs(); persistContracts(); persistAudits();
+        Object.entries(state.records).forEach(([id, recs]) => LS.set('dp_records_'+id, recs));
+        if (b.data.theme) LS.set('dp_theme', b.data.theme);
+        if (b.data.currency) LS.set('dp_currency', b.data.currency);
+        if (b.data.backend) LS.set('dp_backend', b.data.backend);
+        ADM.theme.apply(ADM.theme.current());
+        auditLog('RESTORE_ALL');
+        toast('Backup restored ✓','success');
+        render();
+      });
+    } catch(e){ toast('Restore failed: '+e.message,'error'); }
+    ev.target.value = '';
+  };
+  reader.readAsText(f);
+}
+function confirmResetAll() {
+  openConfirm('Reset ALL Data?', 'This deletes every organization, contract, audit entry, and record. Cannot be undone!', () => {
+    LS.del('dp_orgs'); LS.del('dp_contracts'); LS.del('dp_audits');
+    const keys = [];
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i);
+      if (k && (k.startsWith('dp_records_') || k.startsWith('dp_trial_'))) keys.push(k);
+    }
+    keys.forEach(k => LS.del(k));
+    state.orgs = []; state.contracts = []; state.audits = []; state.records = {};
+    toast('All data reset','warn');
+    render();
+  });
+}
+
+/* ---------- BACKEND HEALTH ---------- */
+async function checkBackendHealth(verbose) {
+  if (state.backendChecking) return;
+  state.backendChecking = true;
+  const url = (document.getElementById('backendUrl')?.value || BACKEND_URL).trim().replace(/\/$/,'');
+  const dot = document.getElementById('backendDot');
+  const st = document.getElementById('backendStatus');
+  const icon = document.getElementById('syncIcon');
+  if (icon) icon.classList.add('fa-spin');
+  if (dot) dot.className = 'w-2 h-2 rounded-full bg-amber-400 pulse-dot';
+  if (st) st.textContent = '(checking…)';
+  let connected = false;
+  const t0 = performance.now();
+  for (const ep of ['/health','/health_check','/api/health','/ping','/']) {
+    if (performance.now() - t0 > 12000) break;
+    try {
+      const res = await ADM.fetch(url + ep, { method:'GET', mode:'cors', credentials:'omit', _timeout: ADM.config.healthTimeout });
+      if (res.ok || res.status === 204 || res.status === 401 || res.status === 403) { connected = true; break; }
+    } catch(e){}
+  }
+  state.backendOnline = connected;
+  if (connected) {
+    if (dot) dot.className='w-2 h-2 rounded-full bg-emerald-400 pulse-dot';
+    if (st) st.textContent='CONNECTED';
+    if (verbose) toast('Backend connected ✓','success');
+  } else {
+    if (dot) dot.className='w-2 h-2 rounded-full bg-rose-400';
+    if (st) st.textContent='OFFLINE';
+    if (verbose) toast('Backend unreachable — local mode','info');
+  }
+  if (icon) icon.classList.remove('fa-spin');
+  state.backendChecking = false;
+  if (state.tab === 'settings') render();
+  return connected;
+}
+async function syncBackend() {
+  const url = document.getElementById('backendUrl').value.trim();
+  LS.set('dp_backend', url);
+  ADM.config.backendDefault = url;
+  await checkBackendHealth(true);
+}
+
+/* ---------- ONLINE/OFFLINE ---------- */
+window.addEventListener('online', () => {
+  state.online = true;
+  const nb = document.getElementById('netBadge');
+  if (nb) { nb.classList.remove('text-rose-400'); nb.classList.add('text-emerald-400'); nb.innerHTML = '<i class="fa-solid fa-wifi"></i>'; }
+  toast('Back online ✓','success');
+});
+window.addEventListener('offline', () => {
+  state.online = false;
+  const nb = document.getElementById('netBadge');
+  if (nb) { nb.classList.remove('text-emerald-400'); nb.classList.add('text-rose-400'); nb.innerHTML = '<i class="fa-solid fa-plane-slash"></i>'; }
+  toast('Offline mode — data saved locally','warn');
+});
+
+/* ---------- KEYBOARD SHORTCUTS ---------- */
+document.addEventListener('keydown', (e) => {
+  if (!state.loggedIn) return;
+  if (e.ctrlKey || e.metaKey) {
+    if (e.key === 'k') { e.preventDefault(); go('orgs'); setTimeout(() => document.getElementById('orgSearch')?.focus(), 100); }
+    if (e.key === 'e') { e.preventDefault(); exportAllOrgs(); }
+  }
+  if (e.key === 'Escape') { closeOrgModal(); closeCtrModal(); closeConfirm(); }
+});
+
+/* ---------- GLOBAL ERROR ---------- */
+window.addEventListener('error', e => console.error('Admin error:', e.error || e.message));
+window.addEventListener('unhandledrejection', e => console.error('Unhandled promise:', e.reason));
+
+/* ---------- INIT ---------- */
+window.addEventListener('DOMContentLoaded', () => {
+  ADM.theme.init();
+
+  if (FIREBASE_ENABLED) {
+    try {
+      if (window.firebase && !firebase.apps.length) firebase.initializeApp(FIREBASE_CONFIG);
+      if (window.firebase) {
+        fbAuth = firebase.auth(); fbDb = firebase.firestore();
+        firebaseReady = true;
+        console.log('✅ Firebase ready (admin)');
+      }
+    } catch(e){ console.warn('⚠️ Firebase unavailable:', e.message); }
+  } else {
+    console.info('ℹ️ Firebase disabled — local-only mode');
+  }
+
+  const cs = document.getElementById('currencySel'); if (cs) cs.value = ADM.currency.get();
+
+  setTimeout(() => {
+    document.getElementById('bootSkeleton').classList.add('hidden');
+    // Auto-resume valid session
+    const s = ADM.session.check();
+    if (s) {
+      state.loggedIn = true;
+      state.admin = { email:s.email, name:s.name, role:s.role };
+      loadAll();
+      enterAdmin();
+      toast(`Welcome back, ${s.name}`, 'success');
+    } else {
+      document.getElementById('loginScreen').classList.remove('hidden');
+      document.getElementById('loginScreen').classList.add('flex');
+      const ae = document.getElementById('adminEmail'); if (ae) ae.value = ADMIN_EMAIL;
+    }
+    checkBackendHealth(false);
+  }, 500);
+});
+</script>
+</body>
+</html>

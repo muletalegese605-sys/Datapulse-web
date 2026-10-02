@@ -1,0 +1,79 @@
+{
+  "timestamp": "2026-10-01T21:37:34.093Z",
+  "system": "DataPulse Enterprise",
+  "collections": {
+    "cleaned_business_records": [
+      {
+        "id": "6uVq8iKppWTASKQtTfNv",
+        "date": "2026-10-01",
+        "unitPrice": 100,
+        "itemName": "Refined Palm Oil (20L)",
+        "category": "Agricultural",
+        "totalSales": 21000,
+        "quantity": 210
+      },
+      {
+        "id": "7THtQr0BSrOl7BbQZXLF",
+        "quantity": 180,
+        "date": "2026-10-01",
+        "unitPrice": 650,
+        "category": "Livestock",
+        "itemName": "Processed Organic Butter",
+        "totalSales": 117000
+      },
+      {
+        "id": "Lpp32Mj1VlCrJMgLwg4C",
+        "date": "2026-10-01",
+        "quantity": 1,
+        "unitPrice": 3500,
+        "totalSales": 3500,
+        "itemName": "Organic Aloe Vera Gel",
+        "category": "Agricultural"
+      },
+      {
+        "id": "i4lYjDcn8XCycUV3eLDs",
+        "quantity": 150,
+        "date": "2026-10-01",
+        "itemName": "Liquid Laundry Detergent (25L)",
+        "category": "Manufacturing",
+        "unitPrice": 1800,
+        "totalSales": 270000
+      },
+      {
+        "id": "kWbC9Am8WJ27Dbeefhqj",
+        "quantity": 350,
+        "date": "2026-10-01",
+        "totalSales": 210000,
+        "unitPrice": 600,
+        "itemName": "Natural Milk Extract",
+        "category": "Livestock"
+      }
+    ],
+    "launch_readiness_audit": [
+      {
+        "id": "2lshHWRVOfZPtDl26nlc",
+        "device": "Mobile Phone (Samsung Galaxy A06 / M13)",
+        "status": "PASSED - Optimized",
+        "layoutStrategy": "Single-column stacked view, bottom navigation bar",
+        "resolution": "360x800",
+        "testedAt": "2026-10-01T21:13:28.567Z"
+      },
+      {
+        "id": "YvQSKfNjfrvOqfvqUahi",
+        "testedAt": "2026-10-01T21:13:28.568Z",
+        "status": "PASSED - Optimized",
+        "layoutStrategy": "Two-column grid, collapsible sidebar navigation",
+        "resolution": "768x1024",
+        "device": "Tablet (iPad / Galaxy Tab)"
+      },
+      {
+        "id": "cFBdt2ZypNOrGIgcPe3C",
+        "layoutStrategy": "Full dashboard grid, multi-pane charts & real-time tables",
+        "testedAt": "2026-10-01T21:13:28.568Z",
+        "status": "PASSED - Optimized",
+        "device": "Desktop / Large Enterprise Monitor",
+        "resolution": "1920x1080"
+      }
+    ]
+  }
+}
