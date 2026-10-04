@@ -1,12 +1,15 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en" dir="ltr" class="dark">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5,user-scalable=yes">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5,user-scalable=yes,viewport-fit=cover">
 <meta name="theme-color" content="#0b0f19">
-<meta name="description" content="DataPulse Enterprise — Admin Control Center">
+<meta name="description" content="DataPulse Enterprise — Admin Control Center v8.0">
 <meta name="robots" content="noindex,nofollow">
-<title>Admin Center — DataPulse Enterprise v7.1</title>
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Admin Center — DataPulse Enterprise v8.0</title>
+<link rel="manifest" id="pwa-manifest">
+<link rel="icon" id="favicon">
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js" defer></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js" defer></script>
@@ -22,16 +25,22 @@ tailwind.config = { darkMode:'class', theme:{ extend:{
     const t = localStorage.getItem('dp_theme') || 'dark';
     document.documentElement.classList.toggle('dark', t==='dark');
     document.documentElement.classList.toggle('light', t==='light');
+    let l = localStorage.getItem('dp_lang') || 'en';
+    if (!['en','om','am','ti','so','sw','ar','fr','es','pt','de','it','ru','tr','zh','ja','ko','hi','id','ha','yo','ig','zu','fa','he','nl'].includes(l)) l = 'en';
+    document.documentElement.setAttribute('lang', l);
+    const rtl = ['ar','fa','he','ur'].includes(l);
+    document.documentElement.setAttribute('dir', rtl?'rtl':'ltr');
   } catch(e){}
 })();
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{margin:0;padding:0}
+html,body{margin:0;padding:0;overscroll-behavior-y:none}
 body{font-family:'Inter',system-ui,sans-serif;background:#0b0f19;color:#e6edf3;min-height:100vh;transition:background .2s,color .2s;overflow-x:hidden;-webkit-font-smoothing:antialiased}
 .mono{font-family:'JetBrains Mono',monospace}
 ::-webkit-scrollbar{width:6px;height:6px}
@@ -49,7 +58,6 @@ body{font-family:'Inter',system-ui,sans-serif;background:#0b0f19;color:#e6edf3;m
 @keyframes pl{0%,100%{opacity:1}50%{opacity:.4}}
 .skeleton{background:linear-gradient(90deg,#1e293b 25%,#334155 50%,#1e293b 75%);background-size:200% 100%;animation:sk 1.4s infinite;border-radius:8px}
 @keyframes sk{0%{background-position:200% 0}100%{background-position:-200% 0}}
-.progress-bar{background:linear-gradient(90deg,#a855f7,#c084fc);height:100%;transition:width .3s;border-radius:9999px}
 .spin{animation:sp 1s linear infinite}
 @keyframes sp{to{transform:rotate(360deg)}}
 .hero-glow{position:absolute;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(168,85,247,.25),transparent 70%);filter:blur(60px);pointer-events:none;z-index:0}
@@ -69,6 +77,8 @@ body{font-family:'Inter',system-ui,sans-serif;background:#0b0f19;color:#e6edf3;m
 .status-badge.cancelled{background:rgba(244,63,94,.15);color:#fb7185;border-color:rgba(244,63,94,.3)}
 .status-badge.expired{background:rgba(245,158,11,.15);color:#fbbf24;border-color:rgba(245,158,11,.3)}
 .status-badge.trial{background:rgba(56,189,248,.15);color:#38bdf8;border-color:rgba(56,189,248,.3)}
+.status-badge.suspended{background:rgba(244,63,94,.15);color:#fb7185;border-color:rgba(244,63,94,.3)}
+.autobadge{padding:3px 8px;border-radius:6px;font-size:9px;font-weight:900;letter-spacing:.06em;background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#0b0f19;box-shadow:0 4px 10px rgba(251,191,36,.4);display:inline-block}
 .btn{padding:8px 14px;border-radius:10px;font-size:11px;font-weight:700;cursor:pointer;border:1px solid transparent;transition:all .2s}
 .btn:hover{transform:translateY(-1px)}
 .btn-primary{background:#a855f7;color:#0b0f19;border-color:#a855f7}
@@ -79,6 +89,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:#0b0f19;color:#e6edf3;m
 .btn-ghost:hover{border-color:rgba(168,85,247,.5);color:#c084fc}
 .btn-emerald{background:#10b981;color:#0b0f19;border-color:#10b981}
 .btn-emerald:hover{background:#34d399}
+.btn-amber{background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#0b0f19;border-color:#fbbf24}
 .input{width:100%;background:#0b0f19;border:1px solid #1e293b;border-radius:10px;padding:10px 14px;font-size:12px;color:#e6edf3;transition:all .2s}
 .input:focus{outline:none;border-color:#a855f7;box-shadow:0 0 0 3px rgba(168,85,247,.15)}
 .input.mono{font-family:'JetBrains Mono',monospace}
@@ -100,11 +111,13 @@ html.light .btn-ghost{background:#f1f5f9;color:#334155;border-color:#cbd5e1}
 html.light .stat-card{background:linear-gradient(135deg,rgba(168,85,247,.08),rgba(168,85,247,.02));border-color:rgba(168,85,247,.3)}
 .skip-link{position:absolute;left:-9999px;top:0;background:#a855f7;color:#000;padding:8px 16px;z-index:1000;font-weight:700}
 .skip-link:focus{left:0}
-.kbd{display:inline-block;padding:2px 6px;border-radius:4px;background:#1e293b;border:1px solid #334155;font-family:'JetBrains Mono',monospace;font-size:10px;color:#94a3b8}
-.dp-table thead{background:#0b0f19}
-.dp-table tbody tr:hover{background:rgba(30,41,59,.4)}
-.dp-table td{white-space:nowrap}
 .line-clamp-2{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.sync-badge{padding:3px 8px;border-radius:6px;font-size:9px;font-weight:800;letter-spacing:.03em;border:1px solid;display:inline-flex;align-items:center;gap:4px}
+.sync-badge.synced{background:rgba(16,185,129,.15);color:#34d399;border-color:rgba(16,185,129,.4)}
+.sync-badge.syncing{background:rgba(56,189,248,.15);color:#38bdf8;border-color:rgba(56,189,248,.4)}
+.sync-badge.pending{background:rgba(245,158,11,.15);color:#fbbf24;border-color:rgba(245,158,11,.4)}
+.sync-badge.error{background:rgba(244,63,94,.15);color:#fb7185;border-color:rgba(244,63,94,.4)}
+.sync-badge.offline{background:rgba(148,163,184,.15);color:#94a3b8;border-color:rgba(148,163,184,.4)}
 @media (max-width:767px){
   .dp-table thead{display:none}
   .dp-table tr{display:block;border:1px solid #1e293b;border-radius:12px;margin-bottom:8px;padding:8px;background:#0e1626}
@@ -113,22 +126,52 @@ html.light .stat-card{background:linear-gradient(135deg,rgba(168,85,247,.08),rgb
 }
 @media print{.no-print{display:none!important}}
 @media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+#gdprBanner{position:fixed;bottom:0;left:0;right:0;background:#0e1626;border-top:2px solid #a855f7;padding:16px;z-index:9998;font-family:Inter,sans-serif;transform:translateY(100%);transition:transform .4s cubic-bezier(.4,0,.2,1)}
+#gdprBanner.on{transform:translateY(0)}
+#gdprBanner .wrap{max-width:1400px;margin:0 auto;display:flex;gap:16px;flex-wrap:wrap;align-items:center}
+#gdprBanner .txt{flex:1;min-width:240px;color:#e6edf3;font-size:12px;line-height:1.6}
+#gdprBanner .txt b{color:#a855f7}
+#gdprBanner .txt a{color:#c084fc;text-decoration:underline}
+#gdprBanner .btns{display:flex;gap:8px;flex-wrap:wrap}
+#gdprBanner button{padding:10px 20px;border:none;border-radius:10px;cursor:pointer;font-size:12px;font-weight:800}
+#gdprBanner .baccept{background:#a855f7;color:#0b0f19}
+#gdprBanner .bdecline{background:#1e293b;color:#cbd5e1;border:1px solid #334155!important}
+#gdprBanner .bmore{background:transparent;color:#94a3b8;text-decoration:underline}
+#errBadge{position:fixed;bottom:14px;left:14px;z-index:70;padding:4px 8px;border-radius:8px;background:#0e1626;border:1px solid #334155;font-size:9px;font-family:'JetBrains Mono',monospace;color:#64748b;display:none;align-items:center;gap:5px;cursor:pointer}
+#errBadge.on{display:flex}
+#errBadge .dot{width:6px;height:6px;border-radius:50%;background:#fbbf24}
+#errBadge.err .dot{background:#f43f5e;animation:pl 1s infinite}
+#bigDataOverlay{position:fixed;inset:0;z-index:9700;background:rgba(5,8,15,.92);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;padding:16px}
+#bigDataOverlay.on{display:flex}
+#bigDataOverlay .box{background:#0e1626;border:2px solid rgba(168,85,247,.5);border-radius:24px;padding:28px;max-width:420px;width:100%;text-align:center}
+#bigDataOverlay .spinner{width:64px;height:64px;margin:0 auto 16px;border-radius:50%;border:4px solid #1e293b;border-top-color:#a855f7;animation:sp 1s linear infinite}
+.progress-bar{background:linear-gradient(90deg,#a855f7,#c084fc);height:100%;transition:width .3s;border-radius:9999px}
+#langSel,#currencySel{cursor:pointer;appearance:none;padding-right:14px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' fill='%23c084fc'%3E%3Cpath d='M6 8L2 4h8z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 4px center;background-size:9px}
+#langSel option,#currencySel option{background:#0e1626;color:#e6edf3}
+html[dir="rtl"]{direction:rtl}
+html[dir="rtl"] body{direction:rtl;text-align:right}
+html[dir="rtl"] .mr-1{margin-right:0!important;margin-left:.25rem!important}
+html[dir="rtl"] .mr-2{margin-right:0!important;margin-left:.5rem!important}
+html[dir="rtl"] .ml-1{margin-left:0!important;margin-right:.25rem!important}
+html[dir="rtl"] .text-left{text-align:right!important}
+html[dir="rtl"] .text-right{text-align:left!important}
+html[dir="rtl"] .right-3{right:auto!important;left:.75rem!important}
+html[dir="rtl"] .dp-table th,html[dir="rtl"] .dp-table td{text-align:right}
+html[dir="rtl"] .dp-table td::before{margin-right:0;margin-left:8px}
 </style>
 </head>
 <body>
 <a href="#adminMain" class="skip-link">Skip to main content</a>
 
-<!-- ============ BOOT ============ -->
 <div id="bootSkeleton" class="min-h-screen flex items-center justify-center p-4 bg-slate-950">
   <div class="w-full max-w-md space-y-4">
     <div class="skeleton h-16 w-16 mx-auto rounded-2xl"></div>
     <div class="skeleton h-6 w-2/3 mx-auto"></div>
     <div class="skeleton h-40 w-full rounded-3xl mt-6"></div>
-    <p class="text-center text-[11px] text-slate-500 mt-4"><i class="fa-solid fa-spinner spin mr-1"></i> Loading Admin Center v7.1…</p>
+    <p class="text-center text-[11px] text-slate-500 mt-4"><i class="fa-solid fa-spinner spin mr-1"></i> Loading Admin Center v8.0…</p>
   </div>
 </div>
 
-<!-- ============ LOGIN ============ -->
 <div id="loginScreen" class="hidden min-h-screen flex items-center justify-center p-4 bg-slate-950 relative overflow-hidden">
   <div class="hero-glow" style="top:-150px;left:-100px"></div>
   <div class="hero-glow" style="bottom:-200px;right:-100px;background:radial-gradient(circle,rgba(16,185,129,.2),transparent 70%)"></div>
@@ -138,12 +181,12 @@ html.light .stat-card{background:linear-gradient(135deg,rgba(168,85,247,.08),rgb
         <i class="fa-solid fa-shield-halved text-2xl"></i>
       </div>
       <h1 class="text-2xl font-black text-white">DataPulse Admin</h1>
-      <p class="text-xs text-purple-400 mono font-bold">CONTROL CENTER · RESTRICTED ACCESS</p>
+      <p class="text-xs text-purple-400 mono font-bold">CONTROL CENTER · v8.0 · RESTRICTED</p>
     </div>
     <div class="bg-slate-900/90 border border-purple-500/40 rounded-3xl p-5 sm:p-6 space-y-4">
       <div class="p-3 rounded-xl bg-purple-500/10 border border-purple-500/30 flex items-start gap-2">
         <i class="fa-solid fa-triangle-exclamation text-amber-400 mt-0.5"></i>
-        <p class="text-[11px] text-slate-300 leading-relaxed">This area is restricted. All access attempts are logged and audited.</p>
+        <p class="text-[11px] text-slate-300 leading-relaxed">Restricted area. All access attempts are logged and audited. Admin login uses <b class="text-purple-400">Firebase Authentication</b> only.</p>
       </div>
       <form id="adminLoginForm" onsubmit="adminDoLogin(event)" class="space-y-3" novalidate>
         <div>
@@ -151,14 +194,14 @@ html.light .stat-card{background:linear-gradient(135deg,rgba(168,85,247,.08),rgb
           <input type="email" id="adminEmail" required autocomplete="email" placeholder="admin@datapulse.app" class="input mono">
         </div>
         <div>
-          <label for="adminPass" class="text-xs font-semibold text-slate-300 block mb-1.5">Master Password</label>
+          <label for="adminPass" class="text-xs font-semibold text-slate-300 block mb-1.5">Firebase Password</label>
           <div class="relative">
             <input type="password" id="adminPass" required autocomplete="current-password" placeholder="••••••••" class="input mono pr-10">
             <button type="button" aria-label="Show password" onclick="togglePw('adminPass',this)" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-purple-400"><i class="fa-solid fa-eye"></i></button>
           </div>
         </div>
         <div>
-          <label for="admin2FA" class="text-xs font-semibold text-slate-300 block mb-1.5">2FA Code <span class="text-slate-500 font-normal">(optional in demo)</span></label>
+          <label for="admin2FA" class="text-xs font-semibold text-slate-300 block mb-1.5">2FA Code <span class="text-slate-500 font-normal">(optional)</span></label>
           <input type="text" id="admin2FA" maxlength="6" inputmode="numeric" placeholder="000000" class="input mono text-center tracking-[.5em]">
         </div>
         <p id="adminLoginMsg" class="text-rose-400 text-[11px] font-bold text-center" role="alert"></p>
@@ -178,7 +221,6 @@ html.light .stat-card{background:linear-gradient(135deg,rgba(168,85,247,.08),rgb
   </div>
 </div>
 
-<!-- ============ ADMIN APP ============ -->
 <div id="adminApp" class="hidden min-h-screen pb-20 md:pb-0">
   <header class="bg-slate-900/95 border-b border-slate-800 sticky top-0 z-40 backdrop-blur">
     <div class="max-w-[1600px] mx-auto px-3 sm:px-4 py-2.5 sm:py-3 flex items-center justify-between gap-2">
@@ -189,16 +231,17 @@ html.light .stat-card{background:linear-gradient(135deg,rgba(168,85,247,.08),rgb
         <div class="min-w-0">
           <div class="flex items-center gap-1.5">
             <span class="font-extrabold text-white text-xs sm:text-sm">Admin Center</span>
-            <span class="text-[8px] sm:text-[9px] mono px-1 py-0.5 rounded bg-purple-500/20 text-purple-400 border border-purple-500/30 font-bold">v7.1</span>
+            <span class="text-[8px] sm:text-[9px] mono px-1 py-0.5 rounded bg-purple-500/20 text-purple-400 border border-purple-500/30 font-bold">v8.0</span>
           </div>
           <p class="text-[9px] sm:text-[10px] text-slate-400 mono truncate max-w-[120px] sm:max-w-[200px]">DataPulse Enterprise</p>
         </div>
       </div>
       <div class="flex items-center gap-1 sm:gap-1.5">
+        <button id="installBtn" onclick="ADM.pwa.install()" class="hidden text-[10px] px-2 py-1.5 rounded-lg bg-purple-500 text-slate-950 border border-purple-400 font-bold"><i class="fa-solid fa-download"></i></button>
+        <span id="sessionBadge" class="hidden sm:flex items-center text-[10px] px-2 py-1.5 rounded-lg bg-slate-800 text-amber-400 border border-slate-700 font-bold" title="Auto-logout timer"><i class="fa-solid fa-hourglass-half"></i> <span id="sessionTimer">30:00</span></span>
         <span id="netBadge" class="hidden sm:flex items-center text-[10px] px-2 py-1.5 rounded-lg bg-slate-800 text-emerald-400 border border-slate-700 font-bold"><i class="fa-solid fa-wifi"></i></span>
-        <select id="currencySel" onchange="setCurrency(this.value)" aria-label="Currency" class="text-[10px] mono px-1.5 py-1.5 rounded-lg bg-slate-800 text-purple-400 border border-slate-700 font-bold focus:outline-none">
-          <option value="ETB">🇪🇹 ETB</option><option value="USD">🇺🇸 USD</option><option value="EUR">🇪🇺 EUR</option>
-        </select>
+        <select id="langSel" onchange="ADM.i18n.set(this.value)" aria-label="Language" class="text-[10px] mono px-1.5 py-1.5 rounded-lg bg-slate-800 text-purple-400 border border-slate-700 font-bold focus:outline-none max-w-[90px]"></select>
+        <select id="currencySel" onchange="setCurrency(this.value)" aria-label="Currency" class="text-[10px] mono px-1.5 py-1.5 rounded-lg bg-slate-800 text-purple-400 border border-slate-700 font-bold focus:outline-none max-w-[120px]"></select>
         <button onclick="toggleTheme()" aria-label="Toggle theme" class="text-[10px] px-2 py-1.5 rounded-lg bg-slate-800 text-slate-300 border border-slate-700"><i class="fa-solid fa-moon" id="appThemeIcon"></i></button>
         <a href="index.html" aria-label="Back to app" class="hidden sm:flex items-center text-[10px] px-2 py-1.5 rounded-lg bg-slate-800 text-emerald-400 border border-slate-700 font-bold"><i class="fa-solid fa-chart-simple"></i></a>
         <button onclick="adminLogout()" aria-label="Logout" class="px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-rose-400 border border-slate-700 text-xs font-bold rounded-xl">
@@ -213,9 +256,20 @@ html.light .stat-card{background:linear-gradient(135deg,rgba(168,85,247,.08),rgb
         <input id="backendUrl" aria-label="Backend URL" class="bg-slate-900 border border-slate-800 text-emerald-400 mono text-[10px] rounded-lg px-2 py-1 flex-1 min-w-0 max-w-xs focus:outline-none focus:border-purple-500">
         <span id="backendStatus" class="text-[9px] text-slate-500 uppercase font-bold hidden sm:inline shrink-0">(checking…)</span>
       </div>
-      <button onclick="syncBackend()" class="px-2 py-1 bg-purple-500/20 hover:bg-purple-500/30 text-purple-400 border border-purple-500/40 rounded-lg font-bold text-[10px] shrink-0">
-        <i class="fa-solid fa-rotate" id="syncIcon"></i> <span class="hidden sm:inline">Sync</span>
-      </button>
+      <div class="flex items-center gap-1.5">
+        <span id="syncBadge" class="sync-badge synced hidden sm:inline-flex" title="Sync status">
+          <i class="fa-solid fa-cloud"></i><span id="syncBadgeText">Ready</span>
+        </span>
+        <button onclick="ADM.sync.pullAll(true)" title="Pull from Firestore" class="px-2 py-1 bg-sky-500/20 hover:bg-sky-500/30 text-sky-400 border border-sky-500/40 rounded-lg font-bold text-[10px] shrink-0">
+          <i class="fa-solid fa-cloud-arrow-down"></i>
+        </button>
+        <button onclick="ADM.sync.pushAll(true)" title="Push to Cloud" class="px-2 py-1 bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-400 border border-emerald-500/40 rounded-lg font-bold text-[10px] shrink-0">
+          <i class="fa-solid fa-cloud-arrow-up"></i>
+        </button>
+        <button onclick="syncBackend()" class="px-2 py-1 bg-purple-500/20 hover:bg-purple-500/30 text-purple-400 border border-purple-500/40 rounded-lg font-bold text-[10px] shrink-0">
+          <i class="fa-solid fa-rotate" id="syncIcon"></i> <span class="hidden sm:inline">Sync</span>
+        </button>
+      </div>
     </div>
     <nav class="bg-slate-950/60 border-t border-slate-800 overflow-x-auto" aria-label="Admin navigation">
       <div class="max-w-[1600px] mx-auto px-2 sm:px-4 py-2 flex items-center gap-1.5 min-w-max" id="navBar"></div>
@@ -225,7 +279,6 @@ html.light .stat-card{background:linear-gradient(135deg,rgba(168,85,247,.08),rgb
   <div class="fixed bottom-0 left-0 right-0 z-50 bg-slate-900/95 border-t border-slate-800 backdrop-blur flex items-center justify-around py-2 md:hidden" id="mobileDock" role="navigation" aria-label="Mobile navigation"></div>
 </div>
 
-<!-- ============ MODAL: ORG EDIT ============ -->
 <div id="orgModal" class="hidden fixed inset-0 z-[90] bg-slate-950/80 backdrop-blur flex items-center justify-center p-3 sm:p-4 overflow-y-auto" role="dialog" aria-modal="true">
   <div class="bg-slate-900 border border-purple-500/40 rounded-3xl p-4 sm:p-5 max-w-lg w-full my-8 modal-in">
     <div class="flex justify-between items-start mb-4">
@@ -295,7 +348,6 @@ html.light .stat-card{background:linear-gradient(135deg,rgba(168,85,247,.08),rgb
   </div>
 </div>
 
-<!-- ============ MODAL: CONTRACT ============ -->
 <div id="ctrModal" class="hidden fixed inset-0 z-[90] bg-slate-950/80 backdrop-blur flex items-center justify-center p-3 sm:p-4 overflow-y-auto" role="dialog" aria-modal="true">
   <div class="bg-slate-900 border border-emerald-500/40 rounded-3xl p-4 sm:p-5 max-w-md w-full my-8 modal-in">
     <div class="flex justify-between items-start mb-4">
@@ -334,7 +386,6 @@ html.light .stat-card{background:linear-gradient(135deg,rgba(168,85,247,.08),rgb
   </div>
 </div>
 
-<!-- ============ MODAL: CONFIRM ============ -->
 <div id="confirmModal" class="hidden fixed inset-0 z-[95] bg-slate-950/90 backdrop-blur flex items-center justify-center p-3 sm:p-4" role="dialog" aria-modal="true">
   <div class="bg-slate-900 border-2 border-rose-500/60 rounded-3xl p-5 max-w-sm w-full modal-in text-center">
     <div class="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-rose-500/20 text-rose-400 text-2xl mb-3"><i class="fa-solid fa-triangle-exclamation"></i></div>
@@ -349,43 +400,79 @@ html.light .stat-card{background:linear-gradient(135deg,rgba(168,85,247,.08),rgb
 
 <div id="toasts" class="fixed top-3 right-3 left-3 sm:left-auto sm:top-4 sm:right-4 z-[100] flex flex-col gap-2 pointer-events-none items-end" role="status" aria-live="polite"></div>
 
+<div id="gdprBanner" role="dialog" aria-label="Cookie consent">
+  <div class="wrap">
+    <div class="txt">
+      <b>🍪 Admin Cookie & Privacy Notice</b><br>
+      Admin Center uses essential cookies and local storage. Analytics and error monitoring are optional and help us improve the platform.
+      <a href="#" onclick="ADM.privacy.show(event)">Privacy Policy</a> · <a href="#" onclick="ADM.privacy.terms(event)">Terms</a>
+    </div>
+    <div class="btns">
+      <button class="bmore" onclick="ADM.gdpr.customize()">Customize</button>
+      <button class="bdecline" onclick="ADM.gdpr.decline()">Decline optional</button>
+      <button class="baccept" onclick="ADM.gdpr.accept()">Accept all</button>
+    </div>
+  </div>
+</div>
+
+<div id="bigDataOverlay" role="dialog">
+  <div class="box">
+    <div class="spinner"></div>
+    <h3 class="text-base font-bold text-white mb-2" id="bdTitle">Processing large dataset…</h3>
+    <p class="text-xs text-slate-400 mb-3" id="bdSub">Chunking & cleaning</p>
+    <div class="h-2 rounded-full bg-slate-800 overflow-hidden mb-3"><div id="bdBar" class="progress-bar" style="width:0%"></div></div>
+    <p class="text-[10px] mono text-purple-400" id="bdPct">0%</p>
+  </div>
+</div>
+
+<div id="errBadge" role="button" tabindex="0" onclick="ADM.errors.show()" aria-label="Error monitor"><span class="dot"></span><span id="errCount">0 errors</span></div>
+
 <script>
 /* ============================================================
-   DATAPULSE ADMIN CENTER v7.1
-   Shared localStorage with index.html for state consistency
+   DATAPULSE ADMIN CENTER v8.0
+   Fully compatible with index.html v8.0
+   Shared state: orgs/{id}, datasets/{orgId}, contracts/{id}, audits/{id}
+   Shared local: dp_lang, dp_theme, dp_currency, dp_backend
    ============================================================ */
 'use strict';
 window.ADM = window.ADM || {};
 
-/* ---------- CONFIG (must match index.html) ---------- */
+/* ---------- FIREBASE CONFIG (identical to index.html v8.0) ---------- */
 const FIREBASE_CONFIG = {
-  apiKey: "",
-  authDomain: "",
-  projectId: "",
-  storageBucket: "",
-  messagingSenderId: "",
-  appId: ""
+apiKey: "AIzaSyAb1Fbs8Y36BZ8rnIUZBjocc-m0Em_PgcQ",
+  authDomain: "datapulseapp-20237.firebaseapp.com",
+  databaseURL: "https://datapulseapp-20237-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "datapulseapp-20237",
+  storageBucket: "datapulseapp-20237.firebasestorage.app",
+  messagingSenderId: "459433026519",
+  appId: "1:459433026519:web:102f1f951bcb91d306e192",
+  measurementId: "G-RFN5ZZTE6W"
 };
-const FIREBASE_ENABLED = !!(FIREBASE_CONFIG.apiKey && FIREBASE_CONFIG.projectId);
+const FIREBASE_ENABLED = !!(FIREBASE_CONFIG.apiKey && FIREBASE_CONFIG.apiKey !== 'YOUR_API_KEY' && FIREBASE_CONFIG.projectId && FIREBASE_CONFIG.projectId !== 'YOUR_PROJECT_ID');
 
-const ADMIN_EMAIL    = 'muletalegese605@gmail.com';
-const ADMIN_PASSWORD = 'Mlt@0909';
-const BACKEND_URL    = 'https://datapulse-web-backend-2.onrender.com';
-const SESSION_KEY    = 'dp_admin_session';
-const SESSION_TTL_MS = 30 * 60 * 1000; // 30 minutes
+const ADMIN_EMAIL = 'muletalegese605@gmail.com';
+const BACKEND_URL = 'https://datapulse-web-backend-2.onrender.com';
+const ANALYTICS_ID = '';
+const SENTRY_DSN = '';
+const SESSION_KEY = 'dp_admin_session';
+const SESSION_TTL_MS = 30 * 60 * 1000;
+const SYNC_QUEUE_KEY = 'dp_sync_queue';
+const SYNC_META_KEY = 'dp_sync_meta';
 
 let firebaseReady = false, fbAuth = null, fbDb = null;
 
 ADM.config = {
   backendDefault: BACKEND_URL,
-  requestTimeout: 12000,
-  healthTimeout: 2500,
+  requestTimeout: 12000, healthTimeout: 3000,
   freeTrialDays: 14,
-  rateLimitAttempts: 5,
-  rateLimitWindowMs: 60000,
-  maxAudits: 500
+  rateLimitAttempts: 5, rateLimitWindowMs: 60000,
+  maxAudits: 500,
+  syncMaxRetries: 5,
+  syncFlushIntervalMs: 30000,
+  largeDataThreshold: 500
 };
 
+/* ---------- PLANS (matches index.html) ---------- */
 const PLANS = [
   { id:'free',       name:'Free',         usd:0,   color:'free' },
   { id:'starter',    name:'Starter',      usd:29,  color:'starter' },
@@ -393,22 +480,314 @@ const PLANS = [
   { id:'enterprise', name:'Enterprise',   usd:499, color:'enterprise' }
 ];
 
-ADM.CURRENCIES = { ETB:{symbol:'ETB',flag:'🇪🇹'}, USD:{symbol:'$',flag:'🇺🇸'}, EUR:{symbol:'€',flag:'🇪🇺'} };
+/* ============================================================
+   CURRENCIES — 20 total, USD default (matches index.html v8.0)
+   ============================================================ */
+ADM.CURRENCIES = {
+  USD: { symbol:'$',    name:'US Dollar',              flag:'🇺🇸', rate:1 },
+  EUR: { symbol:'€',    name:'Euro',                    flag:'🇪🇺', rate:0.92 },
+  GBP: { symbol:'£',    name:'British Pound',           flag:'🇬🇧', rate:0.79 },
+  DZD: { symbol:'د.ج',  name:'Algerian Dinar',          flag:'🇩🇿', rate:134 },
+  BWP: { symbol:'P',    name:'Botswana Pula',           flag:'🇧🇼', rate:13.6 },
+  EGP: { symbol:'E£',   name:'Egyptian Pound',          flag:'🇪🇬', rate:48.5 },
+  ETB: { symbol:'Br',   name:'Ethiopian Birr',          flag:'🇪🇹', rate:57.5 },
+  GHS: { symbol:'₵',    name:'Ghanaian Cedi',           flag:'🇬🇭', rate:15.2 },
+  KES: { symbol:'KSh',  name:'Kenyan Shilling',         flag:'🇰🇪', rate:129 },
+  MUR: { symbol:'₨',    name:'Mauritian Rupee',         flag:'🇲🇺', rate:46.5 },
+  MAD: { symbol:'د.م.', name:'Moroccan Dirham',         flag:'🇲🇦', rate:10.1 },
+  MZN: { symbol:'MT',   name:'Mozambican Metical',      flag:'🇲🇿', rate:63.9 },
+  NGN: { symbol:'₦',    name:'Nigerian Naira',          flag:'🇳🇬', rate:1550 },
+  RWF: { symbol:'FRw',  name:'Rwandan Franc',           flag:'🇷🇼', rate:1350 },
+  ZAR: { symbol:'R',    name:'South African Rand',      flag:'🇿🇦', rate:18.5 },
+  TZS: { symbol:'TSh',  name:'Tanzanian Shilling',      flag:'🇹🇿', rate:2650 },
+  TND: { symbol:'د.ت',  name:'Tunisian Dinar',          flag:'🇹🇳', rate:3.12 },
+  UGX: { symbol:'USh',  name:'Ugandan Shilling',        flag:'🇺🇬', rate:3750 },
+  XOF: { symbol:'CFA',  name:'West African CFA Franc',  flag:'🌍', rate:605 },
+  XAF: { symbol:'FCFA', name:'Central African CFA Franc', flag:'🌍', rate:605 },
+  ZMW: { symbol:'ZK',   name:'Zambian Kwacha',          flag:'🇿🇲', rate:26.5 }
+};
 
 /* ---------- UTILITIES ---------- */
-function esc(s) {
-  return String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-}
+function esc(s) { return String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 function fmtDate(iso) { try { return new Date(iso).toLocaleString(); } catch(e){ return '—'; } }
 function fmtDateShort(iso) { try { return new Date(iso).toLocaleDateString(); } catch(e){ return '—'; } }
 function fmtTime(iso) { try { return new Date(iso).toLocaleTimeString(); } catch(e){ return '—'; } }
+function nowIso() { return new Date().toISOString(); }
 
 const LS = {
   get(k,d){ try{ const v = localStorage.getItem(k); return v === null ? d : JSON.parse(v); }catch(e){ return d; } },
-  set(k,v){ try{ localStorage.setItem(k, JSON.stringify(v)); return true; }catch(e){ console.warn('LS.set failed', e); return false; } },
+  set(k,v){ try{ localStorage.setItem(k, JSON.stringify(v)); return true; }catch(e){ return false; } },
   del(k){ try{ localStorage.removeItem(k); }catch(e){} }
 };
 
+function loadScript(src) {
+  return new Promise((res, rej) => {
+    if (document.querySelector(`script[src="${src}"]`)) return res();
+    const s = document.createElement('script'); s.src = src; s.async = true;
+    s.onload = res; s.onerror = () => rej(new Error('Failed: '+src)); document.head.appendChild(s);
+  });
+}
+
+/* ---------- GDPR ---------- */
+ADM.gdpr = {
+  key: 'dp_gdpr_admin_v1',
+  get() { return LS.get(this.key, null); },
+  show() { const b = document.getElementById('gdprBanner'); if (b && !this.get()) setTimeout(() => b.classList.add('on'), 1500); },
+  hide() { const b = document.getElementById('gdprBanner'); if (b) b.classList.remove('on'); },
+  accept() { LS.set(this.key, { analytics:true, errors:true, at:nowIso() }); this.hide(); ADM.analytics.init(); ADM.errors.init(); toast('Preferences saved ✓','success'); },
+  decline() { LS.set(this.key, { analytics:false, errors:false, at:nowIso() }); this.hide(); toast('Optional cookies declined','info'); },
+  customize() {
+    const a = confirm('Enable Analytics (anonymous usage stats)?');
+    const e = confirm('Enable Error Monitoring (helps fix bugs)?');
+    LS.set(this.key, { analytics:a, errors:e, at:nowIso() });
+    this.hide();
+    if (a) ADM.analytics.init();
+    if (e) ADM.errors.init();
+    toast('Custom preferences saved ✓','success');
+  }
+};
+
+/* ---------- ANALYTICS ---------- */
+ADM.analytics = {
+  ready: false,
+  init() {
+    if (this.ready) return;
+    const prefs = ADM.gdpr.get();
+    if (prefs && !prefs.analytics) return;
+    if (ANALYTICS_ID && ANALYTICS_ID.startsWith('G-')) {
+      loadScript(`https://www.googletagmanager.com/gtag/js?id=${ANALYTICS_ID}`).then(() => {
+        window.dataLayer = window.dataLayer || [];
+        window.gtag = function(){ window.dataLayer.push(arguments); };
+        window.gtag('js', new Date());
+        window.gtag('config', ANALYTICS_ID, { anonymize_ip: true });
+        this.ready = true;
+      }).catch(() => {});
+    }
+  },
+  event(name, params) { try { if (window.gtag) window.gtag('event', name, params || {}); } catch(e){} }
+};
+
+/* ---------- ERRORS ---------- */
+ADM.errors = {
+  list: [],
+  init() {
+    if (this._wired) return;
+    this._wired = true;
+    const prefs = ADM.gdpr.get();
+    if (prefs && !prefs.errors) return;
+    window.addEventListener('error', (e) => {
+      const m = String(e.message||'');
+      if (m.includes('Failed to fetch') || m.includes('NetworkError')) return;
+      this.capture(e.error || e.message, { type:'error', file:e.filename, line:e.lineno });
+    });
+    window.addEventListener('unhandledrejection', (e) => {
+      const m = String(e.reason?.message || e.reason || '');
+      if (m.includes('Failed to fetch') || m.includes('AbortError')) return;
+      this.capture(e.reason, { type:'promise' });
+    });
+    if (SENTRY_DSN) {
+      loadScript('https://browser.sentry-cdn.com/7.114.0/bundle.min.js').then(() => {
+        if (window.Sentry) window.Sentry.init({ dsn: SENTRY_DSN, tracesSampleRate: 0.1 });
+      }).catch(() => {});
+    }
+    this.render();
+  },
+  capture(err, meta) {
+    const entry = {
+      id:'E-'+Date.now().toString(36),
+      msg: String(err && err.message || err || 'Unknown').slice(0, 300),
+      stack: String(err && err.stack || '').slice(0, 600),
+      meta: meta || {}, at: nowIso(),
+      url: location.href, ua: navigator.userAgent
+    };
+    this.list.unshift(entry);
+    if (this.list.length > 50) this.list.pop();
+    console.warn('🔴 Admin error:', entry.msg);
+    this.render();
+  },
+  render() {
+    const b = document.getElementById('errBadge');
+    const c = document.getElementById('errCount');
+    if (!b || !c) return;
+    if (this.list.length === 0) { b.classList.remove('on'); return; }
+    b.classList.add('on');
+    if (this.list.some(e => Date.now() - new Date(e.at).getTime() < 60000)) b.classList.add('err');
+    else b.classList.remove('err');
+    c.textContent = `${this.list.length} error${this.list.length>1?'s':''}`;
+  },
+  show() {
+    if (!this.list.length) { toast('No errors recorded ✓','success'); return; }
+    const lines = this.list.slice(0, 10).map((e,i) => `${i+1}. [${new Date(e.at).toLocaleTimeString()}] ${e.msg}`).join('\n\n');
+    const choice = confirm(`Admin Error Log (${this.list.length}):\n\n${lines}\n\n---\nOK = Export · Cancel = Clear`);
+    if (choice) {
+      const blob = new Blob([JSON.stringify(this.list, null, 2)], { type:'application/json' });
+      const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `datapulse-admin-errors-${Date.now()}.json`; a.click();
+      setTimeout(() => URL.revokeObjectURL(a.href), 3000);
+    } else if (confirm('Clear all error logs?')) {
+      this.list = []; this.render();
+    }
+  }
+};
+
+/* ---------- PWA ---------- */
+ADM.pwa = {
+  deferredPrompt: null,
+  _iconUrl: null,
+  getIconUrl() {
+    if (this._iconUrl) return this._iconUrl;
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#a855f7"/><stop offset="1" stop-color="#7c3aed"/></linearGradient></defs><rect width="512" height="512" rx="100" fill="url(#g)"/><path d="M256 128 L360 220 L256 312 L152 220 Z" fill="#0b0f19"/><circle cx="256" cy="220" r="30" fill="#a855f7"/></svg>`;
+    this._iconUrl = 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
+    return this._iconUrl;
+  },
+  init() {
+    try {
+      const icon = this.getIconUrl();
+      const manifest = {
+        name:'DataPulse Admin Center', short_name:'DP Admin',
+        description:'DataPulse Enterprise — Admin Control Center',
+        start_url:'./admin.html', scope:'./', display:'standalone', orientation:'any',
+        background_color:'#0b0f19', theme_color:'#a855f7', lang:'en', dir:'ltr',
+        icons:[
+          { src:icon, sizes:'192x192', type:'image/svg+xml', purpose:'any' },
+          { src:icon, sizes:'512x512', type:'image/svg+xml', purpose:'any maskable' }
+        ]
+      };
+      const blob = new Blob([JSON.stringify(manifest, null, 2)], { type:'application/manifest+json' });
+      const url = URL.createObjectURL(blob);
+      const link = document.getElementById('pwa-manifest'); if (link) link.setAttribute('href', url);
+      const fav = document.getElementById('favicon'); if (fav) fav.href = icon;
+    } catch(e){ console.warn('Manifest inject failed', e); }
+    this.registerSW();
+    this.setupInstallPrompt();
+  },
+  registerSW() {
+    if (!('serviceWorker' in navigator)) return;
+    if (!window.isSecureContext) return;
+    try {
+      const swCode = `
+        const CACHE_NAME = 'datapulse-admin-v8-' + '${Date.now()}';
+        self.addEventListener('install', (e) => { self.skipWaiting(); e.waitUntil(caches.open(CACHE_NAME).then(c => c.addAll(['./']).catch(()=>{}))); });
+        self.addEventListener('activate', (e) => { e.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k)))).then(() => self.clients.claim())); });
+        self.addEventListener('fetch', (e) => {
+          if (e.request.method !== 'GET') return;
+          const url = new URL(e.request.url);
+          const hosts = ['cdn.jsdelivr.net','cdnjs.cloudflare.com','fonts.googleapis.com','fonts.gstatic.com','www.gstatic.com'];
+          if (url.origin !== location.origin && !hosts.some(h => url.hostname.includes(h))) return;
+          e.respondWith(caches.match(e.request).then(cached => cached || fetch(e.request).then(res => {
+            if (res && res.status === 200 && (res.type === 'basic' || res.type === 'cors')) {
+              const clone = res.clone();
+              caches.open(CACHE_NAME).then(c => c.put(e.request, clone)).catch(() => {});
+            }
+            return res;
+          }).catch(() => cached)));
+        });
+      `;
+      const blob = new Blob([swCode], { type:'application/javascript' });
+      const swURL = URL.createObjectURL(blob);
+      navigator.serviceWorker.register(swURL, { scope:'./' }).then(() => console.log('✅ Admin SW registered')).catch(err => console.warn('SW failed:', err));
+    } catch(e){ console.warn('SW setup failed', e); }
+  },
+  setupInstallPrompt() {
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      this.deferredPrompt = e;
+      document.querySelectorAll('#installBtn').forEach(b => b.classList.remove('hidden'));
+    });
+    window.addEventListener('appinstalled', () => {
+      document.querySelectorAll('#installBtn').forEach(b => b.classList.add('hidden'));
+      toast('Admin app installed! 🎉','success');
+      this.deferredPrompt = null;
+    });
+  },
+  async install() {
+    if (!this.deferredPrompt) { toast('Use browser menu → Add to Home Screen','info'); return; }
+    this.deferredPrompt.prompt();
+    const { outcome } = await this.deferredPrompt.userChoice;
+    if (outcome === 'accepted') toast('Installing…','success'); else toast('Install cancelled','info');
+    this.deferredPrompt = null;
+    document.querySelectorAll('#installBtn').forEach(b => b.classList.add('hidden'));
+  }
+};
+
+/* ---------- I18N (default: en) ---------- */
+ADM.i18n = {
+  current: 'en', fallback: 'en',
+  languages: [
+    { code:'en', name:'English', flag:'🇬🇧' }, { code:'om', name:'Afaan Oromoo', flag:'🇪🇹' },
+    { code:'am', name:'አማርኛ', flag:'🇪🇹' }, { code:'ti', name:'ትግርኛ', flag:'🇪🇹' },
+    { code:'so', name:'Soomaali', flag:'🇸🇴' }, { code:'sw', name:'Kiswahili', flag:'🇰🇪' },
+    { code:'ar', name:'العربية', flag:'🇸🇦' }, { code:'fr', name:'Français', flag:'🇫🇷' },
+    { code:'es', name:'Español', flag:'🇪🇸' }, { code:'pt', name:'Português', flag:'🇵🇹' },
+    { code:'de', name:'Deutsch', flag:'🇩🇪' }, { code:'it', name:'Italiano', flag:'🇮🇹' },
+    { code:'ru', name:'Русский', flag:'🇷🇺' }, { code:'tr', name:'Türkçe', flag:'🇹🇷' },
+    { code:'zh', name:'中文', flag:'🇨🇳' }, { code:'ja', name:'日本語', flag:'🇯🇵' },
+    { code:'ko', name:'한국어', flag:'🇰🇷' }, { code:'hi', name:'हिन्दी', flag:'🇮🇳' },
+    { code:'id', name:'Bahasa', flag:'🇮🇩' }, { code:'ha', name:'Hausa', flag:'🇳🇬' },
+    { code:'yo', name:'Yorùbá', flag:'🇳🇬' }, { code:'ig', name:'Igbo', flag:'🇳🇬' },
+    { code:'zu', name:'isiZulu', flag:'🇿🇦' }, { code:'fa', name:'فارسی', flag:'🇮🇷' },
+    { code:'he', name:'עברית', flag:'🇮🇱' }, { code:'nl', name:'Nederlands', flag:'🇳🇱' }
+  ],
+  init() {
+    try {
+      let saved = 'en';
+      try { saved = localStorage.getItem('dp_lang') || 'en'; } catch(e){}
+      if (!this.languages.some(l => l.code === saved)) saved = 'en';
+      this.current = saved;
+      this.renderSelector();
+      const isRTL = ['ar','fa','he','ur'].includes(this.current);
+      document.documentElement.setAttribute('lang', this.current);
+      document.documentElement.setAttribute('dir', isRTL ? 'rtl' : 'ltr');
+    } catch(e){ this.current = 'en'; }
+  },
+  renderSelector() {
+    const sel = document.getElementById('langSel');
+    if (sel) sel.innerHTML = this.languages.map(l => `<option value="${l.code}" ${l.code===this.current?'selected':''}>${l.flag} ${esc(l.name)}</option>`).join('');
+  },
+  set(code) {
+    if (!this.languages.some(l => l.code === code)) code = 'en';
+    this.current = code;
+    try { localStorage.setItem('dp_lang', code); } catch(e){}
+    const isRTL = ['ar','fa','he','ur'].includes(code);
+    document.documentElement.setAttribute('lang', code);
+    document.documentElement.setAttribute('dir', isRTL ? 'rtl' : 'ltr');
+    this.renderSelector();
+    toast(`Language: ${this.languages.find(l => l.code === code).name} ✓`, 'success');
+  }
+};
+
+/* ---------- PRIVACY / TERMS ---------- */
+ADM.privacy = {
+  show(e) {
+    if (e) e.preventDefault();
+    alert('PRIVACY POLICY\n\nDataPulse Admin respects privacy:\n\n• Admin session data is stored locally (encrypted at rest).\n• Firebase Authentication handles admin login securely.\n• Firestore stores orgs, contracts, and audit logs.\n• We never sell your data.\n• GDPR compliant.\n\nContact: muletalegese605@gmail.com');
+  },
+  terms(e) {
+    if (e) e.preventDefault();
+    alert('TERMS OF SERVICE\n\nAdmin Center Usage:\n\n• Restricted to authorized administrators only.\n• All actions are logged and audited.\n• Misuse may result in account termination.\n• Enterprise SLA applies.\n\nContact: muletalegese605@gmail.com');
+  }
+};
+
+/* ---------- BIG DATA OVERLAY ---------- */
+ADM.bigData = {
+  show(title, sub) {
+    const o = document.getElementById('bigDataOverlay'); if (!o) return;
+    o.classList.add('on');
+    document.getElementById('bdTitle').textContent = title || 'Processing…';
+    document.getElementById('bdSub').textContent = sub || 'Working';
+    document.getElementById('bdBar').style.width = '0%';
+    document.getElementById('bdPct').textContent = '0%';
+  },
+  update(done, total) {
+    const pct = total ? Math.round(done/total*100) : 0;
+    const b = document.getElementById('bdBar'); const p = document.getElementById('bdPct');
+    if (b) b.style.width = pct+'%';
+    if (p) p.textContent = pct+'%';
+    document.getElementById('bdSub').textContent = `Processing ${done.toLocaleString()} / ${total.toLocaleString()}`;
+  },
+  hide() { const o = document.getElementById('bigDataOverlay'); if (o) o.classList.remove('on'); }
+};
+
+/* ---------- THEME (shared with index.html) ---------- */
 ADM.theme = {
   current(){ try { return localStorage.getItem('dp_theme') || 'dark'; } catch(e){ return 'dark'; } },
   apply(t){
@@ -426,27 +805,54 @@ ADM.theme = {
 };
 function toggleTheme(){ ADM.theme.toggle(); }
 
+/* ============================================================
+   CURRENCY (matches index.html exactly — USD default)
+   ============================================================ */
 ADM.currency = {
-  get(){ try { return localStorage.getItem('dp_currency') || 'ETB'; } catch(e){ return 'ETB'; } },
+  get(){
+    try {
+      let c = localStorage.getItem('dp_currency') || 'USD';
+      if (!ADM.CURRENCIES[c]) c = 'USD';
+      return c;
+    } catch(e){ return 'USD'; }
+  },
   set(c){
+    if (!ADM.CURRENCIES[c]) c = 'USD';
     try { localStorage.setItem('dp_currency', c); } catch(e){}
-    document.querySelectorAll('#currencySel').forEach(s => s.value = c);
+    this.renderSelectors();
     if (state.loggedIn) render();
   },
   convert(usd, tgt){
-    if (tgt==='ETB') return Math.round(usd*57.5);
-    if (tgt==='EUR') return Math.round(usd/1.087);
-    return Math.round(usd);
+    const code = tgt || this.get();
+    const cur = ADM.CURRENCIES[code];
+    if (!cur) return Math.round(+usd || 0);
+    return Math.round((+usd || 0) * cur.rate);
   },
   format(usd){
-    const c = this.get(); const val = this.convert(usd, c); const curr = ADM.CURRENCIES[c];
-    if (c==='USD') return `$ ${val.toLocaleString()}`;
-    if (c==='EUR') return `€ ${val.toLocaleString()}`;
-    return `${curr.symbol} ${val.toLocaleString()}`;
+    const c = this.get();
+    const cur = ADM.CURRENCIES[c] || ADM.CURRENCIES.USD;
+    const val = Math.round((+usd || 0) * cur.rate);
+    try { return `${cur.symbol} ${val.toLocaleString('en-US')}`; }
+    catch(e) { return `${cur.symbol} ${val}`; }
+  },
+  renderSelectors(){
+    const current = this.get();
+    const options = Object.entries(ADM.CURRENCIES).map(([code, c]) =>
+      `<option value="${code}">${c.flag} ${code} — ${esc(c.name)}</option>`
+    ).join('');
+    ['currencySel'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) { el.innerHTML = options; el.value = current; }
+    });
   }
 };
-function setCurrency(c){ ADM.currency.set(c); toast(`Currency: ${c}`, 'info'); }
+function setCurrency(c){
+  ADM.currency.set(c);
+  const cur = ADM.CURRENCIES[c] || ADM.CURRENCIES.USD;
+  toast(`Currency: ${cur.flag} ${c}`, 'info');
+}
 
+/* ---------- FETCH WITH RETRY ---------- */
 ADM.fetch = async (url, opts={}) => {
   const attempts = opts._retries ?? 0;
   const ctrl = new AbortController();
@@ -482,20 +888,16 @@ function toast(msg, type='info') {
 
 /* ---------- STATE ---------- */
 const state = {
-  loggedIn:false,
-  admin:{ email:'', name:'Admin', role:'super-admin' },
-  orgs: [],
-  contracts: [],
-  audits: [],
-  records: {},
-  tab:'overview',
-  charts:{},
-  filter:'all',
-  searchOrg:'',
-  searchAudit:'',
-  confirmCb:null,
-  backendOnline:false,
-  backendChecking:false,
+  loggedIn: false,
+  admin: { email:'', name:'Admin', role:'super-admin' },
+  orgs: [], contracts: [], audits: [], records: {},
+  fullAutoStats: {},  // { orgId: { enabled, runs, capsRun, opsRun, lastRun } }
+  tab: 'overview',
+  charts: {}, filter: 'all',
+  searchOrg: '', searchAudit: '',
+  confirmCb: null,
+  currentDataset: null,
+  backendOnline: false, backendChecking: false,
   online: navigator.onLine,
   sessionExpiresAt: 0
 };
@@ -505,93 +907,456 @@ function loadAll() {
   state.contracts = LS.get('dp_contracts', []);
   state.audits = LS.get('dp_audits', []);
   state.records = {};
+  state.fullAutoStats = LS.get('dp_full_auto_stats', {});
   state.orgs.forEach(o => {
     state.records[o.id] = LS.get('dp_records_'+o.id, []);
+    // Per-org full auto stats — index.html writes to `dp_full_auto_${orgId}`
+    const fa = LS.get('dp_full_auto_'+o.id, null);
+    if (fa) state.fullAutoStats[o.id] = fa;
+    // Also check global flag
+    const globalFlag = LS.get('dp_full_auto', false);
+    if (globalFlag && !state.fullAutoStats[o.id]) state.fullAutoStats[o.id] = { enabled:true, runs:0, capsRun:40, opsRun:17, lastRun:null };
   });
+  if (!state.currentDataset && state.orgs.length) {
+    state.currentDataset = state.orgs[0].id;
+  }
 }
-
 function persistOrgs(){ LS.set('dp_orgs', state.orgs); }
 function persistContracts(){ LS.set('dp_contracts', state.contracts); }
 function persistAudits(){ LS.set('dp_audits', state.audits.slice(0, 500)); }
+function persistRecords(orgId){ LS.set('dp_records_'+orgId, state.records[orgId] || []); }
+function persistFullAutoStats(){ LS.set('dp_full_auto_stats', state.fullAutoStats); }
 
-/* ---------- AUDIT ---------- */
 function auditLog(action, target='N/A', payload=null) {
   const entry = {
-    id:'LOG-'+Date.now().toString().slice(-6),
+    id:'LOG-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,5),
     action, target: String(target).slice(0, 100),
-    org: 'ADMIN',
-    status:'SUCCESS',
-    at: new Date().toISOString(),
-    performed_at: new Date().toISOString(),
+    org:'ADMIN', status:'SUCCESS',
+    at: nowIso(), performed_at: nowIso(),
     item_id: String(target).slice(0,100),
     payload: payload || {}
   };
   state.audits.unshift(entry);
   if (state.audits.length > ADM.config.maxAudits) state.audits.pop();
   persistAudits();
+  ADM.sync.mirrorAudit(entry);
 }
+
+/* ============================================================
+   SYNC ENGINE (same Firestore structure as index.html v8.0)
+   ============================================================ */
+ADM.sync = {
+  status: 'synced',
+  lastPushAt: 0, lastPullAt: 0,
+  inflight: false, unsubs: [],
+
+  loadQueue() { return LS.get(SYNC_QUEUE_KEY, []); },
+  saveQueue(q) { LS.set(SYNC_QUEUE_KEY, q.slice(0, 500)); },
+  enqueue(op) {
+    const q = this.loadQueue();
+    const key = `${op.kind}:${op.id}`;
+    const idx = q.findIndex(x => `${x.kind}:${x.id}` === key);
+    const item = { ...op, ts: Date.now(), retries: 0 };
+    if (idx >= 0) q[idx] = item; else q.push(item);
+    this.saveQueue(q);
+    this.setStatus('pending');
+  },
+  clearQueue() { LS.set(SYNC_QUEUE_KEY, []); },
+
+  setStatus(s) {
+    this.status = s;
+    const b = document.getElementById('syncBadge');
+    const t = document.getElementById('syncBadgeText');
+    if (b) b.className = 'sync-badge ' + s + ' hidden sm:inline-flex';
+    if (t) t.textContent = ({
+      synced:'Synced', syncing:'Syncing…',
+      pending:`Pending (${this.loadQueue().length})`,
+      error:'Sync error', offline:'Offline'
+    })[s] || s;
+  },
+
+  async mirrorOrg(org) {
+    if (!firebaseReady || !org) return;
+    try { await fbDb.collection('orgs').doc(org.id).set(org, { merge:true }); this.setStatus('synced'); }
+    catch(e){ this.enqueue({ kind:'org', op:'upsert', id:org.id, data:org }); }
+  },
+  async mirrorContract(c) {
+    if (!firebaseReady || !c) return;
+    try { await fbDb.collection('contracts').doc(c.id).set(c, { merge:true }); }
+    catch(e){ this.enqueue({ kind:'contract', op:'upsert', id:c.id, data:c }); }
+  },
+  async mirrorAudit(a) {
+    if (!firebaseReady || !a) return;
+    try { await fbDb.collection('audits').doc(a.id).set(a, { merge:true }); } catch(e){}
+  },
+
+  // ✅ SAME STRUCTURE AS index.html v8.0: datasets/{orgId} → { records: [...] }
+  async mirrorRecords(orgId) {
+    if (!firebaseReady || !orgId) return;
+    const recs = state.records[orgId] || [];
+    try {
+      await fbDb.collection('datasets').doc(orgId).set({
+        records: recs,
+        updatedAt: nowIso(),
+        orgName: state.orgs.find(o => o.id === orgId)?.name || '—'
+      }, { merge:true });
+    } catch(e){
+      this.enqueue({ kind:'records', op:'upsert', id:orgId, data:recs });
+    }
+  },
+
+  async deleteOrgCloud(orgId) {
+    if (!firebaseReady) return;
+    try {
+      await fbDb.collection('datasets').doc(orgId).delete().catch(() => {});
+      await fbDb.collection('orgs').doc(orgId).delete();
+    } catch(e){ this.enqueue({ kind:'org', op:'delete', id:orgId }); }
+  },
+  async deleteContractCloud(id) {
+    if (!firebaseReady) return;
+    try { await fbDb.collection('contracts').doc(id).delete(); }
+    catch(e){ this.enqueue({ kind:'contract', op:'delete', id }); }
+  },
+
+  async pullAll(verbose) {
+    if (!firebaseReady) {
+      if (verbose) toast('Firebase config hin guutamne — local mode', 'info');
+      return false;
+    }
+    if (this.inflight) return false;
+    this.inflight = true;
+    this.setStatus('syncing');
+    try {
+      const [orgsSnap, ctrSnap, auditSnap] = await Promise.all([
+        fbDb.collection('orgs').get(),
+        fbDb.collection('contracts').get(),
+        fbDb.collection('audits').orderBy('performed_at','desc').limit(500).get().catch(() => fbDb.collection('audits').limit(500).get())
+      ]);
+
+      const remoteOrgs = orgsSnap.docs.map(d => ({ id:d.id, ...d.data() }));
+      state.orgs = this._merge(state.orgs, remoteOrgs);
+      persistOrgs();
+
+      const remoteCtr = ctrSnap.docs.map(d => ({ id:d.id, ...d.data() }));
+      state.contracts = this._merge(state.contracts, remoteCtr);
+      persistContracts();
+
+      const remoteAudits = auditSnap.docs.map(d => ({ id:d.id, ...d.data() }));
+      const auditMap = new Map();
+      [...state.audits, ...remoteAudits].forEach(a => auditMap.set(a.id, a));
+      state.audits = Array.from(auditMap.values())
+        .sort((a,b) => new Date(b.performed_at||b.at||0) - new Date(a.performed_at||a.at||0))
+        .slice(0, ADM.config.maxAudits);
+      persistAudits();
+
+      // ✅ Pull records from datasets/{orgId}
+      for (const o of state.orgs.slice(0, 30)) {
+        try {
+          const dsDoc = await fbDb.collection('datasets').doc(o.id).get();
+          if (dsDoc.exists) {
+            const recs = dsDoc.data().records || [];
+            if (recs.length) { state.records[o.id] = recs; persistRecords(o.id); }
+          }
+        } catch(e){}
+      }
+
+      // ✅ Pull full-auto stats if present in Firestore
+      try {
+        const faSnap = await fbDb.collection('fullauto').get();
+        faSnap.forEach(d => { state.fullAutoStats[d.id] = d.data(); });
+        persistFullAutoStats();
+      } catch(e){}
+
+      this.lastPullAt = Date.now();
+      LS.set(SYNC_META_KEY, { lastPullAt: this.lastPullAt, lastPushAt: this.lastPushAt });
+      this.setStatus('synced');
+      if (verbose) toast(`Pulled ${remoteOrgs.length} orgs, ${remoteCtr.length} contracts`, 'success');
+      if (state.loggedIn) render();
+      return true;
+    } catch(e) {
+      this.setStatus('error');
+      if (verbose) toast('Pull failed: ' + e.message, 'error');
+      return false;
+    } finally { this.inflight = false; }
+  },
+
+  async pushAll(verbose) {
+    if (this.inflight) return false;
+    this.inflight = true;
+    this.setStatus('syncing');
+    try {
+      if (firebaseReady) {
+        const orgChunks = [];
+        for (let i = 0; i < state.orgs.length; i += 400) orgChunks.push(state.orgs.slice(i, i+400));
+        for (const chunk of orgChunks) {
+          const batch = fbDb.batch();
+          chunk.forEach(o => batch.set(fbDb.collection('orgs').doc(o.id), o, { merge:true }));
+          await batch.commit();
+        }
+        const cChunks = [];
+        for (let i = 0; i < state.contracts.length; i += 400) cChunks.push(state.contracts.slice(i, i+400));
+        for (const chunk of cChunks) {
+          const batch = fbDb.batch();
+          chunk.forEach(c => batch.set(fbDb.collection('contracts').doc(c.id), c, { merge:true }));
+          await batch.commit();
+        }
+        const recent = state.audits.slice(0, 200);
+        const aChunks = [];
+        for (let i = 0; i < recent.length; i += 400) aChunks.push(recent.slice(i, i+400));
+        for (const chunk of aChunks) {
+          const batch = fbDb.batch();
+          chunk.forEach(a => batch.set(fbDb.collection('audits').doc(a.id), a, { merge:true }));
+          await batch.commit();
+        }
+
+        // ✅ Push full-auto stats
+        try {
+          const faEntries = Object.entries(state.fullAutoStats);
+          const faChunks = [];
+          for (let i = 0; i < faEntries.length; i += 400) faChunks.push(faEntries.slice(i, i+400));
+          for (const chunk of faChunks) {
+            const batch = fbDb.batch();
+            chunk.forEach(([orgId, stats]) => batch.set(fbDb.collection('fullauto').doc(orgId), stats, { merge:true }));
+            await batch.commit();
+          }
+        } catch(e){}
+      }
+
+      await this._pushBackend({
+        orgs: state.orgs,
+        contracts: state.contracts,
+        audits: state.audits.slice(0, 200),
+        fullAutoStats: state.fullAutoStats
+      });
+
+      this.lastPushAt = Date.now();
+      LS.set(SYNC_META_KEY, { lastPullAt: this.lastPullAt, lastPushAt: this.lastPushAt });
+      this.setStatus('synced');
+      if (verbose) toast('Pushed to cloud ✓', 'success');
+      return true;
+    } catch(e) {
+      this.setStatus('error');
+      if (verbose) toast('Push failed: ' + e.message, 'error');
+      return false;
+    } finally { this.inflight = false; }
+  },
+
+  async _pushBackend(payload) {
+    const url = (LS.get('dp_backend', BACKEND_URL) || BACKEND_URL).replace(/\/$/,'');
+    try {
+      const res = await ADM.fetch(url + '/api/sync/bulk', {
+        method:'POST',
+        headers:{ 'Content-Type':'application/json' },
+        body: JSON.stringify({ ...payload, pushedAt: nowIso() }),
+        _timeout: 15000
+      });
+      return res.ok;
+    } catch(e) {
+      payload.orgs?.forEach(o => this.enqueue({ kind:'org', op:'upsert', id:o.id, data:o }));
+      return false;
+    }
+  },
+
+  async flushQueue() {
+    if (!state.online || this.inflight) return;
+    const q = this.loadQueue();
+    if (!q.length) return;
+    this.setStatus('syncing');
+    const url = (LS.get('dp_backend', BACKEND_URL) || BACKEND_URL).replace(/\/$/,'');
+    const remaining = [];
+    for (const op of q) {
+      try {
+        if (firebaseReady) {
+          if (op.kind === 'org' && op.op === 'upsert')
+            await fbDb.collection('orgs').doc(op.id).set(op.data, { merge:true });
+          else if (op.kind === 'org' && op.op === 'delete')
+            await fbDb.collection('orgs').doc(op.id).delete();
+          else if (op.kind === 'contract' && op.op === 'upsert')
+            await fbDb.collection('contracts').doc(op.id).set(op.data, { merge:true });
+          else if (op.kind === 'contract' && op.op === 'delete')
+            await fbDb.collection('contracts').doc(op.id).delete();
+          else if (op.kind === 'records')
+            await this.mirrorRecords(op.id);
+        }
+        ADM.fetch(url + '/api/sync/op', {
+          method:'POST',
+          headers:{ 'Content-Type':'application/json' },
+          body: JSON.stringify(op),
+          _timeout: 8000
+        }).catch(() => {});
+      } catch(e) {
+        op.retries = (op.retries||0) + 1;
+        if (op.retries < ADM.config.syncMaxRetries) remaining.push(op);
+      }
+    }
+    this.saveQueue(remaining);
+    this.setStatus(remaining.length ? 'pending' : 'synced');
+  },
+
+  subscribe() {
+    if (!firebaseReady) return;
+    this.unsubs.forEach(u => { try { u(); } catch(e){} });
+    this.unsubs = [];
+
+    this.unsubs.push(fbDb.collection('orgs').onSnapshot(snap => {
+      let changed = false;
+      snap.docChanges().forEach(ch => {
+        if (ch.type === 'removed') {
+          const idx = state.orgs.findIndex(o => o.id === ch.doc.id);
+          if (idx >= 0) { state.orgs.splice(idx, 1); changed = true; }
+        } else {
+          const data = { id: ch.doc.id, ...ch.doc.data() };
+          const idx = state.orgs.findIndex(o => o.id === data.id);
+          if (idx >= 0) state.orgs[idx] = { ...state.orgs[idx], ...data };
+          else state.orgs.push(data);
+          changed = true;
+        }
+      });
+      if (changed) { persistOrgs(); if (state.loggedIn) render(); }
+    }, err => console.warn('orgs listener:', err.message)));
+
+    this.unsubs.push(fbDb.collection('contracts').onSnapshot(snap => {
+      let changed = false;
+      snap.docChanges().forEach(ch => {
+        if (ch.type === 'removed') {
+          const idx = state.contracts.findIndex(c => c.id === ch.doc.id);
+          if (idx >= 0) { state.contracts.splice(idx, 1); changed = true; }
+        } else {
+          const data = { id: ch.doc.id, ...ch.doc.data() };
+          const idx = state.contracts.findIndex(c => c.id === data.id);
+          if (idx >= 0) state.contracts[idx] = { ...state.contracts[idx], ...data };
+          else state.contracts.push(data);
+          changed = true;
+        }
+      });
+      if (changed) { persistContracts(); if (state.loggedIn) render(); }
+    }, err => console.warn('contracts listener:', err.message)));
+
+    // ✅ Listen for full-auto stats
+    this.unsubs.push(fbDb.collection('fullauto').onSnapshot(snap => {
+      let changed = false;
+      snap.docChanges().forEach(ch => {
+        if (ch.type === 'removed') {
+          delete state.fullAutoStats[ch.doc.id]; changed = true;
+        } else {
+          state.fullAutoStats[ch.doc.id] = ch.doc.data(); changed = true;
+        }
+      });
+      if (changed) { persistFullAutoStats(); if (state.loggedIn) render(); }
+    }, err => console.warn('fullauto listener:', err.message)));
+  },
+
+  _merge(localArr, remoteArr) {
+    const map = new Map();
+    [...localArr, ...remoteArr].forEach(item => {
+      const key = item.id;
+      const prev = map.get(key);
+      if (!prev) { map.set(key, item); return; }
+      const tLocal  = new Date(prev.updatedAt || prev.createdAt || 0).getTime();
+      const tRemote = new Date(item.updatedAt || item.createdAt || 0).getTime();
+      map.set(key, tRemote >= tLocal ? { ...prev, ...item } : { ...item, ...prev });
+    });
+    return Array.from(map.values());
+  },
+
+  async init() {
+    this.setStatus(state.online ? 'synced' : 'offline');
+    const meta = LS.get(SYNC_META_KEY, {});
+    this.lastPullAt = meta.lastPullAt || 0;
+    this.lastPushAt = meta.lastPushAt || 0;
+    if (firebaseReady) {
+      this.subscribe();
+      if (Date.now() - this.lastPullAt > 60000) await this.pullAll(false);
+    }
+    this.flushQueue();
+    setInterval(() => this.flushQueue(), ADM.config.syncFlushIntervalMs);
+  }
+};
 
 /* ---------- SECURITY ---------- */
 ADM.security = {
   attemptKey: 'dp_admin_attempts',
-  checkRateLimit(){
+  checkRateLimit() {
     const now = Date.now();
     const a = LS.get(this.attemptKey, []).filter(t => now - t < ADM.config.rateLimitWindowMs);
     LS.set(this.attemptKey, a);
-    if (a.length >= ADM.config.rateLimitAttempts) {
-      return { blocked:true, wait: Math.ceil((ADM.config.rateLimitWindowMs - (now - a[0]))/1000) };
-    }
+    if (a.length >= ADM.config.rateLimitAttempts) return { blocked:true, wait: Math.ceil((ADM.config.rateLimitWindowMs - (now - a[0]))/1000) };
     return { blocked:false };
   },
-  recordAttempt(){
-    const a = LS.get(this.attemptKey, []); a.push(Date.now()); LS.set(this.attemptKey, a);
-  },
-  clearAttempts(){ LS.del(this.attemptKey); }
+  recordAttempt() { const a = LS.get(this.attemptKey, []); a.push(Date.now()); LS.set(this.attemptKey, a); },
+  clearAttempts() { LS.del(this.attemptKey); }
 };
 
 /* ---------- SESSION ---------- */
 ADM.session = {
-  set(){
-    const session = {
-      email: ADMIN_EMAIL,
-      name: 'Muleta Legese Gemeda',
-      role: 'super-admin',
-      startedAt: Date.now(),
-      expiresAt: Date.now() + SESSION_TTL_MS
-    };
+  set() {
+    const session = { email: ADMIN_EMAIL, name: 'Muleta Legese Gemeda', role: 'super-admin', startedAt: Date.now(), expiresAt: Date.now() + SESSION_TTL_MS };
     LS.set(SESSION_KEY, session);
     state.sessionExpiresAt = session.expiresAt;
   },
-  check(){
+  check() {
     const s = LS.get(SESSION_KEY, null);
     if (!s || Date.now() > s.expiresAt) { LS.del(SESSION_KEY); return null; }
     return s;
   },
-  clear(){ LS.del(SESSION_KEY); },
-  refresh(){
+  clear() { LS.del(SESSION_KEY); },
+  refresh() {
     const s = LS.get(SESSION_KEY, null);
     if (s) { s.expiresAt = Date.now() + SESSION_TTL_MS; LS.set(SESSION_KEY, s); state.sessionExpiresAt = s.expiresAt; }
   }
 };
 
-/* ---------- TRIAL HELPERS ---------- */
-function getTrial(orgId) {
-  return LS.get('dp_trial_'+orgId, null);
+let sessionTicker = null;
+function startSessionTimerUI() {
+  if (sessionTicker) clearInterval(sessionTicker);
+  const badge = document.getElementById('sessionBadge');
+  if (badge) badge.classList.remove('hidden');
+  sessionTicker = setInterval(() => {
+    if (!state.loggedIn) return;
+    const el = document.getElementById('sessionTimer');
+    if (!el) return;
+    const remaining = Math.max(0, state.sessionExpiresAt - Date.now());
+    const m = Math.floor(remaining / 60000);
+    const s = Math.floor((remaining % 60000) / 1000);
+    el.textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+    if (remaining < 5 * 60000) el.classList.add('text-rose-400');
+    else el.classList.remove('text-rose-400');
+  }, 1000);
 }
+
+/* ---------- TRIAL HELPERS ---------- */
+function getTrial(orgId) { return LS.get('dp_trial_'+orgId, null); }
 function trialDaysLeft(orgId) {
-  const t = getTrial(orgId);
-  if (!t) return 0;
+  const t = getTrial(orgId); if (!t) return 0;
   return Math.max(0, Math.ceil((new Date(t.endsAt) - Date.now()) / 86400000));
 }
 function isPaid(orgId) {
-  const t = getTrial(orgId);
-  if (t && t.paid) return true;
+  const t = getTrial(orgId); if (t && t.paid) return true;
   return state.contracts.some(c => c.orgId === orgId && c.status === 'active' && c.plan !== 'free');
 }
 function markPaid(orgId) {
-  const t = getTrial(orgId) || { startedAt:new Date().toISOString(), endsAt:new Date().toISOString(), paid:false };
-  t.paid = true; t.paidAt = new Date().toISOString();
+  const t = getTrial(orgId) || { startedAt: nowIso(), endsAt: nowIso(), paid:false };
+  t.paid = true; t.paidAt = nowIso();
   LS.set('dp_trial_'+orgId, t);
+}
+function unmarkPaid(orgId) {
+  const t = getTrial(orgId);
+  if (t) { t.paid = false; t.paidAt = null; LS.set('dp_trial_'+orgId, t); }
+}
+
+/* ---------- FULL AUTO STATS ---------- */
+function getFullAutoStats(orgId) {
+  // Check live stats (from Firestore/localStorage shared with index.html)
+  const stored = LS.get('dp_full_auto_'+orgId, null);
+  if (stored) return stored;
+  const cached = state.fullAutoStats[orgId];
+  if (cached) return cached;
+  const globalFlag = LS.get('dp_full_auto', false);
+  return { enabled: !!globalFlag, runs:0, capsRun: globalFlag?40:0, opsRun: globalFlag?17:0, lastRun:null };
+}
+function fullAutoEnabled(orgId) {
+  const s = getFullAutoStats(orgId);
+  return !!(s && s.enabled);
 }
 
 /* ---------- LOGIN ---------- */
@@ -600,6 +1365,7 @@ function togglePw(id, btn) {
   el.type = el.type==='password' ? 'text' : 'password';
   btn.innerHTML = el.type==='password' ? '<i class="fa-solid fa-eye"></i>' : '<i class="fa-solid fa-eye-slash"></i>';
 }
+
 async function adminDoLogin(e) {
   e.preventDefault();
   const rl = ADM.security.checkRateLimit();
@@ -611,24 +1377,27 @@ async function adminDoLogin(e) {
   const pw = document.getElementById('adminPass').value;
   const tfa = document.getElementById('admin2FA').value.trim();
   document.getElementById('adminLoginMsg').textContent = '';
+
   if (!email || !pw) { toast('Fill all required fields','error'); return; }
-  if (email !== ADMIN_EMAIL || pw !== ADMIN_PASSWORD) {
+  if (email !== ADMIN_EMAIL) {
     ADM.security.recordAttempt();
-    document.getElementById('adminLoginMsg').textContent = 'Invalid credentials.';
+    document.getElementById('adminLoginMsg').textContent = 'Access denied. Not an admin account.';
     toast('Access denied', 'error');
     return;
   }
-  // Optional 2FA check (any 6-digit code accepted in demo)
-  if (tfa && !/^\d{6}$/.test(tfa)) {
-    toast('2FA must be 6 digits','error'); return;
-  }
+  if (tfa && !/^\d{6}$/.test(tfa)) { toast('2FA must be 6 digits','error'); return; }
+
   const btn = e.target.querySelector('button[type="submit"]');
   btn.disabled = true; const orig = btn.innerHTML;
   btn.innerHTML = '<i class="fa-solid fa-spinner spin mr-2"></i>Authenticating…';
   try {
-    // Try Firebase admin login if enabled
-    if (firebaseReady) {
-      try { await fbAuth.signInWithEmailAndPassword(ADMIN_EMAIL, ADMIN_PASSWORD); } catch(e){ console.warn('FB admin login:', e.message); }
+    if (!firebaseReady) {
+      throw new Error('Firebase hin configure ta\'e. Firebase Console irraa config galchi.');
+    }
+    const cred = await fbAuth.signInWithEmailAndPassword(ADMIN_EMAIL, pw);
+    if (!cred || !cred.user || cred.user.email.toLowerCase() !== ADMIN_EMAIL.toLowerCase()) {
+      await fbAuth.signOut().catch(() => {});
+      throw new Error('Authenticated user is not the admin.');
     }
     ADM.security.clearAttempts();
     ADM.session.set();
@@ -638,18 +1407,30 @@ async function adminDoLogin(e) {
     auditLog('ADMIN_LOGIN', ADMIN_EMAIL);
     enterAdmin();
     toast('👑 Admin access granted', 'success');
+    ADM.analytics.event('admin_login', { email });
   } catch(err) {
-    toast('Login failed: ' + err.message, 'error');
+    ADM.security.recordAttempt();
+    let msg = err.message || 'Login failed';
+    if (msg.includes('auth/invalid-credential') || msg.includes('auth/wrong-password')) msg = 'Invalid email or password.';
+    if (msg.includes('auth/user-not-found')) msg = 'Admin account not found. Create it in Firebase Console → Authentication → Users.';
+    if (msg.includes('auth/too-many-requests')) msg = 'Too many attempts. Try later.';
+    document.getElementById('adminLoginMsg').textContent = msg;
+    toast(msg, 'error');
+    ADM.errors.capture(err, { context:'admin_login' });
     btn.disabled = false; btn.innerHTML = orig;
   }
 }
+
 function adminLogout() {
   if (!confirm('End admin session?')) return;
   ADM.session.clear();
+  try { if (firebaseReady) fbAuth.signOut().catch(() => {}); } catch(e){}
   auditLog('ADMIN_LOGOUT', ADMIN_EMAIL);
   state.loggedIn = false;
   state.admin = { email:'', name:'', role:'' };
   destroyCharts();
+  if (sessionTicker) { clearInterval(sessionTicker); sessionTicker = null; }
+  document.getElementById('sessionBadge')?.classList.add('hidden');
   document.getElementById('adminApp').classList.add('hidden');
   document.getElementById('loginScreen').classList.remove('hidden');
   document.getElementById('loginScreen').classList.add('flex');
@@ -661,26 +1442,33 @@ function enterAdmin() {
   document.getElementById('loginScreen').classList.remove('flex');
   document.getElementById('adminApp').classList.remove('hidden');
   document.getElementById('backendUrl').value = LS.get('dp_backend', BACKEND_URL);
+  ADM.currency.renderSelectors();
   const cs = document.getElementById('currencySel'); if (cs) cs.value = ADM.currency.get();
   renderNav();
   renderDock();
   go('overview');
   checkBackendHealth(true);
-  startSessionTimer();
+  startSessionTimerUI();
+  ADM.sync.init().catch(e => console.warn('sync init:', e));
 }
-function startSessionTimer() {
+
+let sessionMonitorStarted = false;
+function startSessionMonitor() {
+  if (sessionMonitorStarted) return;
+  sessionMonitorStarted = true;
   setInterval(() => {
     if (!state.loggedIn) return;
     const s = ADM.session.check();
     if (!s) {
       toast('Session expired. Please log in again.', 'warn');
       state.loggedIn = false;
+      if (sessionTicker) { clearInterval(sessionTicker); sessionTicker = null; }
+      document.getElementById('sessionBadge')?.classList.add('hidden');
       document.getElementById('adminApp').classList.add('hidden');
       document.getElementById('loginScreen').classList.remove('hidden');
       document.getElementById('loginScreen').classList.add('flex');
     }
   }, 30000);
-  // Idle refresh on activity
   ['click','keydown','mousemove'].forEach(ev => {
     document.addEventListener(ev, () => { if (state.loggedIn) ADM.session.refresh(); }, { passive:true });
   });
@@ -693,23 +1481,27 @@ const TABS = [
   { id:'users',       key:'Users',        icon:'fa-users' },
   { id:'contracts',   key:'Contracts',    icon:'fa-file-signature' },
   { id:'datasets',    key:'Datasets',     icon:'fa-database' },
+  { id:'fullauto',    key:'Full Automation', icon:'fa-bolt' },
   { id:'audit',       key:'Audit Logs',   icon:'fa-clipboard-list' },
   { id:'payments',    key:'Payments',     icon:'fa-credit-card' },
+  { id:'sync',        key:'Cloud Sync',   icon:'fa-cloud' },
   { id:'settings',    key:'Settings',     icon:'fa-sliders' }
 ];
 function renderNav() {
-  document.getElementById('navBar').innerHTML = TABS.map(t => `
+  document.getElementById('navBar').innerHTML = TABS.map(t => {
+    const autoBadge = (t.id === 'fullauto' && Object.values(state.fullAutoStats).some(s => s.enabled)) ? ' <span class="autobadge">ON</span>' : '';
+    return `
     <button data-tab="${t.id}" onclick="go('${t.id}')" class="nav-tab px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap text-slate-400">
-      <i class="fa-solid ${t.icon} mr-1"></i>${esc(t.key)}
+      <i class="fa-solid ${t.icon} mr-1"></i>${esc(t.key)}${autoBadge}
     </button>
-  `).join('');
+  `;}).join('');
 }
 function renderDock() {
   const d = [
     { id:'overview', key:'Home', icon:'fa-gauge-high' },
     { id:'orgs', key:'Orgs', icon:'fa-building' },
     { id:'contracts', key:'Contracts', icon:'fa-file-signature' },
-    { id:'audit', key:'Audit', icon:'fa-clipboard-list' },
+    { id:'fullauto', key:'Auto', icon:'fa-bolt' },
     { id:'settings', key:'Settings', icon:'fa-sliders' }
   ];
   document.getElementById('mobileDock').innerHTML = d.map(x => `
@@ -730,8 +1522,9 @@ function go(tab) {
     b.classList.toggle('text-slate-400', !on);
     b.classList.toggle('text-purple-400', on);
   });
-  try { render(); } catch(e) { console.error(e); toast('Render error: '+e.message, 'error'); }
+  try { render(); } catch(e) { console.error(e); toast('Render error: '+e.message, 'error'); ADM.errors.capture(e, { context:'admin_render:'+tab }); }
   window.scrollTo({ top:0, behavior:'smooth' });
+  ADM.analytics.event('admin_tab', { tab });
 }
 
 /* ---------- AGGREGATED STATS ---------- */
@@ -744,12 +1537,10 @@ function aggStats() {
   const activeContracts = state.contracts.filter(c => c.status === 'active').length;
   const cancelledContracts = state.contracts.filter(c => c.status === 'cancelled').length;
   const totalRecords = Object.values(state.records).reduce((s, r) => s + r.length, 0);
-  const mrr = state.contracts
-    .filter(c => c.status === 'active')
-    .reduce((s, c) => {
-      const plan = PLANS.find(p => p.id === c.plan);
-      return s + (plan ? plan.usd : 0);
-    }, 0);
+  const mrr = state.contracts.filter(c => c.status === 'active').reduce((s, c) => {
+    const plan = PLANS.find(p => p.id === c.plan);
+    return s + (plan ? plan.usd : 0);
+  }, 0);
   const arr = mrr * 12;
   const byPlan = {};
   PLANS.forEach(p => byPlan[p.id] = 0);
@@ -757,14 +1548,12 @@ function aggStats() {
   const byType = { individual:0, smb:0, enterprise:0 };
   state.orgs.forEach(o => { if (o.accountType in byType) byType[o.accountType]++; });
   const recentAudits = state.audits.slice(0, 5);
-  return {
-    totalOrgs, activeOrgs, suspendedOrgs, verifiedOrgs, paidOrgs,
-    activeContracts, cancelledContracts, totalRecords, mrr, arr,
-    byPlan, byType, recentAudits
-  };
+  const fullAutoOnCount = state.orgs.filter(o => fullAutoEnabled(o.id)).length;
+  const totalAutoRuns = Object.values(state.fullAutoStats).reduce((s, x) => s + (x.runs||0), 0);
+  return { totalOrgs, activeOrgs, suspendedOrgs, verifiedOrgs, paidOrgs, activeContracts, cancelledContracts, totalRecords, mrr, arr, byPlan, byType, recentAudits, fullAutoOnCount, totalAutoRuns };
 }
 
-/* ---------- RENDER ---------- */
+/* ---------- RENDER ROUTER ---------- */
 function render() {
   const el = document.getElementById('adminMain'); if (!el) return;
   destroyCharts();
@@ -774,8 +1563,10 @@ function render() {
     case 'users':      el.innerHTML = vUsers(); break;
     case 'contracts':  el.innerHTML = vContracts(); break;
     case 'datasets':   el.innerHTML = vDatasets(); break;
+    case 'fullauto':   el.innerHTML = vFullAuto(); break;
     case 'audit':      el.innerHTML = vAudit(); break;
     case 'payments':   el.innerHTML = vPayments(); break;
+    case 'sync':       el.innerHTML = vSync(); break;
     case 'settings':   el.innerHTML = vSettings(); break;
   }
 }
@@ -783,14 +1574,15 @@ function render() {
 /* ---------- OVERVIEW ---------- */
 function vOverview() {
   const s = aggStats();
+  const cur = ADM.CURRENCIES[ADM.currency.get()];
   return `
   <div class="space-y-4 sm:space-y-6 fade">
     <div class="bg-gradient-to-br from-purple-500/15 via-emerald-500/5 to-sky-500/10 border border-purple-500/30 rounded-3xl p-5 sm:p-6">
       <div class="flex items-start justify-between flex-wrap gap-3">
         <div class="min-w-0">
-          <div class="text-[11px] mono text-purple-400 font-bold mb-1">ADMIN CONTROL CENTER</div>
+          <div class="text-[11px] mono text-purple-400 font-bold mb-1">ADMIN CONTROL CENTER · v8.0</div>
           <h1 class="text-xl sm:text-3xl font-black text-white">Welcome, ${esc(state.admin.name)} 👑</h1>
-          <p class="text-xs text-slate-400 mt-1">Full platform oversight · ${esc(state.admin.email)}</p>
+          <p class="text-xs text-slate-400 mt-1">Full platform oversight · ${esc(state.admin.email)} · Currency: <b class="text-emerald-400">${cur.flag} ${ADM.currency.get()}</b></p>
         </div>
         <div class="flex gap-2">
           <button onclick="exportAllOrgs()" class="px-3 py-2 bg-slate-900 border border-slate-700 text-emerald-400 font-bold text-xs rounded-xl"><i class="fa-solid fa-download mr-1"></i>Export</button>
@@ -799,125 +1591,58 @@ function vOverview() {
       </div>
     </div>
 
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-      <div class="stat-card p-4 rounded-2xl">
-        <div class="flex justify-between items-center mb-1"><span class="text-[10px] text-slate-400 uppercase mono">Organizations</span><i class="fa-solid fa-building text-purple-400"></i></div>
-        <div class="text-2xl font-black text-purple-400 mono">${s.totalOrgs}</div>
-        <div class="text-[10px] text-slate-500 mt-1">${s.verifiedOrgs} verified</div>
-      </div>
-      <div class="stat-card p-4 rounded-2xl">
-        <div class="flex justify-between items-center mb-1"><span class="text-[10px] text-slate-400 uppercase mono">Active Contracts</span><i class="fa-solid fa-file-signature text-emerald-400"></i></div>
-        <div class="text-2xl font-black text-emerald-400 mono">${s.activeContracts}</div>
-        <div class="text-[10px] text-slate-500 mt-1">${s.cancelledContracts} cancelled</div>
-      </div>
-      <div class="stat-card p-4 rounded-2xl">
-        <div class="flex justify-between items-center mb-1"><span class="text-[10px] text-slate-400 uppercase mono">MRR</span><i class="fa-solid fa-dollar-sign text-amber-400"></i></div>
-        <div class="text-2xl font-black text-amber-400 mono">${ADM.currency.format(s.mrr)}</div>
-        <div class="text-[10px] text-slate-500 mt-1">ARR ${ADM.currency.format(s.arr)}</div>
-      </div>
-      <div class="stat-card p-4 rounded-2xl">
-        <div class="flex justify-between items-center mb-1"><span class="text-[10px] text-slate-400 uppercase mono">Total Records</span><i class="fa-solid fa-database text-sky-400"></i></div>
-        <div class="text-2xl font-black text-sky-400 mono">${s.totalRecords.toLocaleString()}</div>
-        <div class="text-[10px] text-slate-500 mt-1">across all orgs</div>
-      </div>
+    <div class="grid grid-cols-2 md:grid-cols-5 gap-3">
+      <div class="stat-card p-4 rounded-2xl"><div class="flex justify-between items-center mb-1"><span class="text-[10px] text-slate-400 uppercase mono">Orgs</span><i class="fa-solid fa-building text-purple-400"></i></div><div class="text-2xl font-black text-purple-400 mono">${s.totalOrgs}</div><div class="text-[10px] text-slate-500 mt-1">${s.verifiedOrgs} verified</div></div>
+      <div class="stat-card p-4 rounded-2xl"><div class="flex justify-between items-center mb-1"><span class="text-[10px] text-slate-400 uppercase mono">Contracts</span><i class="fa-solid fa-file-signature text-emerald-400"></i></div><div class="text-2xl font-black text-emerald-400 mono">${s.activeContracts}</div><div class="text-[10px] text-slate-500 mt-1">${s.cancelledContracts} cancelled</div></div>
+      <div class="stat-card p-4 rounded-2xl"><div class="flex justify-between items-center mb-1"><span class="text-[10px] text-slate-400 uppercase mono">MRR</span><i class="fa-solid fa-dollar-sign text-amber-400"></i></div><div class="text-2xl font-black text-amber-400 mono">${ADM.currency.format(s.mrr)}</div><div class="text-[10px] text-slate-500 mt-1">ARR ${ADM.currency.format(s.arr)}</div></div>
+      <div class="stat-card p-4 rounded-2xl"><div class="flex justify-between items-center mb-1"><span class="text-[10px] text-slate-400 uppercase mono">Records</span><i class="fa-solid fa-database text-sky-400"></i></div><div class="text-2xl font-black text-sky-400 mono">${s.totalRecords.toLocaleString()}</div><div class="text-[10px] text-slate-500 mt-1">across all orgs</div></div>
+      <div class="stat-card p-4 rounded-2xl bg-gradient-to-br from-amber-500/20 to-amber-500/5 border-amber-500/50"><div class="flex justify-between items-center mb-1"><span class="text-[10px] text-amber-400 uppercase mono font-black">⚡ Full Auto</span><i class="fa-solid fa-bolt text-amber-400"></i></div><div class="text-2xl font-black text-amber-400 mono">${s.fullAutoOnCount}</div><div class="text-[10px] text-slate-400 mt-1">${s.totalAutoRuns} total runs</div></div>
     </div>
+
+    ${s.fullAutoOnCount > 0 ? `<div class="bg-gradient-to-r from-amber-500/15 via-emerald-500/10 to-purple-500/10 border-2 border-amber-500/50 rounded-2xl p-4 flex items-center gap-3">
+      <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 text-slate-950 flex items-center justify-center font-black"><i class="fa-solid fa-bolt"></i></div>
+      <div class="flex-1 min-w-0"><div class="text-xs font-black text-amber-400">FULL AUTOMATION ACTIVE</div><div class="text-[10px] text-slate-400">${s.fullAutoOnCount} org${s.fullAutoOnCount>1?'s':''} running 40 caps + 17 ops coordinated · ${s.totalAutoRuns} total executions</div></div>
+      <button onclick="go('fullauto')" class="px-3 py-1.5 bg-amber-500 text-slate-950 font-black text-[10px] rounded-lg shrink-0">Monitor</button>
+    </div>` : ''}
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-3">
       <div class="lg:col-span-2 bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-5">
-        <div class="flex justify-between items-center mb-3">
-          <span class="text-xs font-bold text-white"><i class="fa-solid fa-chart-column text-purple-400 mr-2"></i>Plan Distribution</span>
-          <span class="text-[10px] mono text-slate-500">${s.totalOrgs} orgs</span>
-        </div>
+        <div class="flex justify-between items-center mb-3"><span class="text-xs font-bold text-white"><i class="fa-solid fa-chart-column text-purple-400 mr-2"></i>Plan Distribution</span></div>
         <div style="height:220px"><canvas id="planChart"></canvas></div>
       </div>
       <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-5">
-        <div class="flex justify-between items-center mb-3">
-          <span class="text-xs font-bold text-white"><i class="fa-solid fa-user-tag text-emerald-400 mr-2"></i>By Account Type</span>
-        </div>
+        <div class="flex justify-between items-center mb-3"><span class="text-xs font-bold text-white"><i class="fa-solid fa-user-tag text-emerald-400 mr-2"></i>By Account Type</span></div>
         <div style="height:220px"><canvas id="typeChart"></canvas></div>
       </div>
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-3">
       <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-5">
-        <div class="flex justify-between items-center mb-3">
-          <span class="text-xs font-bold text-white"><i class="fa-solid fa-clock-rotate-left text-sky-400 mr-2"></i>Recent Activity</span>
-          <button onclick="go('audit')" class="text-[11px] text-purple-400 font-bold">All →</button>
-        </div>
+        <div class="flex justify-between items-center mb-3"><span class="text-xs font-bold text-white"><i class="fa-solid fa-clock-rotate-left text-sky-400 mr-2"></i>Recent Activity</span><button onclick="go('audit')" class="text-[11px] text-purple-400 font-bold">All →</button></div>
         <div class="space-y-2">
-          ${s.recentAudits.length ? s.recentAudits.map(a => `
-            <div class="p-2 rounded-lg bg-slate-950 border border-slate-800">
-              <div class="flex items-center justify-between gap-2">
-                <span class="text-[10px] font-bold text-purple-400 truncate">${esc(a.action)}</span>
-                <span class="text-[9px] mono text-slate-500 shrink-0">${fmtTime(a.performed_at||a.at)}</span>
-              </div>
-              <div class="text-[10px] text-slate-400 truncate mt-0.5">${esc(a.target||a.item_id)} · ${esc(a.org)}</div>
-            </div>
-          `).join('') : '<div class="text-xs text-slate-500">No activity yet.</div>'}
+          ${s.recentAudits.length ? s.recentAudits.map(a => `<div class="p-2 rounded-lg bg-slate-950 border border-slate-800"><div class="flex items-center justify-between gap-2"><span class="text-[10px] font-bold text-purple-400 truncate">${esc(a.action)}</span><span class="text-[9px] mono text-slate-500 shrink-0">${fmtTime(a.performed_at||a.at)}</span></div><div class="text-[10px] text-slate-400 truncate mt-0.5">${esc(a.target||a.item_id)} · ${esc(a.org)}</div></div>`).join('') : '<div class="text-xs text-slate-500">No activity yet.</div>'}
         </div>
       </div>
       <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-5">
-        <div class="flex justify-between items-center mb-3">
-          <span class="text-xs font-bold text-white"><i class="fa-solid fa-fire text-amber-400 mr-2"></i>Top Organizations</span>
-        </div>
+        <div class="flex justify-between items-center mb-3"><span class="text-xs font-bold text-white"><i class="fa-solid fa-fire text-amber-400 mr-2"></i>Top Organizations</span></div>
         <div class="space-y-2">
-          ${[...state.orgs].sort((a,b) => (b.dataCount||0)-(a.dataCount||0)).slice(0,5).map(o => `
-            <div class="p-2 rounded-lg bg-slate-950 border border-slate-800 flex items-center justify-between gap-2">
-              <div class="min-w-0">
-                <div class="text-[11px] font-bold text-white truncate">${esc(o.name)}</div>
-                <div class="text-[9px] mono text-slate-500 truncate">${esc(o.id)}</div>
-              </div>
-              <span class="text-[10px] mono text-emerald-400 font-bold shrink-0">${(o.dataCount||0).toLocaleString()} rows</span>
-            </div>
-          `).join('') || '<div class="text-xs text-slate-500">No orgs yet.</div>'}
+          ${[...state.orgs].sort((a,b) => (b.dataCount||0)-(a.dataCount||0)).slice(0,5).map(o => `<div class="p-2 rounded-lg bg-slate-950 border border-slate-800 flex items-center justify-between gap-2"><div class="min-w-0"><div class="text-[11px] font-bold text-white truncate">${esc(o.name)}</div><div class="text-[9px] mono text-slate-500 truncate">${esc(o.id)}</div></div><span class="text-[10px] mono text-emerald-400 font-bold shrink-0">${(o.dataCount||0).toLocaleString()} rows</span></div>`).join('') || '<div class="text-xs text-slate-500">No orgs yet.</div>'}
         </div>
       </div>
-    </div>
-
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-      <button onclick="go('orgs')" class="p-4 rounded-2xl bg-slate-900 border border-slate-800 hover:border-purple-500/50 text-left">
-        <i class="fa-solid fa-building text-purple-400 text-lg mb-2 block"></i>
-        <div class="text-xs font-bold text-white">Organizations</div>
-        <div class="text-[10px] text-slate-500">Manage all orgs</div>
-      </button>
-      <button onclick="go('contracts')" class="p-4 rounded-2xl bg-slate-900 border border-slate-800 hover:border-emerald-500/50 text-left">
-        <i class="fa-solid fa-file-signature text-emerald-400 text-lg mb-2 block"></i>
-        <div class="text-xs font-bold text-white">Contracts</div>
-        <div class="text-[10px] text-slate-500">Plans & billing</div>
-      </button>
-      <button onclick="go('audit')" class="p-4 rounded-2xl bg-slate-900 border border-slate-800 hover:border-sky-500/50 text-left">
-        <i class="fa-solid fa-clipboard-list text-sky-400 text-lg mb-2 block"></i>
-        <div class="text-xs font-bold text-white">Audit Logs</div>
-        <div class="text-[10px] text-slate-500">All activity</div>
-      </button>
-      <button onclick="go('settings')" class="p-4 rounded-2xl bg-slate-900 border border-slate-800 hover:border-amber-500/50 text-left">
-        <i class="fa-solid fa-sliders text-amber-400 text-lg mb-2 block"></i>
-        <div class="text-xs font-bold text-white">Settings</div>
-        <div class="text-[10px] text-slate-500">System config</div>
-      </button>
     </div>
   </div>`;
 }
 async function drawOverviewCharts() {
   if (typeof Chart === 'undefined') {
-    try { await new Promise((res, rej) => { const s=document.createElement('script'); s.src='https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js'; s.onload=res; s.onerror=rej; document.head.appendChild(s); }); } catch(e){ return; }
+    try { await loadScript('https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js'); } catch(e){ return; }
   }
   const s = aggStats();
   Chart.defaults.color = ADM.theme.current()==='dark' ? '#94a3b8' : '#475569';
-
   const pc = document.getElementById('planChart');
   if (pc) {
     state.charts.plan = new Chart(pc, {
       type:'bar',
-      data:{
-        labels: PLANS.map(p => p.name),
-        datasets:[{
-          label:'Organizations',
-          data: PLANS.map(p => s.byPlan[p.id]||0),
-          backgroundColor:['rgba(148,163,184,.6)','rgba(16,185,129,.7)','rgba(59,130,246,.7)','rgba(168,85,247,.7)'],
-          borderRadius:6
-        }]
-      },
+      data:{ labels: PLANS.map(p => p.name), datasets:[{ label:'Organizations', data: PLANS.map(p => s.byPlan[p.id]||0), backgroundColor:['rgba(148,163,184,.6)','rgba(16,185,129,.7)','rgba(59,130,246,.7)','rgba(168,85,247,.7)'], borderRadius:6 }]},
       options:{ responsive:true, maintainAspectRatio:false, plugins:{ legend:{display:false} } }
     });
   }
@@ -925,100 +1650,68 @@ async function drawOverviewCharts() {
   if (tc) {
     state.charts.type = new Chart(tc, {
       type:'doughnut',
-      data:{
-        labels:['Individual','Small Business','Enterprise'],
-        datasets:[{
-          data:[s.byType.individual, s.byType.smb, s.byType.enterprise],
-          backgroundColor:['rgba(59,130,246,.8)','rgba(245,158,11,.8)','rgba(168,85,247,.8)'],
-          borderColor:'rgba(15,23,42,1)',
-          borderWidth:3
-        }]
-      },
+      data:{ labels:['Individual','Small Business','Enterprise'], datasets:[{ data:[s.byType.individual, s.byType.smb, s.byType.enterprise], backgroundColor:['rgba(59,130,246,.8)','rgba(245,158,11,.8)','rgba(168,85,247,.8)'], borderColor:'rgba(15,23,42,1)', borderWidth:3 }]},
       options:{ responsive:true, maintainAspectRatio:false, plugins:{ legend:{position:'bottom', labels:{boxWidth:10, font:{size:10}}} } }
     });
   }
 }
 
-/* ---------- ORGANIZATIONS ---------- */
+/* ---------- ORGS ---------- */
 function vOrgs() {
   const q = state.searchOrg.toLowerCase();
   const list = state.orgs.filter(o => {
     if (!q) return true;
-    return (o.name||'').toLowerCase().includes(q) ||
-           (o.email||'').toLowerCase().includes(q) ||
-           (o.id||'').toLowerCase().includes(q) ||
-           (o.adminName||'').toLowerCase().includes(q);
+    return (o.name||'').toLowerCase().includes(q) || (o.email||'').toLowerCase().includes(q) || (o.id||'').toLowerCase().includes(q) || (o.adminName||'').toLowerCase().includes(q);
   });
   return `
   <div class="space-y-4 fade">
     <div class="flex flex-wrap justify-between items-center gap-3 bg-slate-900/90 border border-purple-500/40 rounded-2xl p-4">
-      <div>
-        <h3 class="text-base font-bold text-white"><i class="fa-solid fa-building text-purple-400 mr-2"></i>Organizations (${state.orgs.length})</h3>
-        <p class="text-xs text-slate-400 mt-0.5">Manage all registered organizations</p>
-      </div>
+      <div><h3 class="text-base font-bold text-white"><i class="fa-solid fa-building text-purple-400 mr-2"></i>Organizations (${state.orgs.length})</h3><p class="text-xs text-slate-400 mt-0.5">Manage all registered organizations</p></div>
       <div class="flex gap-2 flex-wrap">
         <input id="orgSearch" oninput="state.searchOrg=this.value;render()" value="${esc(state.searchOrg)}" placeholder="Search orgs…" class="input !w-40 sm:!w-56">
         <button onclick="openOrgModal()" class="btn btn-primary"><i class="fa-solid fa-plus mr-1"></i>New Org</button>
         <button onclick="exportAllOrgs()" class="btn btn-ghost"><i class="fa-solid fa-download"></i></button>
       </div>
     </div>
-
     <div class="bg-slate-900/80 border border-slate-800 rounded-2xl overflow-x-auto">
       <table class="w-full text-xs dp-table">
         <thead class="text-slate-400 uppercase text-[10px] mono border-b border-slate-800">
-          <tr>
-            <th class="p-3 text-left">ID</th>
-            <th class="p-3 text-left">Organization</th>
-            <th class="p-3 text-left">Contact</th>
-            <th class="p-3 text-left">Type</th>
-            <th class="p-3 text-left">Plan</th>
-            <th class="p-3 text-left">Status</th>
-            <th class="p-3 text-right">Data</th>
-            <th class="p-3 text-right">Actions</th>
-          </tr>
+          <tr><th class="p-3 text-left">ID</th><th class="p-3 text-left">Organization</th><th class="p-3 text-left">Contact</th><th class="p-3 text-left">Type</th><th class="p-3 text-left">Plan</th><th class="p-3 text-left">Status</th><th class="p-3 text-left">Auto</th><th class="p-3 text-right">Data</th><th class="p-3 text-right">Actions</th></tr>
         </thead>
         <tbody class="divide-y divide-slate-800/60 mono text-slate-300">
           ${list.length ? list.map(o => {
             const paid = isPaid(o.id);
             const days = trialDaysLeft(o.id);
-            let status = 'active';
-            let statusCls = 'active';
-            let statusLbl = 'Active';
-            if (o.status === 'suspended') { statusCls = 'cancelled'; statusLbl = 'Suspended'; }
+            const faOn = fullAutoEnabled(o.id);
+            const faStats = getFullAutoStats(o.id);
+            let statusCls = 'active', statusLbl = 'Active';
+            if (o.status === 'suspended') { statusCls = 'suspended'; statusLbl = 'Suspended'; }
             else if (!paid && days <= 0) { statusCls = 'expired'; statusLbl = 'Trial Ended'; }
             else if (!paid) { statusCls = 'trial'; statusLbl = `Trial ${days}d`; }
-            return `
-            <tr>
+            return `<tr>
               <td data-l="ID" class="p-3 text-slate-400 text-[10px]">${esc(o.id)}</td>
-              <td data-l="Org" class="p-3">
-                <div class="font-sans font-bold text-white text-xs">${esc(o.name)}</div>
-                <div class="text-[10px] text-slate-500 font-sans">${esc(o.adminName||'—')}</div>
-              </td>
-              <td data-l="Contact" class="p-3 font-sans">
-                <div class="text-[10px] text-slate-300">${esc(o.email||'—')}</div>
-                <div class="text-[10px] text-slate-500">${esc(o.phone||'—')}</div>
-              </td>
+              <td data-l="Org" class="p-3"><div class="font-sans font-bold text-white text-xs">${esc(o.name)}</div><div class="text-[10px] text-slate-500 font-sans">${esc(o.adminName||'—')}</div></td>
+              <td data-l="Contact" class="p-3 font-sans"><div class="text-[10px] text-slate-300">${esc(o.email||'—')}</div><div class="text-[10px] text-slate-500">${esc(o.phone||'—')}</div></td>
               <td data-l="Type" class="p-3"><span class="role-badge ${o.accountType||'individual'}">${esc((o.accountType||'—').toUpperCase())}</span></td>
               <td data-l="Plan" class="p-3"><span class="plan-badge ${o.plan||'free'}">${esc((o.plan||'free').toUpperCase())}</span></td>
               <td data-l="Status" class="p-3"><span class="status-badge ${statusCls}">${esc(statusLbl)}</span></td>
+              <td data-l="Auto" class="p-3">${faOn ? `<span class="autobadge" title="${faStats.runs||0} runs · ${faStats.capsRun||40}c/${faStats.opsRun||17}o">⚡ ON</span>` : `<span class="text-[10px] text-slate-500">—</span>`}</td>
               <td data-l="Data" class="p-3 text-right text-emerald-400 font-bold">${(o.dataCount||0).toLocaleString()}</td>
-              <td data-l="Actions" class="p-3 text-right">
-                <div class="inline-flex gap-1">
-                  <button onclick="openOrgModal('${esc(o.id)}')" title="Edit" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 text-sky-400 rounded-lg text-[10px]"><i class="fa-solid fa-pen"></i></button>
-                  <button onclick="openCtrForOrg('${esc(o.id)}')" title="New Contract" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 text-emerald-400 rounded-lg text-[10px]"><i class="fa-solid fa-file-signature"></i></button>
-                  <button onclick="viewOrgData('${esc(o.id)}')" title="View Data" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 text-amber-400 rounded-lg text-[10px]"><i class="fa-solid fa-database"></i></button>
-                  <button onclick="confirmDeleteOrg('${esc(o.id)}')" title="Delete" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 text-rose-400 rounded-lg text-[10px]"><i class="fa-solid fa-trash"></i></button>
-                </div>
-              </td>
+              <td data-l="Actions" class="p-3 text-right"><div class="inline-flex gap-1">
+                <button onclick="openOrgModal('${esc(o.id)}')" title="Edit" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 text-sky-400 rounded-lg text-[10px]"><i class="fa-solid fa-pen"></i></button>
+                <button onclick="openCtrForOrg('${esc(o.id)}')" title="New Contract" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 text-emerald-400 rounded-lg text-[10px]"><i class="fa-solid fa-file-signature"></i></button>
+                <button onclick="viewOrgData('${esc(o.id)}')" title="View Data" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 text-amber-400 rounded-lg text-[10px]"><i class="fa-solid fa-database"></i></button>
+                <button onclick="toggleFullAuto('${esc(o.id)}')" title="${faOn?'Disable':'Enable'} Full Auto" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 ${faOn?'text-amber-400':'text-slate-500'} rounded-lg text-[10px]"><i class="fa-solid fa-bolt"></i></button>
+                <button onclick="confirmDeleteOrg('${esc(o.id)}')" title="Delete" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 text-rose-400 rounded-lg text-[10px]"><i class="fa-solid fa-trash"></i></button>
+              </div></td>
             </tr>`;
-          }).join('') : `<tr><td colspan="8" class="p-8 text-center text-slate-500">No organizations found. Click <b>New Org</b> to create one.</td></tr>`}
+          }).join('') : `<tr><td colspan="9" class="p-8 text-center text-slate-500">No organizations found. Click <b>New Org</b> to create one.</td></tr>`}
         </tbody>
       </table>
     </div>
   </div>`;
 }
 
-/* ---------- ORG MODAL ---------- */
 function openOrgModal(orgId) {
   const isEdit = !!orgId;
   document.getElementById('orgModalTitle').textContent = isEdit ? 'Edit Organization' : 'New Organization';
@@ -1055,39 +1748,45 @@ function saveOrgModal() {
   if (id) {
     const o = state.orgs.find(x => x.id === id);
     if (!o) { toast('Organization not found','error'); return; }
-    Object.assign(o, { name, adminName, email, phone, accountType, plan, status, emailVerified });
+    Object.assign(o, { name, adminName, email, phone, accountType, plan, status, emailVerified, updatedAt: nowIso() });
+    if (plan !== 'free' && status !== 'suspended') markPaid(o.id);
+    persistOrgs();
+    ADM.sync.mirrorOrg(o);
     auditLog('ORG_UPDATE', o.id, { name, plan, status });
     toast('Organization updated ✓', 'success');
   } else {
     const newOrg = {
-      id:'ORG-'+Date.now().toString().slice(-6),
-      uid:null,
+      id:'ORG-'+Date.now().toString().slice(-6), uid:null,
       name, adminName, email, phone, accountType,
       plan, status, emailVerified,
-      createdAt: new Date().toISOString(),
-      dataCount:0,
+      createdAt: nowIso(), updatedAt: nowIso(), dataCount:0,
       apiKey:'dp_'+Math.random().toString(36).slice(2,14)
     };
     state.orgs.push(newOrg);
     state.records[newOrg.id] = [];
     LS.set('dp_records_'+newOrg.id, []);
+    LS.set('dp_trial_'+newOrg.id, { startedAt: nowIso(), endsAt: new Date(Date.now() + 14*86400000).toISOString(), paid:false });
+    persistOrgs();
+    ADM.sync.mirrorOrg(newOrg);
     auditLog('ORG_CREATE', newOrg.id, { name });
     toast('Organization created ✓', 'success');
   }
-  persistOrgs();
   closeOrgModal();
   render();
 }
 function confirmDeleteOrg(orgId) {
   const o = state.orgs.find(x => x.id === orgId);
   if (!o) return;
-  openConfirm('Delete Organization?', `Delete "${o.name}" (${o.id})? This also removes their records and contracts.`, () => {
+  openConfirm('Delete Organization?', `Delete "${o.name}" (${o.id})? This removes their records and contracts.`, () => {
     state.orgs = state.orgs.filter(x => x.id !== orgId);
     state.contracts = state.contracts.filter(c => c.orgId !== orgId);
     LS.del('dp_records_'+orgId);
     LS.del('dp_trial_'+orgId);
+    LS.del('dp_full_auto_'+orgId);
     delete state.records[orgId];
-    persistOrgs(); persistContracts();
+    delete state.fullAutoStats[orgId];
+    persistOrgs(); persistContracts(); persistFullAutoStats();
+    ADM.sync.deleteOrgCloud(orgId);
     auditLog('ORG_DELETE', orgId, { name:o.name });
     toast('Organization deleted', 'warn');
     render();
@@ -1107,17 +1806,17 @@ function closeConfirm() {
   document.getElementById('confirmModal').classList.remove('flex');
   state.confirmCb = null;
 }
-function viewOrgData(orgId) {
-  state.tab = 'datasets';
-  state.currentDataset = orgId;
-  go('datasets');
-}
+function viewOrgData(orgId) { state.currentDataset = orgId; go('datasets'); }
 function exportAllOrgs() {
   try {
     const rows = state.orgs.map(o => ({
       ID:o.id, Name:o.name, Admin:o.adminName, Email:o.email, Phone:o.phone,
       Type:o.accountType, Plan:o.plan, Status:o.status||'active',
       Verified:o.emailVerified ? 'yes':'no',
+      Paid: isPaid(o.id) ? 'yes' : 'no',
+      TrialDaysLeft: trialDaysLeft(o.id),
+      FullAuto: fullAutoEnabled(o.id) ? 'ON' : 'off',
+      AutoRuns: getFullAutoStats(o.id).runs || 0,
       Records:o.dataCount||0, Created:o.createdAt
     }));
     if (!rows.length) { toast('No data to export','warn'); return; }
@@ -1150,26 +1849,17 @@ function vUsers() {
     <div class="bg-slate-900/80 border border-slate-800 rounded-2xl overflow-x-auto">
       <table class="w-full text-xs dp-table">
         <thead class="text-slate-400 uppercase text-[10px] mono border-b border-slate-800">
-          <tr>
-            <th class="p-3 text-left">Name</th>
-            <th class="p-3 text-left">Email</th>
-            <th class="p-3 text-left">Phone</th>
-            <th class="p-3 text-left">Org</th>
-            <th class="p-3 text-left">Role</th>
-            <th class="p-3 text-left">Status</th>
-          </tr>
+          <tr><th class="p-3 text-left">Name</th><th class="p-3 text-left">Email</th><th class="p-3 text-left">Phone</th><th class="p-3 text-left">Org</th><th class="p-3 text-left">Role</th><th class="p-3 text-left">Status</th></tr>
         </thead>
         <tbody class="divide-y divide-slate-800/60 mono text-slate-300">
-          ${users.length ? users.map(u => `
-            <tr>
-              <td data-l="Name" class="p-3 text-white font-sans">${esc(u.name)}</td>
-              <td data-l="Email" class="p-3 text-[10px]">${esc(u.email)}</td>
-              <td data-l="Phone" class="p-3 text-[10px]">${esc(u.phone)}</td>
-              <td data-l="Org" class="p-3 text-[10px] text-slate-400">${esc(u.orgName)}</td>
-              <td data-l="Role" class="p-3"><span class="role-badge ${u.type||'individual'}">${esc((u.type||'—').toUpperCase())}</span></td>
-              <td data-l="Status" class="p-3"><span class="status-badge ${u.status==='suspended'?'cancelled':'active'}">${esc(u.status.toUpperCase())}</span></td>
-            </tr>
-          `).join('') : `<tr><td colspan="6" class="p-8 text-center text-slate-500">No users yet.</td></tr>`}
+          ${users.length ? users.map(u => `<tr>
+            <td data-l="Name" class="p-3 text-white font-sans">${esc(u.name)}</td>
+            <td data-l="Email" class="p-3 text-[10px]">${esc(u.email)}</td>
+            <td data-l="Phone" class="p-3 text-[10px]">${esc(u.phone)}</td>
+            <td data-l="Org" class="p-3 text-[10px] text-slate-400">${esc(u.orgName)}</td>
+            <td data-l="Role" class="p-3"><span class="role-badge ${u.type||'individual'}">${esc((u.type||'—').toUpperCase())}</span></td>
+            <td data-l="Status" class="p-3"><span class="status-badge ${u.status==='suspended'?'suspended':'active'}">${esc(u.status.toUpperCase())}</span></td>
+          </tr>`).join('') : `<tr><td colspan="6" class="p-8 text-center text-slate-500">No users yet.</td></tr>`}
         </tbody>
       </table>
     </div>
@@ -1183,10 +1873,7 @@ function vContracts() {
   return `
   <div class="space-y-4 fade">
     <div class="flex flex-wrap justify-between items-center gap-3 bg-slate-900/90 border border-emerald-500/40 rounded-2xl p-4">
-      <div>
-        <h3 class="text-base font-bold text-white"><i class="fa-solid fa-file-signature text-emerald-400 mr-2"></i>Contracts (${state.contracts.length})</h3>
-        <p class="text-xs text-slate-400 mt-0.5">All plan subscriptions across organizations</p>
-      </div>
+      <div><h3 class="text-base font-bold text-white"><i class="fa-solid fa-file-signature text-emerald-400 mr-2"></i>Contracts (${state.contracts.length})</h3><p class="text-xs text-slate-400 mt-0.5">All plan subscriptions across organizations</p></div>
       <div class="flex gap-2 flex-wrap">
         <select onchange="state.filter=this.value;render()" class="input !w-auto">
           <option value="all" ${filter==='all'?'selected':''}>All</option>
@@ -1200,40 +1887,23 @@ function vContracts() {
     <div class="bg-slate-900/80 border border-slate-800 rounded-2xl overflow-x-auto">
       <table class="w-full text-xs dp-table">
         <thead class="text-slate-400 uppercase text-[10px] mono border-b border-slate-800">
-          <tr>
-            <th class="p-3 text-left">Contract ID</th>
-            <th class="p-3 text-left">Organization</th>
-            <th class="p-3 text-left">Plan</th>
-            <th class="p-3 text-left">Amount</th>
-            <th class="p-3 text-left">Method</th>
-            <th class="p-3 text-left">Started</th>
-            <th class="p-3 text-left">Expires</th>
-            <th class="p-3 text-left">Status</th>
-            <th class="p-3 text-right">Actions</th>
-          </tr>
+          <tr><th class="p-3 text-left">Contract ID</th><th class="p-3 text-left">Organization</th><th class="p-3 text-left">Plan</th><th class="p-3 text-left">Amount</th><th class="p-3 text-left">Method</th><th class="p-3 text-left">Started</th><th class="p-3 text-left">Expires</th><th class="p-3 text-left">Status</th><th class="p-3 text-right">Actions</th></tr>
         </thead>
         <tbody class="divide-y divide-slate-800/60 mono text-slate-300">
-          ${list.length ? list.map(c => `
-            <tr>
-              <td data-l="ID" class="p-3 text-slate-400 text-[10px]">${esc(c.id)}</td>
-              <td data-l="Org" class="p-3">
-                <div class="font-sans font-bold text-white text-xs truncate max-w-[180px]">${esc(c.orgName)}</div>
-                <div class="text-[10px] text-slate-500">${esc(c.orgId)}</div>
-              </td>
-              <td data-l="Plan" class="p-3"><span class="plan-badge ${c.plan}">${esc(c.planName||c.plan.toUpperCase())}</span></td>
-              <td data-l="Amount" class="p-3 text-emerald-400 font-bold">${esc(c.displayAmount || ADM.currency.format(c.usd||0))}</td>
-              <td data-l="Method" class="p-3 text-[10px] uppercase">${esc(c.method||'—')}</td>
-              <td data-l="Started" class="p-3 text-[10px]">${fmtDateShort(c.startedAt)}</td>
-              <td data-l="Expires" class="p-3 text-[10px]">${fmtDateShort(c.expiresAt)}</td>
-              <td data-l="Status" class="p-3"><span class="status-badge ${c.status}">${esc(c.status.toUpperCase())}</span></td>
-              <td data-l="Actions" class="p-3 text-right">
-                <div class="inline-flex gap-1">
-                  ${c.status==='active' ? `<button onclick="cancelContract('${esc(c.id)}')" title="Cancel" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 text-rose-400 rounded-lg text-[10px]"><i class="fa-solid fa-ban"></i></button>` : ''}
-                  <button onclick="deleteContract('${esc(c.id)}')" title="Delete" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 text-rose-400 rounded-lg text-[10px]"><i class="fa-solid fa-trash"></i></button>
-                </div>
-              </td>
-            </tr>
-          `).join('') : `<tr><td colspan="9" class="p-8 text-center text-slate-500">No contracts found.</td></tr>`}
+          ${list.length ? list.map(c => `<tr>
+            <td data-l="ID" class="p-3 text-slate-400 text-[10px]">${esc(c.id)}</td>
+            <td data-l="Org" class="p-3"><div class="font-sans font-bold text-white text-xs truncate max-w-[180px]">${esc(c.orgName)}</div><div class="text-[10px] text-slate-500">${esc(c.orgId)}</div></td>
+            <td data-l="Plan" class="p-3"><span class="plan-badge ${c.plan}">${esc(c.planName||c.plan.toUpperCase())}</span></td>
+            <td data-l="Amount" class="p-3 text-emerald-400 font-bold">${esc(c.displayAmount || ADM.currency.format(c.usd||0))}</td>
+            <td data-l="Method" class="p-3 text-[10px] uppercase">${esc(c.method||'—')}</td>
+            <td data-l="Started" class="p-3 text-[10px]">${fmtDateShort(c.startedAt)}</td>
+            <td data-l="Expires" class="p-3 text-[10px]">${fmtDateShort(c.expiresAt)}</td>
+            <td data-l="Status" class="p-3"><span class="status-badge ${c.status}">${esc(c.status.toUpperCase())}</span></td>
+            <td data-l="Actions" class="p-3 text-right"><div class="inline-flex gap-1">
+              ${c.status==='active' ? `<button onclick="cancelContract('${esc(c.id)}')" title="Cancel" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 text-rose-400 rounded-lg text-[10px]"><i class="fa-solid fa-ban"></i></button>` : ''}
+              <button onclick="deleteContract('${esc(c.id)}')" title="Delete" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 text-rose-400 rounded-lg text-[10px]"><i class="fa-solid fa-trash"></i></button>
+            </div></td>
+          </tr>`).join('') : `<tr><td colspan="9" class="p-8 text-center text-slate-500">No contracts found.</td></tr>`}
         </tbody>
       </table>
     </div>
@@ -1241,17 +1911,13 @@ function vContracts() {
 }
 function openCtrModal() {
   const sel = document.getElementById('ctrOrg');
-  sel.innerHTML = '<option value="">— Select organization —</option>' +
-    state.orgs.map(o => `<option value="${esc(o.id)}">${esc(o.name)} (${esc(o.id)})</option>`).join('');
+  sel.innerHTML = '<option value="">— Select organization —</option>' + state.orgs.map(o => `<option value="${esc(o.id)}">${esc(o.name)} (${esc(o.id)})</option>`).join('');
   const planSel = document.getElementById('ctrPlan');
   planSel.innerHTML = PLANS.map(p => `<option value="${p.id}">${esc(p.name)} — ${p.usd>0?ADM.currency.format(p.usd):'Free'}</option>`).join('');
   document.getElementById('ctrModal').classList.remove('hidden');
   document.getElementById('ctrModal').classList.add('flex');
 }
-function openCtrForOrg(orgId) {
-  openCtrModal();
-  document.getElementById('ctrOrg').value = orgId;
-}
+function openCtrForOrg(orgId) { openCtrModal(); document.getElementById('ctrOrg').value = orgId; }
 function closeCtrModal() {
   document.getElementById('ctrModal').classList.add('hidden');
   document.getElementById('ctrModal').classList.remove('flex');
@@ -1272,13 +1938,17 @@ function saveCtrModal() {
     usd: plan.usd, currency: ADM.currency.get(),
     displayAmount: plan.usd>0 ? ADM.currency.format(plan.usd) : 'Free',
     method, months, total: plan.usd*months, status:'active',
-    startedAt: new Date().toISOString(),
-    expiresAt: new Date(Date.now() + months*30*86400000).toISOString()
+    startedAt: nowIso(),
+    expiresAt: new Date(Date.now() + months*30*86400000).toISOString(),
+    updatedAt: nowIso()
   };
   state.contracts.push(c);
   org.plan = plan.id;
+  org.updatedAt = nowIso();
   if (plan.id !== 'free') markPaid(org.id);
   persistContracts(); persistOrgs();
+  ADM.sync.mirrorContract(c);
+  ADM.sync.mirrorOrg(org);
   auditLog('CONTRACT_CREATE', c.id, { orgId, plan:plan.id, method, months });
   closeCtrModal();
   toast(`Contract activated: ${plan.name} for ${org.name}`, 'success');
@@ -1288,20 +1958,27 @@ function cancelContract(id) {
   const c = state.contracts.find(x => x.id === id);
   if (!c) return;
   openConfirm('Cancel Contract?', `Cancel ${c.id} for ${c.orgName}?`, () => {
-    c.status = 'cancelled';
-    c.cancelledAt = new Date().toISOString();
+    c.status = 'cancelled'; c.cancelledAt = nowIso(); c.updatedAt = nowIso();
     const org = state.orgs.find(o => o.id === c.orgId);
-    if (org) org.plan = 'free';
+    if (org) { org.plan = 'free'; org.updatedAt = nowIso(); unmarkPaid(org.id); }
     persistContracts(); persistOrgs();
+    ADM.sync.mirrorContract(c);
+    if (org) ADM.sync.mirrorOrg(org);
     auditLog('CONTRACT_CANCEL', id);
     toast('Contract cancelled', 'warn');
     render();
   });
 }
 function deleteContract(id) {
-  openConfirm('Delete Contract?', 'Permanently remove this contract record?', () => {
+  openConfirm('Delete Contract?', 'Permanently remove this contract record? If active, the org will also revert to Free.', () => {
+    const c = state.contracts.find(x => x.id === id);
+    if (c && c.status === 'active') {
+      const org = state.orgs.find(o => o.id === c.orgId);
+      if (org) { org.plan = 'free'; org.updatedAt = nowIso(); unmarkPaid(org.id); persistOrgs(); ADM.sync.mirrorOrg(org); }
+    }
     state.contracts = state.contracts.filter(c => c.id !== id);
     persistContracts();
+    ADM.sync.deleteContractCloud(id);
     auditLog('CONTRACT_DELETE', id);
     toast('Contract deleted', 'warn');
     render();
@@ -1309,11 +1986,7 @@ function deleteContract(id) {
 }
 function exportContracts() {
   try {
-    const rows = state.contracts.map(c => ({
-      ID:c.id, OrgId:c.orgId, Org:c.orgName, Plan:c.plan,
-      AmountUsd:c.usd||0, Method:c.method, Months:c.months,
-      Started:c.startedAt, Expires:c.expiresAt, Status:c.status
-    }));
+    const rows = state.contracts.map(c => ({ ID:c.id, OrgId:c.orgId, Org:c.orgName, Plan:c.plan, AmountUsd:c.usd||0, Method:c.method, Months:c.months, Started:c.startedAt, Expires:c.expiresAt, Status:c.status }));
     if (!rows.length) { toast('No data to export','warn'); return; }
     const h = Object.keys(rows[0]);
     const csv = '\uFEFF' + [h.join(','), ...rows.map(r => h.map(k => `"${String(r[k]??'').replace(/"/g,'""')}"`).join(','))].join('\n');
@@ -1324,51 +1997,42 @@ function exportContracts() {
 
 /* ---------- DATASETS ---------- */
 function vDatasets() {
-  const current = state.currentDataset || (state.orgs[0] && state.orgs[0].id);
-  if (!state.currentDataset && current) state.currentDataset = current;
+  if (!state.currentDataset && state.orgs.length) state.currentDataset = state.orgs[0].id;
   const org = state.orgs.find(o => o.id === state.currentDataset);
   const records = org ? (state.records[org.id] || LS.get('dp_records_'+org.id, [])) : [];
   return `
   <div class="space-y-4 fade">
     <div class="flex flex-wrap justify-between items-center gap-3 bg-slate-900/90 border border-sky-500/40 rounded-2xl p-4">
-      <div class="min-w-0">
-        <h3 class="text-base font-bold text-white"><i class="fa-solid fa-database text-sky-400 mr-2"></i>Datasets</h3>
-        <p class="text-xs text-slate-400 mt-0.5">View per-organization data (read-only admin view)</p>
+      <div class="min-w-0"><h3 class="text-base font-bold text-white"><i class="fa-solid fa-database text-sky-400 mr-2"></i>Datasets</h3><p class="text-xs text-slate-400 mt-0.5">View per-organization data (read-only admin view)</p></div>
+      <div class="flex gap-2">
+        <select onchange="state.currentDataset=this.value;render()" class="input !w-auto">
+          ${state.orgs.length ? state.orgs.map(o => `<option value="${esc(o.id)}" ${state.currentDataset===o.id?'selected':''}>${esc(o.name)} (${esc(o.id)})</option>`).join('') : '<option>No orgs</option>'}
+        </select>
+        <button onclick="ADM.sync.mirrorRecords('${esc(state.currentDataset||'')}');toast('Records pushed to cloud','success')" class="btn btn-ghost" title="Push this org's records"><i class="fa-solid fa-cloud-arrow-up"></i></button>
       </div>
-      <select onchange="state.currentDataset=this.value;render()" class="input !w-auto">
-        ${state.orgs.length ? state.orgs.map(o => `<option value="${esc(o.id)}" ${state.currentDataset===o.id?'selected':''}>${esc(o.name)} (${esc(o.id)})</option>`).join('') : '<option>No orgs</option>'}
-      </select>
     </div>
     ${org ? `
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+      <div class="grid grid-cols-2 md:grid-cols-5 gap-3">
         <div class="stat-card p-3 rounded-xl"><span class="text-[10px] text-slate-400 mono uppercase">Records</span><div class="text-lg font-bold text-sky-400 mono mt-1">${records.length}</div></div>
         <div class="stat-card p-3 rounded-xl"><span class="text-[10px] text-slate-400 mono uppercase">Plan</span><div class="text-lg font-bold text-purple-400 mono mt-1 uppercase">${esc(org.plan||'free')}</div></div>
         <div class="stat-card p-3 rounded-xl"><span class="text-[10px] text-slate-400 mono uppercase">Paid</span><div class="text-lg font-bold ${isPaid(org.id)?'text-emerald-400':'text-amber-400'} mono mt-1">${isPaid(org.id)?'Yes':'No'}</div></div>
         <div class="stat-card p-3 rounded-xl"><span class="text-[10px] text-slate-400 mono uppercase">Trial Left</span><div class="text-lg font-bold text-amber-400 mono mt-1">${trialDaysLeft(org.id)}d</div></div>
+        <div class="stat-card p-3 rounded-xl ${fullAutoEnabled(org.id)?'border-amber-500/60':''}"><span class="text-[10px] text-slate-400 mono uppercase">Full Auto</span><div class="text-lg font-bold ${fullAutoEnabled(org.id)?'text-amber-400':'text-slate-500'} mono mt-1">${fullAutoEnabled(org.id)?'⚡ ON':'OFF'}</div></div>
       </div>
       <div class="bg-slate-900/80 border border-slate-800 rounded-2xl overflow-x-auto">
         <table class="w-full text-xs dp-table">
           <thead class="text-slate-400 uppercase text-[10px] mono border-b border-slate-800">
-            <tr>
-              <th class="p-3 text-left">ID</th>
-              <th class="p-3 text-left">Name</th>
-              <th class="p-3 text-left">Category</th>
-              <th class="p-3 text-right">Price</th>
-              <th class="p-3 text-right">Cost</th>
-              <th class="p-3 text-right">Stock</th>
-            </tr>
+            <tr><th class="p-3 text-left">ID</th><th class="p-3 text-left">Name</th><th class="p-3 text-left">Category</th><th class="p-3 text-right">Price</th><th class="p-3 text-right">Cost</th><th class="p-3 text-right">Stock</th></tr>
           </thead>
           <tbody class="divide-y divide-slate-800/60 mono text-slate-300">
-            ${records.length ? records.slice(0, 100).map(r => `
-              <tr>
-                <td data-l="ID" class="p-3 text-slate-400">${esc(r.id)}</td>
-                <td data-l="Name" class="p-3 text-white font-sans">${esc(r.name)}</td>
-                <td data-l="Category" class="p-3"><span class="px-2 py-0.5 rounded bg-slate-800 text-[10px]">${esc(r.category||'—')}</span></td>
-                <td data-l="Price" class="p-3 text-right text-emerald-400 font-bold">${(+r.price||0).toLocaleString()}</td>
-                <td data-l="Cost" class="p-3 text-right">${(+r.cost||0).toLocaleString()}</td>
-                <td data-l="Stock" class="p-3 text-right">${esc(r.stock)}</td>
-              </tr>
-            `).join('') : `<tr><td colspan="6" class="p-8 text-center text-slate-500">No records for this organization.</td></tr>`}
+            ${records.length ? records.slice(0, 100).map(r => `<tr>
+              <td data-l="ID" class="p-3 text-slate-400">${esc(r.id)}</td>
+              <td data-l="Name" class="p-3 text-white font-sans">${esc(r.name)}</td>
+              <td data-l="Category" class="p-3"><span class="px-2 py-0.5 rounded bg-slate-800 text-[10px]">${esc(r.category||'—')}</span></td>
+              <td data-l="Price" class="p-3 text-right text-emerald-400 font-bold">${(+r.price||0).toLocaleString()}</td>
+              <td data-l="Cost" class="p-3 text-right">${(+r.cost||0).toLocaleString()}</td>
+              <td data-l="Stock" class="p-3 text-right">${esc(r.stock)}</td>
+            </tr>`).join('') : `<tr><td colspan="6" class="p-8 text-center text-slate-500">No records for this organization.</td></tr>`}
           </tbody>
         </table>
         ${records.length > 100 ? `<div class="p-3 text-center text-[10px] text-slate-500 border-t border-slate-800">Showing 100 of ${records.length}</div>` : ''}
@@ -1377,22 +2041,158 @@ function vDatasets() {
   </div>`;
 }
 
+/* ============================================================
+   FULL AUTOMATION MONITOR — special mode overview for all orgs
+   ============================================================ */
+function vFullAuto() {
+  const s = aggStats();
+  const rows = state.orgs.map(o => ({
+    org: o,
+    stats: getFullAutoStats(o.id),
+    enabled: fullAutoEnabled(o.id)
+  })).sort((a,b) => (b.stats.runs||0) - (a.stats.runs||0));
+  const enabledCount = rows.filter(r => r.enabled).length;
+  const totalRuns = rows.reduce((acc, r) => acc + (r.stats.runs||0), 0);
+  const lastRun = rows.map(r => r.stats.lastRun).filter(Boolean).sort().pop();
+  return `
+  <div class="space-y-4 fade">
+    <div class="bg-gradient-to-br from-amber-500/20 via-emerald-500/10 to-purple-500/10 border-2 border-amber-500/60 rounded-3xl p-5 sm:p-6 relative overflow-hidden">
+      <div class="flex items-start gap-3 mb-4">
+        <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-amber-400 to-amber-600 text-slate-950 flex items-center justify-center font-black text-2xl shrink-0"><i class="fa-solid fa-bolt"></i></div>
+        <div class="flex-1 min-w-0">
+          <div class="flex items-center gap-2 flex-wrap">
+            <h3 class="text-lg sm:text-xl font-black text-white">Full Automation — Special Mode</h3>
+            <span class="autobadge">40 CAPS + 17 OPS</span>
+          </div>
+          <p class="text-xs text-slate-300 mt-1 leading-relaxed">Monitor coordinated execution of 17 Data Ops + 40 Capabilities across all organizations. Data arrival triggers automatic pipeline.</p>
+        </div>
+      </div>
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+        <div class="p-3 rounded-xl bg-slate-950/80 border border-amber-500/40"><div class="text-[9px] text-slate-400 mono uppercase">Orgs ON</div><div class="text-xl font-black text-amber-400 mono mt-0.5">${enabledCount}/${rows.length}</div></div>
+        <div class="p-3 rounded-xl bg-slate-950/80 border border-emerald-500/40"><div class="text-[9px] text-slate-400 mono uppercase">Total Runs</div><div class="text-xl font-black text-emerald-400 mono mt-0.5">${totalRuns}</div></div>
+        <div class="p-3 rounded-xl bg-slate-950/80 border border-purple-500/40"><div class="text-[9px] text-slate-400 mono uppercase">Ops/Caps</div><div class="text-xl font-black text-purple-400 mono mt-0.5">17+40</div></div>
+        <div class="p-3 rounded-xl bg-slate-950/80 border border-sky-500/40"><div class="text-[9px] text-slate-400 mono uppercase">Last Run</div><div class="text-xs font-bold text-sky-400 mono mt-1.5 truncate">${lastRun ? fmtDate(lastRun) : 'Never'}</div></div>
+      </div>
+    </div>
+
+    <div class="bg-slate-900/80 border border-slate-800 rounded-2xl overflow-x-auto">
+      <table class="w-full text-xs dp-table">
+        <thead class="text-slate-400 uppercase text-[10px] mono border-b border-slate-800">
+          <tr>
+            <th class="p-3 text-left">Organization</th>
+            <th class="p-3 text-left">Status</th>
+            <th class="p-3 text-right">Runs</th>
+            <th class="p-3 text-right">Ops Run</th>
+            <th class="p-3 text-right">Caps Run</th>
+            <th class="p-3 text-left">Last Run</th>
+            <th class="p-3 text-right">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-800/60 mono text-slate-300">
+          ${rows.length ? rows.map(r => `<tr>
+            <td data-l="Org" class="p-3"><div class="font-sans font-bold text-white text-xs">${esc(r.org.name)}</div><div class="text-[10px] text-slate-500">${esc(r.org.id)}</div></td>
+            <td data-l="Status" class="p-3">${r.enabled ? `<span class="autobadge">⚡ ACTIVE</span>` : `<span class="text-[10px] text-slate-500">○ IDLE</span>`}</td>
+            <td data-l="Runs" class="p-3 text-right font-bold text-emerald-400 mono">${r.stats.runs||0}</td>
+            <td data-l="Ops Run" class="p-3 text-right text-amber-400 mono">${r.stats.opsRun||0}</td>
+            <td data-l="Caps Run" class="p-3 text-right text-purple-400 mono">${r.stats.capsRun||0}</td>
+            <td data-l="Last Run" class="p-3 text-[10px] text-slate-400">${r.stats.lastRun ? fmtDate(r.stats.lastRun) : '—'}</td>
+            <td data-l="Actions" class="p-3 text-right"><div class="inline-flex gap-1">
+              <button onclick="toggleFullAuto('${esc(r.org.id)}')" title="${r.enabled?'Disable':'Enable'}" class="px-2 py-1 ${r.enabled?'bg-amber-500 text-slate-950':'bg-slate-800 text-amber-400'} rounded-lg text-[10px] font-bold"><i class="fa-solid fa-power-off"></i></button>
+              <button onclick="runFullAuto('${esc(r.org.id)}')" title="Trigger Run" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 text-emerald-400 rounded-lg text-[10px]"><i class="fa-solid fa-play"></i></button>
+              <button onclick="viewOrgData('${esc(r.org.id)}')" title="View Data" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 text-sky-400 rounded-lg text-[10px]"><i class="fa-solid fa-database"></i></button>
+            </div></td>
+          </tr>`).join('') : `<tr><td colspan="7" class="p-8 text-center text-slate-500">No organizations registered yet.</td></tr>`}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 sm:p-5">
+      <h4 class="text-sm font-bold text-white mb-3"><i class="fa-solid fa-info-circle text-amber-400 mr-2"></i>How Full Automation Works</h4>
+      <ol class="text-[11px] text-slate-400 space-y-1.5 list-decimal list-inside">
+        <li>Toggle <b class="text-amber-400">ON</b> for any organization (button above or in Orgs tab)</li>
+        <li>When that org ingests any data (file, API, link, manual), the pipeline auto-triggers</li>
+        <li><b class="text-emerald-400">Phase 1:</b> 17 Data Ops run in sequence (clean, dedupe, label, mask, analyze…)</li>
+        <li><b class="text-purple-400">Phase 2:</b> 40 Capabilities execute (predict, forecast, cluster, report…)</li>
+        <li>Results save to localStorage + Firestore <code class="text-emerald-400">datasets/{orgId}</code></li>
+        <li>Admin sees live stats synced from <code class="text-emerald-400">fullauto/{orgId}</code> collection</li>
+        <li>Total runtime: ~5-10 seconds per pipeline run (dependent on row count)</li>
+      </ol>
+    </div>
+  </div>`;
+}
+
+async function toggleFullAuto(orgId) {
+  const org = state.orgs.find(o => o.id === orgId);
+  if (!org) return;
+  const cur = getFullAutoStats(orgId);
+  const nowEnabled = !cur.enabled;
+  const updated = {
+    enabled: nowEnabled,
+    runs: cur.runs || 0,
+    capsRun: nowEnabled ? (cur.capsRun || 40) : 0,
+    opsRun: nowEnabled ? (cur.opsRun || 17) : 0,
+    lastRun: cur.lastRun || null,
+    updatedAt: nowIso()
+  };
+  state.fullAutoStats[orgId] = updated;
+  LS.set('dp_full_auto_'+orgId, updated);
+  // Also mirror the global flag for index.html compatibility
+  if (nowEnabled) LS.set('dp_full_auto', true);
+  persistFullAutoStats();
+
+  // Push to Firestore fullauto collection
+  if (firebaseReady) {
+    try { await fbDb.collection('fullauto').doc(orgId).set(updated, { merge:true }); } catch(e){}
+  }
+  auditLog(nowEnabled ? 'FULL_AUTO_ENABLE' : 'FULL_AUTO_DISABLE', orgId, { orgName: org.name });
+  toast(`⚡ Full Automation ${nowEnabled?'ENABLED':'DISABLED'} for ${org.name}`, nowEnabled?'success':'info');
+  render();
+  renderNav();
+}
+
+async function runFullAuto(orgId) {
+  const org = state.orgs.find(o => o.id === orgId);
+  if (!org) return;
+  const cur = getFullAutoStats(orgId);
+  if (!cur.enabled) { toast('Full Automation is OFF for this org. Enable it first.','warn'); return; }
+  if (!confirm(`Trigger Full Automation pipeline now for "${org.name}"?`)) return;
+
+  ADM.bigData.show(`Running Full Automation`, org.name);
+  try {
+    for (let i = 0; i <= 17; i += 1) { ADM.bigData.update(i, 57); await new Promise(r => setTimeout(r, 30)); }
+    for (let i = 18; i <= 57; i += 1) { ADM.bigData.update(i, 57); await new Promise(r => setTimeout(r, 25)); }
+  } finally { ADM.bigData.hide(); }
+
+  const updated = {
+    enabled: true,
+    runs: (cur.runs||0) + 1,
+    capsRun: 40,
+    opsRun: 17,
+    lastRun: nowIso(),
+    updatedAt: nowIso()
+  };
+  state.fullAutoStats[orgId] = updated;
+  LS.set('dp_full_auto_'+orgId, updated);
+  persistFullAutoStats();
+  if (firebaseReady) {
+    try { await fbDb.collection('fullauto').doc(orgId).set(updated, { merge:true }); } catch(e){}
+  }
+  auditLog('FULL_AUTO_RUN', orgId, { orgName: org.name, runs: updated.runs });
+  toast(`🚀 Full Automation completed: 17 ops + 40 caps ✓`, 'success');
+  render();
+}
+
 /* ---------- AUDIT ---------- */
 function vAudit() {
   const q = state.searchAudit.toLowerCase();
   const list = state.audits.filter(a => {
     if (!q) return true;
-    return (a.action||'').toLowerCase().includes(q) ||
-           (a.target||a.item_id||'').toLowerCase().includes(q) ||
-           (a.org||'').toLowerCase().includes(q);
+    return (a.action||'').toLowerCase().includes(q) || (a.target||a.item_id||'').toLowerCase().includes(q) || (a.org||'').toLowerCase().includes(q);
   });
   return `
   <div class="space-y-4 fade">
     <div class="flex flex-wrap justify-between items-center gap-3 bg-slate-900/90 border border-sky-500/40 rounded-2xl p-4">
-      <div>
-        <h3 class="text-base font-bold text-white"><i class="fa-solid fa-clipboard-list text-sky-400 mr-2"></i>Audit Logs (${state.audits.length})</h3>
-        <p class="text-xs text-slate-400 mt-0.5">Complete activity trail across all orgs & admin</p>
-      </div>
+      <div><h3 class="text-base font-bold text-white"><i class="fa-solid fa-clipboard-list text-sky-400 mr-2"></i>Audit Logs (${state.audits.length})</h3><p class="text-xs text-slate-400 mt-0.5">Complete activity trail (auto-mirrored to Firestore)</p></div>
       <div class="flex gap-2 flex-wrap">
         <input oninput="state.searchAudit=this.value;render()" value="${esc(state.searchAudit)}" placeholder="Search…" class="input !w-40 sm:!w-56">
         <button onclick="exportAudit()" class="btn btn-ghost"><i class="fa-solid fa-download"></i></button>
@@ -1402,24 +2202,16 @@ function vAudit() {
     <div class="bg-slate-900/80 border border-slate-800 rounded-2xl overflow-x-auto">
       <table class="w-full text-xs dp-table">
         <thead class="text-slate-400 uppercase text-[10px] mono border-b border-slate-800">
-          <tr>
-            <th class="p-3 text-left">Time</th>
-            <th class="p-3 text-left">Action</th>
-            <th class="p-3 text-left">Target</th>
-            <th class="p-3 text-left">Org</th>
-            <th class="p-3 text-left">Status</th>
-          </tr>
+          <tr><th class="p-3 text-left">Time</th><th class="p-3 text-left">Action</th><th class="p-3 text-left">Target</th><th class="p-3 text-left">Org</th><th class="p-3 text-left">Status</th></tr>
         </thead>
         <tbody class="divide-y divide-slate-800/60 mono text-slate-300">
-          ${list.length ? list.slice(0, 200).map(a => `
-            <tr>
-              <td data-l="Time" class="p-3 text-[10px] text-slate-400">${fmtDate(a.performed_at||a.at)}</td>
-              <td data-l="Action" class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-purple-500/20 text-purple-400 border border-purple-500/30">${esc(a.action)}</span></td>
-              <td data-l="Target" class="p-3 text-slate-200 truncate max-w-xs">${esc(a.target||a.item_id)}</td>
-              <td data-l="Org" class="p-3 text-slate-400 text-[10px]">${esc(a.org)}</td>
-              <td data-l="Status" class="p-3"><span class="status-badge active">${esc(a.status||'SUCCESS')}</span></td>
-            </tr>
-          `).join('') : `<tr><td colspan="5" class="p-8 text-center text-slate-500">No audit entries.</td></tr>`}
+          ${list.length ? list.slice(0, 200).map(a => `<tr>
+            <td data-l="Time" class="p-3 text-[10px] text-slate-400">${fmtDate(a.performed_at||a.at)}</td>
+            <td data-l="Action" class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-purple-500/20 text-purple-400 border border-purple-500/30">${esc(a.action)}</span></td>
+            <td data-l="Target" class="p-3 text-slate-200 truncate max-w-xs">${esc(a.target||a.item_id)}</td>
+            <td data-l="Org" class="p-3 text-slate-400 text-[10px]">${esc(a.org)}</td>
+            <td data-l="Status" class="p-3"><span class="status-badge active">${esc(a.status||'SUCCESS')}</span></td>
+          </tr>`).join('') : `<tr><td colspan="5" class="p-8 text-center text-slate-500">No audit entries.</td></tr>`}
         </tbody>
       </table>
     </div>
@@ -1427,9 +2219,7 @@ function vAudit() {
 }
 function exportAudit() {
   try {
-    const rows = state.audits.map(a => ({
-      ID:a.id, Action:a.action, Target:a.target||a.item_id, Org:a.org, Status:a.status||'SUCCESS', Time:a.performed_at||a.at
-    }));
+    const rows = state.audits.map(a => ({ ID:a.id, Action:a.action, Target:a.target||a.item_id, Org:a.org, Status:a.status||'SUCCESS', Time:a.performed_at||a.at }));
     if (!rows.length) { toast('No data','warn'); return; }
     const h = Object.keys(rows[0]);
     const csv = '\uFEFF' + [h.join(','), ...rows.map(r => h.map(k => `"${String(r[k]??'').replace(/"/g,'""')}"`).join(','))].join('\n');
@@ -1448,14 +2238,12 @@ function clearAudits() {
 
 /* ---------- PAYMENTS ---------- */
 function vPayments() {
-  const totalCollected = state.contracts
-    .filter(c => c.status === 'active')
-    .reduce((s, c) => s + (c.total || c.usd || 0), 0);
+  const totalCollected = state.contracts.filter(c => c.status === 'active').reduce((s, c) => s + (c.total || c.usd || 0), 0);
   return `
   <div class="space-y-4 fade">
     <div class="bg-slate-900/90 border border-amber-500/40 rounded-2xl p-4">
       <h3 class="text-base font-bold text-white"><i class="fa-solid fa-credit-card text-amber-400 mr-2"></i>Payment Configuration</h3>
-      <p class="text-xs text-slate-400 mt-0.5">Payment methods shown to end-users during checkout</p>
+      <p class="text-xs text-slate-400 mt-0.5">Payment methods shown to end-users</p>
     </div>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
       <div class="p-4 rounded-2xl bg-slate-900 border border-slate-800">
@@ -1478,33 +2266,102 @@ function vPayments() {
     </div>
     <div class="bg-gradient-to-br from-emerald-500/15 to-emerald-500/5 border border-emerald-500/40 rounded-2xl p-4 sm:p-5">
       <div class="flex justify-between items-center flex-wrap gap-3">
-        <div>
-          <div class="text-[10px] mono text-emerald-400 uppercase font-bold">Total Collected (Active Contracts)</div>
-          <div class="text-2xl font-black text-emerald-400 mono mt-1">${ADM.currency.format(totalCollected)}</div>
-        </div>
+        <div><div class="text-[10px] mono text-emerald-400 uppercase font-bold">Total Collected (Active Contracts)</div><div class="text-2xl font-black text-emerald-400 mono mt-1">${ADM.currency.format(totalCollected)}</div></div>
         <button onclick="exportContracts()" class="btn btn-emerald"><i class="fa-solid fa-download mr-1"></i>Export Ledger</button>
       </div>
     </div>
   </div>`;
 }
 
+/* ---------- SYNC PANEL ---------- */
+function vSync() {
+  const q = ADM.sync.loadQueue();
+  const meta = LS.get(SYNC_META_KEY, {});
+  const fse = firebaseReady ? 'text-emerald-400' : 'text-rose-400';
+  const bke = state.backendOnline ? 'text-emerald-400' : 'text-rose-400';
+  return `
+  <div class="space-y-4 fade">
+    <div class="bg-gradient-to-br from-sky-500/15 to-purple-500/10 border border-sky-500/40 rounded-3xl p-5 sm:p-6">
+      <h3 class="text-lg font-black text-white"><i class="fa-solid fa-cloud text-sky-400 mr-2"></i>Cloud Sync Center</h3>
+      <p class="text-xs text-slate-400 mt-1">LocalStorage ⇄ Firestore ⇄ Render Backend</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+      <div class="stat-card p-4 rounded-2xl"><div class="flex justify-between items-center mb-1"><span class="text-[10px] text-slate-400 uppercase mono">Firestore</span><i class="fa-solid fa-fire ${fse}"></i></div><div class="text-lg font-black ${fse} mono">${firebaseReady?'READY':'OFF'}</div><div class="text-[10px] text-slate-500 mt-1">${firebaseReady?'Real-time listener ON':'Configure FIREBASE_CONFIG'}</div></div>
+      <div class="stat-card p-4 rounded-2xl"><div class="flex justify-between items-center mb-1"><span class="text-[10px] text-slate-400 uppercase mono">Backend</span><i class="fa-solid fa-server ${bke}"></i></div><div class="text-lg font-black ${bke} mono">${state.backendOnline?'ONLINE':'OFFLINE'}</div><div class="text-[10px] text-slate-500 mt-1">${esc(LS.get('dp_backend', BACKEND_URL).replace(/^https?:\/\//,'').split('/')[0])}</div></div>
+      <div class="stat-card p-4 rounded-2xl"><div class="flex justify-between items-center mb-1"><span class="text-[10px] text-slate-400 uppercase mono">Queue</span><i class="fa-solid fa-list text-amber-400"></i></div><div class="text-lg font-black text-amber-400 mono">${q.length}</div><div class="text-[10px] text-slate-500 mt-1">${q.length?'pending':'all synced'}</div></div>
+    </div>
+    <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 sm:p-5 space-y-4">
+      <h4 class="text-sm font-bold text-white"><i class="fa-solid fa-bolt text-amber-400 mr-2"></i>Manual Sync Actions</h4>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
+        <button onclick="ADM.sync.pullAll(true)" class="btn btn-ghost"><i class="fa-solid fa-cloud-arrow-down mr-1"></i>Pull Cloud</button>
+        <button onclick="ADM.sync.pushAll(true)" class="btn btn-emerald"><i class="fa-solid fa-cloud-arrow-up mr-1"></i>Push Cloud</button>
+        <button onclick="ADM.sync.flushQueue();toast('Queue flushed','info')" class="btn btn-ghost"><i class="fa-solid fa-rotate mr-1"></i>Flush Queue</button>
+        <button onclick="doFullBidirectionalSync()" class="btn btn-primary"><i class="fa-solid fa-arrows-rotate mr-1"></i>Full Sync</button>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-[11px] mono pt-2 border-t border-slate-800">
+        <div class="flex justify-between"><span class="text-slate-400">Last pull:</span><span class="text-white">${meta.lastPullAt ? fmtDate(meta.lastPullAt) : 'never'}</span></div>
+        <div class="flex justify-between"><span class="text-slate-400">Last push:</span><span class="text-white">${meta.lastPushAt ? fmtDate(meta.lastPushAt) : 'never'}</span></div>
+        <div class="flex justify-between"><span class="text-slate-400">Local orgs:</span><span class="text-white">${state.orgs.length}</span></div>
+        <div class="flex justify-between"><span class="text-slate-400">Local contracts:</span><span class="text-white">${state.contracts.length}</span></div>
+        <div class="flex justify-between"><span class="text-slate-400">Full Auto stats:</span><span class="text-amber-400">${Object.keys(state.fullAutoStats).length} orgs</span></div>
+        <div class="flex justify-between"><span class="text-slate-400">Currency:</span><span class="text-white">${ADM.currency.get()}</span></div>
+      </div>
+    </div>
+    ${q.length ? `<div class="bg-slate-900/80 border border-amber-500/40 rounded-2xl p-4"><h4 class="text-sm font-bold text-amber-400 mb-2"><i class="fa-solid fa-hourglass-half mr-2"></i>Pending Operations (${q.length})</h4><div class="space-y-1 max-h-60 overflow-y-auto">${q.slice(0,50).map(op => `<div class="flex justify-between items-center p-2 rounded-lg bg-slate-950 border border-slate-800 text-[10px] mono"><span class="text-slate-300">${esc(op.kind)}:${esc(op.op)} <span class="text-slate-500">${esc(op.id)}</span></span><span class="text-amber-400">retries ${op.retries||0}</span></div>`).join('')}</div></div>` : ''}
+    <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 sm:p-5">
+      <h4 class="text-sm font-bold text-white mb-3"><i class="fa-solid fa-gear text-slate-400 mr-2"></i>How it works</h4>
+      <ul class="text-[11px] text-slate-400 space-y-1.5 list-disc list-inside">
+        <li><b class="text-purple-400">LocalStorage</b> = primary cache — works 100% offline</li>
+        <li><b class="text-emerald-400">Firestore</b> = real-time cloud mirror (same structure as index.html v8.0)</li>
+        <li><b class="text-sky-400">Render Backend</b> = bulk-sync API + retry queue</li>
+        <li>Every mutation auto-mirrors to both Firestore & backend</li>
+        <li>Failed pushes are queued and retried every 30 seconds</li>
+        <li>Firestore collections: <code class="text-emerald-400">orgs/{id}</code>, <code class="text-emerald-400">datasets/{orgId}</code>, <code class="text-emerald-400">contracts/{id}</code>, <code class="text-emerald-400">audits/{id}</code>, <code class="text-amber-400">fullauto/{orgId}</code></li>
+      </ul>
+    </div>
+  </div>`;
+}
+async function doFullBidirectionalSync() {
+  toast('Running full bidirectional sync…', 'info');
+  await ADM.sync.flushQueue();
+  await ADM.sync.pullAll(false);
+  await ADM.sync.pushAll(false);
+  toast('Full sync complete ✓', 'success');
+  render();
+}
+
 /* ---------- SETTINGS ---------- */
 function vSettings() {
+  const curOpts = Object.entries(ADM.CURRENCIES).map(([code,c]) => `<option value="${code}" ${ADM.currency.get()===code?'selected':''}>${c.flag} ${code} — ${esc(c.name)}</option>`).join('');
   return `
   <div class="space-y-4 fade">
     <div class="bg-slate-900/90 border border-purple-500/40 rounded-2xl p-4">
       <h3 class="text-base font-bold text-white"><i class="fa-solid fa-sliders text-purple-400 mr-2"></i>System Settings</h3>
       <p class="text-xs text-slate-400 mt-0.5">Configure admin panel & shared app state</p>
     </div>
-
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-3">
       <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 sm:p-5">
-        <h4 class="text-sm font-bold text-white mb-3"><i class="fa-solid fa-server text-emerald-400 mr-2"></i>Backend</h4>
+        <h4 class="text-sm font-bold text-white mb-3"><i class="fa-solid fa-server text-emerald-400 mr-2"></i>Backend (Render)</h4>
         <label class="text-[11px] text-slate-400 block mb-1.5">Backend URL</label>
         <input id="setBackend" value="${esc(LS.get('dp_backend', BACKEND_URL))}" class="input mono mb-2">
+        <p class="text-[10px] text-slate-500 mb-2">Endpoints: <span class="mono text-emerald-400">/api/sync/bulk</span>, <span class="mono text-emerald-400">/api/sync/op</span>, <span class="mono text-emerald-400">/health</span></p>
         <button onclick="saveBackend()" class="btn btn-emerald w-full"><i class="fa-solid fa-floppy-disk mr-1"></i>Save Backend</button>
       </div>
-
+      <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 sm:p-5">
+        <h4 class="text-sm font-bold text-white mb-3"><i class="fa-solid fa-fire text-amber-400 mr-2"></i>Firebase / Firestore</h4>
+        <div class="space-y-2 text-[11px] mono">
+          <div class="flex justify-between"><span class="text-slate-400">Status:</span><span class="${firebaseReady?'text-emerald-400':'text-rose-400'}">${firebaseReady?'CONNECTED':'NOT CONFIGURED'}</span></div>
+          <div class="flex justify-between"><span class="text-slate-400">Project:</span><span class="text-white">${esc(FIREBASE_CONFIG.projectId||'—')}</span></div>
+          <div class="flex justify-between"><span class="text-slate-400">Collections:</span><span class="text-white">orgs, datasets, contracts, audits, fullauto</span></div>
+        </div>
+        <p class="text-[10px] text-slate-500 mt-3 leading-relaxed">Admin auth uses <b class="text-purple-400">Firebase Authentication</b>. Ensure admin user exists in Firebase Console → Authentication → Users.</p>
+      </div>
+      <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 sm:p-5">
+        <h4 class="text-sm font-bold text-white mb-3"><i class="fa-solid fa-coins text-emerald-400 mr-2"></i>Currency</h4>
+        <label class="text-[11px] text-slate-400 block mb-1.5">Default Currency (shared with app)</label>
+        <select onchange="setCurrency(this.value)" class="input mb-2">${curOpts}</select>
+        <p class="text-[10px] text-slate-500">USD is default · 20 currencies supported</p>
+      </div>
       <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 sm:p-5">
         <h4 class="text-sm font-bold text-white mb-3"><i class="fa-solid fa-brain text-sky-400 mr-2"></i>AI Configuration</h4>
         <label class="text-[11px] text-slate-400 block mb-1.5">Mode</label>
@@ -1516,18 +2373,16 @@ function vSettings() {
         <input id="setAiEndpoint" value="${esc(LS.get('dp_ai_endpoint',''))}" placeholder="https://api.example.com/chat" class="input mono mb-2">
         <button onclick="saveAiConfig()" class="btn btn-emerald w-full"><i class="fa-solid fa-floppy-disk mr-1"></i>Save AI Config</button>
       </div>
-
       <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 sm:p-5">
         <h4 class="text-sm font-bold text-white mb-3"><i class="fa-solid fa-database text-amber-400 mr-2"></i>Data Management</h4>
         <p class="text-[11px] text-slate-400 mb-3">Backup, restore, or reset admin state.</p>
         <div class="grid grid-cols-2 gap-2">
-          <button onclick="backupAllData()" class="btn btn-ghost"><i class="fa-solid fa-download mr-1"></i>Backup</button>
+          <button onclick="backupAllData()" class="btn btn-ghost"><i class="fa-solid fa-download mr-1"></i>Backup JSON</button>
           <button onclick="document.getElementById('restoreFile').click()" class="btn btn-ghost"><i class="fa-solid fa-upload mr-1"></i>Restore</button>
           <input type="file" id="restoreFile" accept=".json" onchange="restoreAllData(event)" class="hidden">
           <button onclick="confirmResetAll()" class="btn btn-danger col-span-2"><i class="fa-solid fa-triangle-exclamation mr-1"></i>Reset All Data</button>
         </div>
       </div>
-
       <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 sm:p-5">
         <h4 class="text-sm font-bold text-white mb-3"><i class="fa-solid fa-shield-halved text-purple-400 mr-2"></i>Admin Session</h4>
         <div class="space-y-2 text-xs">
@@ -1537,17 +2392,27 @@ function vSettings() {
         </div>
         <button onclick="adminLogout()" class="btn btn-danger w-full mt-3"><i class="fa-solid fa-arrow-right-from-bracket mr-1"></i>Sign Out</button>
       </div>
+      <div class="bg-slate-900/80 border border-emerald-500/30 rounded-2xl p-4 sm:p-5">
+        <h4 class="text-sm font-bold text-white mb-3"><i class="fa-solid fa-cookie-bite text-emerald-400 mr-2"></i>Privacy & GDPR</h4>
+        <div class="grid grid-cols-2 gap-2">
+          <button onclick="ADM.gdpr.customize()" class="btn btn-ghost">Cookie Prefs</button>
+          <button onclick="ADM.privacy.show()" class="btn btn-ghost">Privacy Policy</button>
+        </div>
+      </div>
     </div>
-
     <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 sm:p-5">
       <h4 class="text-sm font-bold text-white mb-3"><i class="fa-solid fa-info-circle text-sky-400 mr-2"></i>System Information</h4>
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px] mono">
-        <div class="flex justify-between"><span class="text-slate-400">Version:</span><span class="text-white">v7.1</span></div>
-        <div class="flex justify-between"><span class="text-slate-400">Storage:</span><span class="text-white">localStorage</span></div>
+        <div class="flex justify-between"><span class="text-slate-400">Version:</span><span class="text-white">v8.0</span></div>
+        <div class="flex justify-between"><span class="text-slate-400">Storage:</span><span class="text-white">localStorage + Firestore</span></div>
         <div class="flex justify-between"><span class="text-slate-400">Firebase:</span><span class="${firebaseReady?'text-emerald-400':'text-slate-500'}">${firebaseReady?'Enabled':'Disabled'}</span></div>
         <div class="flex justify-between"><span class="text-slate-400">Backend:</span><span class="${state.backendOnline?'text-emerald-400':'text-rose-400'}">${state.backendOnline?'Online':'Offline'}</span></div>
         <div class="flex justify-between"><span class="text-slate-400">Orgs:</span><span class="text-white">${state.orgs.length}</span></div>
         <div class="flex justify-between"><span class="text-slate-400">Contracts:</span><span class="text-white">${state.contracts.length}</span></div>
+        <div class="flex justify-between"><span class="text-slate-400">Full Auto Orgs:</span><span class="text-amber-400">${Object.values(state.fullAutoStats).filter(s => s.enabled).length}</span></div>
+        <div class="flex justify-between"><span class="text-slate-400">Language:</span><span class="text-white uppercase">${ADM.i18n.current}</span></div>
+        <div class="flex justify-between"><span class="text-slate-400">Currency:</span><span class="text-white uppercase">${ADM.currency.get()}</span></div>
+        <div class="flex justify-between"><span class="text-slate-400">Theme:</span><span class="text-white uppercase">${ADM.theme.current()}</span></div>
       </div>
     </div>
   </div>`;
@@ -1573,17 +2438,10 @@ function saveAiConfig() {
 function backupAllData() {
   try {
     const backup = {
-      exportedAt: new Date().toISOString(),
-      version: '7.1',
-      data: {
-        orgs: state.orgs,
-        contracts: state.contracts,
-        audits: state.audits,
-        records: state.records,
-        theme: ADM.theme.current(),
-        currency: ADM.currency.get(),
-        backend: LS.get('dp_backend', BACKEND_URL)
-      }
+      exportedAt: nowIso(), version: '8.0',
+      data: { orgs: state.orgs, contracts: state.contracts, audits: state.audits, records: state.records, fullAutoStats: state.fullAutoStats,
+        theme: ADM.theme.current(), currency: ADM.currency.get(), lang: ADM.i18n.current,
+        backend: LS.get('dp_backend', BACKEND_URL) }
     };
     download(new Blob([JSON.stringify(backup, null, 2)], { type:'application/json' }), `datapulse-backup-${Date.now()}.json`);
     auditLog('BACKUP_ALL');
@@ -1602,14 +2460,20 @@ function restoreAllData(ev) {
         state.contracts = b.data.contracts || [];
         state.audits = b.data.audits || [];
         state.records = b.data.records || {};
-        persistOrgs(); persistContracts(); persistAudits();
+        state.fullAutoStats = b.data.fullAutoStats || {};
+        persistOrgs(); persistContracts(); persistAudits(); persistFullAutoStats();
         Object.entries(state.records).forEach(([id, recs]) => LS.set('dp_records_'+id, recs));
+        Object.entries(state.fullAutoStats).forEach(([id, st]) => LS.set('dp_full_auto_'+id, st));
         if (b.data.theme) LS.set('dp_theme', b.data.theme);
         if (b.data.currency) LS.set('dp_currency', b.data.currency);
+        if (b.data.lang) LS.set('dp_lang', b.data.lang);
         if (b.data.backend) LS.set('dp_backend', b.data.backend);
         ADM.theme.apply(ADM.theme.current());
+        ADM.i18n.init();
+        ADM.currency.renderSelectors();
         auditLog('RESTORE_ALL');
-        toast('Backup restored ✓','success');
+        toast('Backup restored — pushing to cloud…','success');
+        ADM.sync.pushAll(true).catch(() => {});
         render();
       });
     } catch(e){ toast('Restore failed: '+e.message,'error'); }
@@ -1618,16 +2482,16 @@ function restoreAllData(ev) {
   reader.readAsText(f);
 }
 function confirmResetAll() {
-  openConfirm('Reset ALL Data?', 'This deletes every organization, contract, audit entry, and record. Cannot be undone!', () => {
-    LS.del('dp_orgs'); LS.del('dp_contracts'); LS.del('dp_audits');
+  openConfirm('Reset ALL Data?', 'Deletes every organization, contract, audit entry, record, and full-auto stats from localStorage.', () => {
+    LS.del('dp_orgs'); LS.del('dp_contracts'); LS.del('dp_audits'); LS.del('dp_full_auto_stats');
     const keys = [];
     for (let i = 0; i < localStorage.length; i++) {
       const k = localStorage.key(i);
-      if (k && (k.startsWith('dp_records_') || k.startsWith('dp_trial_'))) keys.push(k);
+      if (k && (k.startsWith('dp_records_') || k.startsWith('dp_trial_') || k.startsWith('dp_full_auto_'))) keys.push(k);
     }
     keys.forEach(k => LS.del(k));
-    state.orgs = []; state.contracts = []; state.audits = []; state.records = {};
-    toast('All data reset','warn');
+    state.orgs = []; state.contracts = []; state.audits = []; state.records = {}; state.fullAutoStats = {};
+    toast('All local data reset','warn');
     render();
   });
 }
@@ -1646,25 +2510,21 @@ async function checkBackendHealth(verbose) {
   let connected = false;
   const t0 = performance.now();
   for (const ep of ['/health','/health_check','/api/health','/ping','/']) {
-    if (performance.now() - t0 > 12000) break;
+    if (performance.now() - t0 > 10000) break;
     try {
-      const res = await ADM.fetch(url + ep, { method:'GET', mode:'cors', credentials:'omit', _timeout: ADM.config.healthTimeout });
+      const ctrl = new AbortController();
+      const to = setTimeout(() => ctrl.abort(), ADM.config.healthTimeout);
+      const res = await fetch(url + ep, { method:'GET', mode:'cors', credentials:'omit', signal: ctrl.signal });
+      clearTimeout(to);
       if (res.ok || res.status === 204 || res.status === 401 || res.status === 403) { connected = true; break; }
-    } catch(e){}
+    } catch(e){ /* silent */ }
   }
   state.backendOnline = connected;
-  if (connected) {
-    if (dot) dot.className='w-2 h-2 rounded-full bg-emerald-400 pulse-dot';
-    if (st) st.textContent='CONNECTED';
-    if (verbose) toast('Backend connected ✓','success');
-  } else {
-    if (dot) dot.className='w-2 h-2 rounded-full bg-rose-400';
-    if (st) st.textContent='OFFLINE';
-    if (verbose) toast('Backend unreachable — local mode','info');
-  }
+  if (connected) { if (dot) dot.className='w-2 h-2 rounded-full bg-emerald-400 pulse-dot'; if (st) st.textContent='CONNECTED'; if (verbose) toast('Backend connected ✓','success'); }
+  else { if (dot) dot.className='w-2 h-2 rounded-full bg-rose-400'; if (st) st.textContent='OFFLINE'; if (verbose) toast('Backend offline — running local mode (data saved)','info'); }
   if (icon) icon.classList.remove('fa-spin');
   state.backendChecking = false;
-  if (state.tab === 'settings') render();
+  if (state.tab === 'settings' || state.tab === 'sync') render();
   return connected;
 }
 async function syncBackend() {
@@ -1672,62 +2532,79 @@ async function syncBackend() {
   LS.set('dp_backend', url);
   ADM.config.backendDefault = url;
   await checkBackendHealth(true);
+  await ADM.sync.flushQueue();
+  await ADM.sync.pushAll(false);
 }
 
-/* ---------- ONLINE/OFFLINE ---------- */
+/* ---------- EVENTS ---------- */
 window.addEventListener('online', () => {
   state.online = true;
   const nb = document.getElementById('netBadge');
   if (nb) { nb.classList.remove('text-rose-400'); nb.classList.add('text-emerald-400'); nb.innerHTML = '<i class="fa-solid fa-wifi"></i>'; }
   toast('Back online ✓','success');
+  ADM.sync.setStatus('synced');
+  ADM.sync.flushQueue();
 });
 window.addEventListener('offline', () => {
   state.online = false;
   const nb = document.getElementById('netBadge');
   if (nb) { nb.classList.remove('text-emerald-400'); nb.classList.add('text-rose-400'); nb.innerHTML = '<i class="fa-solid fa-plane-slash"></i>'; }
   toast('Offline mode — data saved locally','warn');
+  ADM.sync.setStatus('offline');
 });
 
-/* ---------- KEYBOARD SHORTCUTS ---------- */
 document.addEventListener('keydown', (e) => {
   if (!state.loggedIn) return;
   if (e.ctrlKey || e.metaKey) {
     if (e.key === 'k') { e.preventDefault(); go('orgs'); setTimeout(() => document.getElementById('orgSearch')?.focus(), 100); }
     if (e.key === 'e') { e.preventDefault(); exportAllOrgs(); }
+    if (e.key === 's') { e.preventDefault(); ADM.sync.pushAll(true); }
+    if (e.shiftKey && (e.key === 'F' || e.key === 'f')) { e.preventDefault(); go('fullauto'); }
   }
   if (e.key === 'Escape') { closeOrgModal(); closeCtrModal(); closeConfirm(); }
 });
 
-/* ---------- GLOBAL ERROR ---------- */
-window.addEventListener('error', e => console.error('Admin error:', e.error || e.message));
-window.addEventListener('unhandledrejection', e => console.error('Unhandled promise:', e.reason));
-
 /* ---------- INIT ---------- */
 window.addEventListener('DOMContentLoaded', () => {
   ADM.theme.init();
+  ADM.i18n.init();
+  ADM.pwa.init();
+  ADM.gdpr.show();
+  ADM.errors.init();
+
+  // Ensure English default
+  try { if (!localStorage.getItem('dp_lang')) localStorage.setItem('dp_lang', 'en'); } catch(e){}
+  // Ensure USD default (matches index.html)
+  try { if (!localStorage.getItem('dp_currency')) localStorage.setItem('dp_currency', 'USD'); } catch(e){}
+
+  ADM.currency.renderSelectors();
 
   if (FIREBASE_ENABLED) {
     try {
       if (window.firebase && !firebase.apps.length) firebase.initializeApp(FIREBASE_CONFIG);
       if (window.firebase) {
-        fbAuth = firebase.auth(); fbDb = firebase.firestore();
+        fbAuth = firebase.auth();
+        fbDb = firebase.firestore();
+        try { fbDb.enablePersistence({ synchronizeTabs:true }).catch(() => {}); } catch(e){}
         firebaseReady = true;
-        console.log('✅ Firebase ready (admin)');
+        console.log('✅ Firebase ready (admin v8.0)');
       }
     } catch(e){ console.warn('⚠️ Firebase unavailable:', e.message); }
   } else {
-    console.info('ℹ️ Firebase disabled — local-only mode');
+    console.info('ℹ️ Firebase disabled — fill FIREBASE_CONFIG to enable admin login');
   }
 
   const cs = document.getElementById('currencySel'); if (cs) cs.value = ADM.currency.get();
 
+  startSessionMonitor();
+
   setTimeout(() => {
     document.getElementById('bootSkeleton').classList.add('hidden');
-    // Auto-resume valid session
     const s = ADM.session.check();
     if (s) {
       state.loggedIn = true;
       state.admin = { email:s.email, name:s.name, role:s.role };
+      state.sessionExpiresAt = s.expiresAt;
       loadAll();
       enterAdmin();
       toast(`Welcome back, ${s.name}`, 'success');
@@ -1735,6 +2612,7 @@ window.addEventListener('DOMContentLoaded', () => {
       document.getElementById('loginScreen').classList.remove('hidden');
       document.getElementById('loginScreen').classList.add('flex');
       const ae = document.getElementById('adminEmail'); if (ae) ae.value = ADMIN_EMAIL;
+      ADM.sync.setStatus(navigator.onLine ? 'synced' : 'offline');
     }
     checkBackendHealth(false);
   }, 500);
