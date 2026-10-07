@@ -1,13 +1,21 @@
 {
   "hosting": {
+    "site": "datapulseapp-20237",
     "public": ".",
     "ignore": [
       "firebase.json",
+      "firebase.json.bak",
       "**/.*",
       "**/node_modules/**",
       "run_*.js",
       "server.js",
-      "*.sh"
+      "upload_*.js",
+      "**/*.sh",
+      "firestore.rules",
+      "firestore.indexes.json",
+      "venv/**",
+      "*.py",
+      "__pycache__/**"
     ],
     "rewrites": [
       {
@@ -15,5 +23,9 @@
         "destination": "/index.html"
       }
     ]
+  },
+  "firestore": {
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
   }
 }

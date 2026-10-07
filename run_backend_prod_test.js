@@ -1,6 +1,6 @@
 const https = require('https');
 
-const BACKEND_URL = "https://datapulse-web-backend-2.onrender.com";
+const BACKEND_URL = "https://datapulse-web-rzon.onrender.com";
 
 // Helper function to make HTTP requests
 function checkEndpoint(path, method = 'GET', data = null) {

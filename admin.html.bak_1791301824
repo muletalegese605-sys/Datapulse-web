@@ -177,9 +177,6 @@ html[dir="rtl"] .text-right{text-align:left!important}
 html[dir="rtl"] .right-3{right:auto!important;left:.75rem!important}
 html[dir="rtl"] .dp-table th,html[dir="rtl"] .dp-table td{text-align:right}
 html[dir="rtl"] .dp-table td::before{margin-right:0;margin-left:8px}
-.fa-step-card{position:relative;padding:16px;border-radius:16px;background:linear-gradient(135deg,rgba(251,191,36,.1),rgba(251,191,36,.02));border:1.5px solid rgba(251,191,36,.35);transition:all .3s}.fa-step-card:hover{transform:translateY(-3px);border-color:rgba(251,191,36,.7)}.fa-step-num{position:absolute;top:-12px;left:14px;width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#0b0f19;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:12px}.fa-verify-row{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;background:rgba(15,23,42,.7);border:1px solid #1e293b;transition:all .2s}.fa-verify-row:hover{border-color:rgba(16,185,129,.5)}.fa-verify-row.pass{border-color:rgba(16,185,129,.5);background:rgba(16,185,129,.08)}.fa-verify-row.fail{border-color:rgba(244,63,94,.5);background:rgba(244,63,94,.08)}.fa-verify-icon{width:32px;height:32px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:13px}.fa-guide-arrow{display:flex;align-items:center;justify-content:center;color:#475569;font-size:20px}.fa-screenshot-hint{padding:8px 12px;border-radius:10px;background:rgba(168,85,247,.1);border:1px dashed rgba(168,85,247,.5);font-size:10px;color:#c084fc;font-weight:700}@keyframes faEnableFlash{0%{box-shadow:0 0 0 0 rgba(251,191,36,.7)}50%{box-shadow:0 0 0 20px rgba(251,191,36,0)}100%{box-shadow:0 0 0 0 rgba(251,191,36,0)}}.fa-enabled-flash{animation:faEnableFlash 1.2s ease-out}@media(max-width:640px){.fa-guide-arrow{transform:rotate(90deg)}}
-.nav-badge{display:inline-block;margin-left:4px;padding:1px 6px;border-radius:8px;background:linear-gradient(135deg,#f43f5e,#dc2626);color:#fff;font-size:9px;font-weight:900;font-family:'JetBrains Mono',monospace;animation:badgePulse 1.5s infinite}.nav-badge.hidden{display:none}@keyframes badgePulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15);box-shadow:0 0 8px rgba(244,63,94,.6)}}.ai-msg{padding:10px 14px;border-radius:14px;font-size:12px;line-height:1.6;max-width:85%;white-space:pre-wrap;word-wrap:break-word}.ai-msg.user{background:linear-gradient(135deg,#a855f7,#7c3aed);color:#fff;margin-left:auto;text-align:right}.ai-msg.ai{background:#0e1626;border:1px solid #334155;color:#e6edf3}.ai-quick{padding:8px 12px;border-radius:10px;background:rgba(168,85,247,.15);border:1px solid rgba(168,85,247,.4);color:#c084fc;font-size:11px;font-weight:700;cursor:pointer;transition:all .2s}.ai-quick:hover{background:rgba(168,85,247,.3);transform:translateY(-1px)}
-#admWelcome{position:fixed;inset:0;z-index:9800;background:radial-gradient(circle at 50% 0%,rgba(168,85,247,.15),transparent 60%),#050810;display:none;align-items:center;justify-content:center;padding:16px;overflow-y:auto}#admWelcome.on{display:flex}#admWelcome .hero{background:linear-gradient(135deg,#0e1626,#0b0f19);border:2px solid rgba(168,85,247,.5);border-radius:32px;padding:32px;max-width:820px;width:100%;margin:20px auto;box-shadow:0 40px 120px rgba(168,85,247,.4);animation:mi .5s ease-out}#admWelcome h2{font-size:clamp(26px,4vw,38px);font-weight:900;color:#fff;text-align:center;margin:0 0 12px;line-height:1.15}#admWelcome .sub{font-size:14px;color:#94a3b8;text-align:center;max-width:520px;margin:0 auto 28px;line-height:1.6}#admFeat{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin-bottom:24px}#admFeat .f{padding:12px;border-radius:12px;background:rgba(15,23,42,.6);border:1px solid #1e293b;text-align:center}#admFeat .f b{font-size:20px;font-weight:900;color:#c084fc;font-family:'JetBrains Mono',monospace;display:block}#admFeat .f span{font-size:9px;color:#94a3b8;text-transform:uppercase;letter-spacing:.06em;margin-top:2px;display:block}#admFabGuide{position:fixed;left:18px;bottom:88px;z-index:60;width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#a855f7,#7c3aed);color:#fff;font-size:17px;border:none;box-shadow:0 12px 30px rgba(168,85,247,.5);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .3s}#admFabGuide:hover{transform:scale(1.12) rotate(-10deg)}
 </style>
 </head>
 <body>
@@ -422,27 +419,6 @@ html[dir="rtl"] .dp-table td::before{margin-right:0;margin-left:8px}
   </div>
 </div>
 
-
-<div id="admWelcome" role="dialog">
-  <div class="hero">
-    <div style="width:88px;height:88px;border-radius:26px;background:linear-gradient(135deg,#a855f7,#7c3aed);display:flex;align-items:center;justify-content:center;color:#fff;font-size:42px;margin:0 auto 20px;box-shadow:0 20px 60px rgba(168,85,247,.5)"><i class="fa-solid fa-shield-halved"></i></div>
-    <h2>Welcome, <span style="background:linear-gradient(135deg,#a855f7,#c084fc,#10b981);-webkit-background-clip:text;-webkit-text-fill-color:transparent">Admin</span> 👑</h2>
-    <p class="sub">You have full control of the DataPulse platform. Manage organizations, monitor automation, review feedback, and drive growth.</p>
-    <div id="admFeat">
-      <div class="f"><b>14</b><span>Admin Tabs</span></div>
-      <div class="f"><b>40+17</b><span>Caps + Ops</span></div>
-      <div class="f"><b>57</b><span>Auto Actions</span></div>
-      <div class="f"><b>24h</b><span>Response SLA</span></div>
-    </div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin-bottom:16px">
-      <button onclick="ADM.welcomeClose()" style="padding:14px;background:linear-gradient(135deg,#a855f7,#7c3aed);color:#fff;border:none;border-radius:14px;font-size:12px;font-weight:900;cursor:pointer"><i class="fa-solid fa-rocket mr-1"></i>Explore Admin</button>
-      <button onclick="ADM.welcomeClose();go('overview')" style="padding:14px;background:linear-gradient(135deg,#10b981,#059669);color:#0b0f19;border:none;border-radius:14px;font-size:12px;font-weight:900;cursor:pointer"><i class="fa-solid fa-gauge-high mr-1"></i>Go to Dashboard</button>
-    </div>
-    <p style="text-align:center;font-size:10px;color:#64748b">Press <strong style="color:#c084fc">Ctrl+K</strong> for command palette · <strong style="color:#c084fc">Alt+F</strong> for Full Auto</p>
-  </div>
-</div>
-<button id="admFabGuide" onclick="ADM.showGuide()" title="Admin Guide"><i class="fa-solid fa-graduation-cap"></i></button>
-
 <div id="toasts" class="fixed top-3 right-3 left-3 sm:left-auto sm:top-4 sm:right-4 z-[100] flex flex-col gap-2 pointer-events-none items-end" role="status" aria-live="polite"></div>
 
 <!-- ★ RESULTS PANEL — bu'aa hojii battalaa (akkuma index.html) ★ -->
@@ -523,11 +499,8 @@ const FIREBASE_ENABLED = !!(FIREBASE_CONFIG.apiKey && FIREBASE_CONFIG.apiKey !==
 
 const ADMIN_EMAIL = 'muletalegese605@gmail.com';
 const BACKEND_URL = 'https://datapulse-web-rzon.onrender.com';
-const ANALYTICS_ID = '';   // Same as index.html
-const SENTRY_DSN   = '';   // Same as index.html
-const APP_VERSION  = '8.0.0';
-const APP_ENV      = 'production';
-const UPTIME_URL   = 'https://datapulseapp-20237.web.app';
+const ANALYTICS_ID = '';
+const SENTRY_DSN = '';
 const SESSION_KEY = 'dp_admin_session';
 const SESSION_TTL_MS = 30 * 60 * 1000;
 const SYNC_QUEUE_KEY = 'dp_sync_queue';
@@ -938,32 +911,19 @@ function openCmdPalette() { ADM.cmd.open(); }
 function filterCmd(v) { ADM.cmd.filter(v); }
 function cmdKeydown(e) { ADM.cmd.keydown(e); }
 
-/* ENHANCED */ async function toggleAllFullAuto() {
-  if (!state.orgs.length) { toast('No orgs', 'warn'); return; }
-  var anyOn = state.orgs.some(function(o){ return fullAutoEnabled(o.id); });
-  var willEnable = !anyOn;
-  if (!confirm((willEnable ? 'Enable' : 'Disable') + ' Full Automation for ALL ' + state.orgs.length + ' orgs?\n\nEach runs 17 ops + 40 caps.\nTotal: ' + (state.orgs.length * 57) + ' actions per event.')) return;
-  var done = 0;
-  for (var i = 0; i < state.orgs.length; i++) {
-    var o = state.orgs[i];
-    var cur = getFullAutoStats(o.id);
-    var updated = { enabled: willEnable, runs: cur.runs || 0, capsRun: willEnable ? 40 : 0, opsRun: willEnable ? 17 : 0, lastRun: cur.lastRun || null, updatedAt: nowIso(), enabledAt: willEnable ? nowIso() : null, enabledBy: state.admin.email, orgName: o.name };
-    state.fullAutoStats[o.id] = updated;
-    LS.set('dp_full_auto_' + o.id, updated);
-    if (firebaseReady) { try { await fbDb.collection('fullauto').doc(o.id).set(updated, { merge:true }); } catch(e){} }
-    done++;
-  }
-  LS.set('dp_full_auto', willEnable);
+function toggleAllFullAuto() {
+  const anyOn = state.orgs.some(o => fullAutoEnabled(o.id));
+  state.orgs.forEach(o => {
+    const stats = { enabled: !anyOn, runs: getFullAutoStats(o.id).runs || 0, capsRun: !anyOn?40:0, opsRun: !anyOn?17:0, lastRun: getFullAutoStats(o.id).lastRun || null, updatedAt: nowIso() };
+    state.fullAutoStats[o.id] = stats;
+    LS.set('dp_full_auto_'+o.id, stats);
+    if (firebaseReady) { try { fbDb.collection('fullauto').doc(o.id).set(stats, { merge:true }); } catch(e){} }
+  });
+  LS.set('dp_full_auto', !anyOn);
   persistFullAutoStats();
-  auditLog(willEnable ? 'FULL_AUTO_ENABLE_ALL' : 'FULL_AUTO_DISABLE_ALL', 'ALL', { count: done });
-  if (willEnable) celebrate();
-  toast('Full Auto ' + (willEnable ? 'ENABLED' : 'DISABLED') + ' for ' + done + ' orgs', willEnable ? 'success' : 'info');
-  render();
-  renderNav();
-  setTimeout(function(){
-    showResults(willEnable ? 'Full Auto Enabled' : 'Full Auto Disabled',
-      '<div class="p-3 rounded-xl bg-gradient-to-r from-amber-500/20 to-amber-500/5 border border-amber-500/40"><div class="text-xs font-black text-amber-400 mb-2">📊 Summary</div><div class="grid grid-cols-2 gap-2 text-[11px]"><div class="p-2 rounded-lg bg-slate-950/60 border border-slate-800"><div class="text-slate-400 text-[9px]">Orgs</div><div class="text-amber-400 font-black mono">' + done + '</div></div><div class="p-2 rounded-lg bg-slate-950/60 border border-slate-800"><div class="text-slate-400 text-[9px]">Actions</div><div class="text-emerald-400 font-black mono">' + (done * 57) + '</div></div><div class="p-2 rounded-lg bg-slate-950/60 border border-slate-800"><div class="text-slate-400 text-[9px]">Cloud</div><div class="' + (firebaseReady?'text-emerald-400':'text-slate-500') + ' font-black mono">' + (firebaseReady?'✓ Done':'○ Local') + '</div></div><div class="p-2 rounded-lg bg-slate-950/60 border border-slate-800"><div class="text-slate-400 text-[9px]">Status</div><div class="' + (willEnable?'text-emerald-400':'text-slate-500') + ' font-black mono">' + (willEnable?'ON':'OFF') + '</div></div></div></div>');
-  }, 300);
+  auditLog(!anyOn ? 'FULL_AUTO_ENABLE_ALL' : 'FULL_AUTO_DISABLE_ALL', 'ALL');
+  toast(`⚡ Full Automation ${!anyOn?'ENABLED':'DISABLED'} for all ${state.orgs.length} orgs`, !anyOn?'success':'info');
+  render(); renderNav();
 }
 
 /* ---------- THEME ---------- */
@@ -1062,12 +1022,6 @@ const state = {
   orgs: [], contracts: [], audits: [], records: {},
   fullAutoStats: {},
   tab: 'overview',
-  fbFilter: 'all',
-  mkSchedule: LS.get('dp_mk_schedule', []),
-  mkReferrals: LS.get('dp_referrals', []),
-  measureRange: '30d',
-  measureChart: null,
-  weeklyReviews: LS.get('dp_weekly_reviews', []),
   charts: {}, filter: 'all',
   searchOrg: '', searchAudit: '',
   confirmCb: null,
@@ -1571,7 +1525,7 @@ function enterAdmin() {
   checkBackendHealth(true);
   startSessionTimerUI();
   ADM.sync.init().catch(e => console.warn('sync init:', e));
-  setTimeout(() => { try { ADM.startBadgeWatcher(); ADM.updateBadge(); } catch(e){}; try { ADM.showWelcome(); } catch(e){}; if (state.orgs.length) showResults('Admin Center Ready', `
+  setTimeout(() => { if (state.orgs.length) showResults('Admin Center Ready', `
     <div class="grid grid-cols-2 gap-2 text-[11px]">
       <div class="p-2 rounded-lg bg-slate-950/60 border border-slate-800"><div class="text-slate-400 text-[9px]">Organizations</div><div class="text-purple-400 font-black mono">${state.orgs.length}</div></div>
       <div class="p-2 rounded-lg bg-slate-950/60 border border-slate-800"><div class="text-slate-400 text-[9px]">Contracts</div><div class="text-emerald-400 font-black mono">${state.contracts.length}</div></div>
@@ -1613,14 +1567,10 @@ const TABS = [
   { id:'contracts',   key:'Contracts',    icon:'fa-file-signature' },
   { id:'datasets',    key:'Datasets',     icon:'fa-database' },
   { id:'fullauto',    key:'Full Automation', icon:'fa-bolt' },
-  { id:'measure',     key:'Measure',         icon:'fa-chart-line' },
-  { id:'marketing',   key:'Marketing',       icon:'fa-bullhorn' },
   { id:'datamap',     key:'Data Map',     icon:'fa-map-location-dot' },
   { id:'audit',       key:'Audit Logs',   icon:'fa-clipboard-list' },
   { id:'payments',    key:'Payments',     icon:'fa-credit-card' },
   { id:'sync',        key:'Cloud Sync',   icon:'fa-cloud' },
-  { id:'feedback',   key:'Feedback',       icon:'fa-comment-dots' },
-  { id:'ai',          key:'AI Assistant',    icon:'fa-robot' },
   { id:'settings',    key:'Settings',     icon:'fa-sliders' }
 ];
 function renderNav() {
@@ -1701,14 +1651,10 @@ function render() {
       case 'contracts':  el.innerHTML = vContracts(); break;
       case 'datasets':   el.innerHTML = vDatasets(); break;
       case 'fullauto':   el.innerHTML = vFullAuto(); break;
-      case 'measure':    el.innerHTML = vMeasure(); drawMeasureCharts(); break;
-      case 'marketing': el.innerHTML = vMarketing(); break;
       case 'datamap':    el.innerHTML = vDataMap(); break;
       case 'audit':      el.innerHTML = vAudit(); break;
       case 'payments':   el.innerHTML = vPayments(); break;
       case 'sync':       el.innerHTML = vSync(); break;
-      case 'feedback':   el.innerHTML = vFeedback(); break;
-      case 'ai':         el.innerHTML = vAdminAi(); break;
       case 'settings':   el.innerHTML = vSettings(); break;
       default:           el.innerHTML = vOverview(); drawOverviewCharts();
     }
@@ -2221,48 +2167,111 @@ function vDatasets() {
 /* ============================================================
    ★ FULL AUTOMATION MONITOR (upgraded)
    ============================================================ */
-/* ENHANCED */ function vFullAuto() {
-  var rows = state.orgs.map(function(o){ return { org:o, stats:getFullAutoStats(o.id), enabled:fullAutoEnabled(o.id) }; }).sort(function(a,b){ return (b.stats.runs||0)-(a.stats.runs||0); });
-  var on = rows.filter(function(r){ return r.enabled; }).length;
-  var totalRuns = rows.reduce(function(a,r){ return a + (r.stats.runs||0); }, 0);
-  var lastRun = rows.map(function(r){ return r.stats.lastRun; }).filter(Boolean).sort().pop();
-  var allOn = rows.length > 0 && on === rows.length;
-  var noneOn = on === 0;
-  var rowsHtml = rows.length ? rows.map(function(r){
-    return '<tr data-org-row="' + r.org.id + '" class="' + (r.enabled?'bg-amber-500/5':'') + '"><td data-l="Org" class="p-3"><div class="font-sans font-bold text-white text-xs">' + esc(r.org.name) + '</div><div class="text-[10px] text-slate-500">' + esc(r.org.id) + '</div></td><td data-l="Status" class="p-3">' + (r.enabled ? '<span class="autobadge">⚡ ACTIVE</span>' : '<span class="px-2 py-0.5 rounded-md bg-slate-800 text-slate-500 text-[10px] font-bold">○ IDLE</span>') + '</td><td data-l="Runs" class="p-3 text-right font-bold text-emerald-400 mono">' + (r.stats.runs||0) + '</td><td data-l="Ops/Caps" class="p-3 text-right text-[10px]"><span class="text-amber-400">' + (r.stats.opsRun||0) + '</span>/<span class="text-purple-400">' + (r.stats.capsRun||0) + '</span></td><td data-l="Last Run" class="p-3 text-[10px] text-slate-400">' + (r.stats.lastRun ? fmtDate(r.stats.lastRun) : '—') + '</td><td data-l="Actions" class="p-3 text-right"><div class="inline-flex gap-1 flex-wrap justify-end"><button onclick="toggleFullAuto(\'' + r.org.id + '\')" class="px-3 py-1.5 ' + (r.enabled?'bg-amber-500 text-slate-950':'bg-slate-800 text-amber-400 border border-slate-700') + ' rounded-lg text-[10px] font-bold"><i class="fa-solid fa-power-off mr-1"></i>' + (r.enabled?'Disable':'Enable') + '</button>' + (r.enabled ? '<button onclick="runFullAuto(\'' + r.org.id + '\')" class="px-3 py-1.5 bg-slate-800 text-emerald-400 rounded-lg text-[10px] font-bold"><i class="fa-solid fa-play"></i></button>' : '') + '<button onclick="viewOrgData(\'' + r.org.id + '\')" class="px-3 py-1.5 bg-slate-800 text-sky-400 rounded-lg text-[10px] font-bold"><i class="fa-solid fa-database"></i></button></div></td></tr>';
-  }).join('') : '<tr><td colspan="6" class="p-8 text-center text-slate-500">No orgs. <button onclick="go(\'orgs\')" class="text-purple-400 underline">Create →</button></td></tr>';
-  var setup = noneOn ? '<div class="bg-gradient-to-br from-purple-500/15 to-sky-500/5 border-2 border-purple-500/50 rounded-3xl p-5"><div class="flex items-center gap-2 mb-5"><i class="fa-solid fa-rocket text-purple-400 text-2xl"></i><div><h4 class="text-base font-black text-white">🚀 3 Steps to Enable Full Automation</h4><p class="text-[11px] text-slate-400 mt-0.5">Takes 30 seconds. Do it once.</p></div></div><div class="grid grid-cols-1 md:grid-cols-5 gap-3 items-center"><div class="fa-step-card"><div class="fa-step-num">1</div><div class="text-xs font-black text-white mb-2">Open Admin</div><p class="text-[10px] text-slate-400">You are here ✓</p><div class="fa-screenshot-hint mt-2">📸 Screenshot 1</div></div><div class="fa-guide-arrow"><i class="fa-solid fa-arrow-right"></i></div><div class="fa-step-card"><div class="fa-step-num">2</div><div class="text-xs font-black text-white mb-2">Go to Orgs</div><p class="text-[10px] text-slate-400">Click <b class="text-purple-400">Organizations</b></p><button onclick="go(\'orgs\')" class="mt-2 w-full py-1.5 bg-purple-500/20 border border-purple-500/40 text-purple-400 font-bold text-[10px] rounded-lg">Open Orgs</button></div><div class="fa-guide-arrow"><i class="fa-solid fa-arrow-right"></i></div><div class="fa-step-card"><div class="fa-step-num">3</div><div class="text-xs font-black text-white mb-2">Click ⚡</div><p class="text-[10px] text-slate-400">Auto column → <b class="text-amber-400">⚡ OFF</b></p><div class="fa-screenshot-hint mt-2">📸 Screenshot 2-3</div></div></div><div class="mt-5 p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/30"><p class="text-[11px] text-slate-300"><b class="text-emerald-400">Done!</b> Auto column shows <b class="text-amber-400">⚡ ON</b>.</p></div></div>' : '';
-  return '<div class="space-y-4 fade">' +
-    '<div class="bg-gradient-to-br from-amber-500/20 via-emerald-500/10 to-purple-500/10 border-2 border-amber-500/60 rounded-3xl p-5 sm:p-6 relative overflow-hidden"><div class="absolute top-3 right-3 hidden sm:block"><span class="badge-special">SPECIAL MODE</span></div><div class="flex items-start gap-3 mb-4 flex-wrap"><div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-amber-400 to-amber-600 text-slate-950 flex items-center justify-center font-black text-2xl shrink-0 ' + (on > 0 ? 'pulse-ring' : '') + '"><i class="fa-solid fa-bolt"></i></div><div class="flex-1 min-w-0"><div class="flex items-center gap-2 flex-wrap"><h3 class="text-lg sm:text-xl font-black text-white">Full Automation</h3><span class="autobadge">40 CAPS + 17 OPS</span><span class="badge-worldclass">WORLD-CLASS</span></div><p class="text-xs text-slate-300 mt-1">One toggle → every data arrival runs <b class="text-amber-400">17 Ops</b> + <b class="text-emerald-400">40 Caps</b> in 5-10s.</p></div><button onclick="toggleAllFullAuto()" class="px-4 py-2.5 ' + (allOn?'bg-rose-500 text-white':'bg-amber-500 text-slate-950') + ' font-black text-[11px] rounded-xl shrink-0"><i class="fa-solid fa-power-off mr-1"></i>' + (allOn ? 'Disable All' : 'Enable All (' + state.orgs.length + ')') + '</button></div><div class="grid grid-cols-2 sm:grid-cols-4 gap-2"><div class="p-3 rounded-xl bg-slate-950/80 border border-amber-500/40"><div class="text-[9px] text-slate-400 mono uppercase">Orgs ON</div><div class="text-xl font-black text-amber-400 mono">' + on + '/' + rows.length + '</div></div><div class="p-3 rounded-xl bg-slate-950/80 border border-emerald-500/40"><div class="text-[9px] text-slate-400 mono uppercase">Total Runs</div><div class="text-xl font-black text-emerald-400 mono">' + totalRuns + '</div></div><div class="p-3 rounded-xl bg-slate-950/80 border border-purple-500/40"><div class="text-[9px] text-slate-400 mono uppercase">Actions/Run</div><div class="text-xl font-black text-purple-400 mono">57</div></div><div class="p-3 rounded-xl bg-slate-950/80 border border-sky-500/40"><div class="text-[9px] text-slate-400 mono uppercase">Last Run</div><div class="text-xs font-bold text-sky-400 mono mt-1.5 truncate">' + (lastRun ? fmtDate(lastRun) : 'Never') + '</div></div></div></div>' +
-    setup +
-    '<div class="bg-slate-900/90 border-2 border-emerald-500/40 rounded-3xl p-5"><div class="flex items-center justify-between mb-4 flex-wrap gap-2"><div class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-emerald-400 text-2xl"></i><div><h4 class="text-base font-black text-white">Live Verification</h4><p class="text-[11px] text-slate-400 mt-0.5">Auto-checks every 15s</p></div></div><button onclick="runFullAutoDiagnostics()" class="px-3 py-2 bg-slate-950 border border-sky-500/40 text-sky-400 font-bold text-[10px] rounded-lg"><i class="fa-solid fa-stethoscope mr-1"></i>Run Diagnostics</button></div><div id="faVerifyPanel" class="space-y-2">' + renderVerificationRows() + '</div></div>' +
-    '<div class="bg-slate-900/80 border border-slate-800 rounded-2xl overflow-x-auto"><div class="p-4 border-b border-slate-800 flex items-center justify-between flex-wrap gap-2"><h4 class="text-sm font-bold text-white"><i class="fa-solid fa-list text-amber-400 mr-2"></i>Per-Org Status</h4><div class="flex gap-2"><button onclick="go(\'orgs\')" class="px-3 py-1.5 bg-slate-800 border border-slate-700 text-purple-400 font-bold text-[10px] rounded-lg"><i class="fa-solid fa-building mr-1"></i>Manage</button><button onclick="runFullAutoDiagnostics()" class="px-3 py-1.5 bg-slate-800 border border-slate-700 text-emerald-400 font-bold text-[10px] rounded-lg"><i class="fa-solid fa-play mr-1"></i>Test</button></div></div><table class="w-full text-xs dp-table"><thead class="text-slate-400 uppercase text-[10px] mono border-b border-slate-800"><tr><th class="p-3 text-left">Organization</th><th class="p-3 text-left">Status</th><th class="p-3 text-right">Runs</th><th class="p-3 text-right">Ops/Caps</th><th class="p-3 text-left">Last Run</th><th class="p-3 text-right">Actions</th></tr></thead><tbody class="divide-y divide-slate-800/60 mono text-slate-300">' + rowsHtml + '</tbody></table></div>' +
-    '<div class="bg-slate-900/80 border border-rose-500/40 rounded-2xl p-5"><h4 class="text-sm font-bold text-white mb-3"><i class="fa-solid fa-wrench text-rose-400 mr-2"></i>Troubleshooting</h4><div class="space-y-2 text-[11px]"><details class="p-3 rounded-lg bg-slate-950 border border-slate-800"><summary class="font-bold text-slate-300 cursor-pointer">⚡ Button hojjetaa hin jiru</summary><p class="text-slate-400 mt-2">Hard refresh: <code class="text-emerald-400">Ctrl+Shift+R</code></p></details><details class="p-3 rounded-lg bg-slate-950 border border-slate-800"><summary class="font-bold text-slate-300 cursor-pointer">Session expired</summary><p class="text-slate-400 mt-2">Logout → login deebi\'i.</p></details><details class="p-3 rounded-lg bg-slate-950 border border-slate-800"><summary class="font-bold text-slate-300 cursor-pointer">Toggle hin jijjiiramne</summary><p class="text-slate-400 mt-2">Internet + refresh + console.</p></details><details class="p-3 rounded-lg bg-slate-950 border border-slate-800"><summary class="font-bold text-slate-300 cursor-pointer">Auto-run hin hojjetu</summary><p class="text-slate-400 mt-2">Front app refresh. Flag <code class="text-amber-400">dp_full_auto=true</code>.</p></details></div></div>' +
-  '</div>';
+function vFullAuto() {
+  const rows = state.orgs.map(o => ({
+    org: o,
+    stats: getFullAutoStats(o.id),
+    enabled: fullAutoEnabled(o.id)
+  })).sort((a,b) => (b.stats.runs||0) - (a.stats.runs||0));
+  const enabledCount = rows.filter(r => r.enabled).length;
+  const totalRuns = rows.reduce((acc, r) => acc + (r.stats.runs||0), 0);
+  const lastRun = rows.map(r => r.stats.lastRun).filter(Boolean).sort().pop();
+  const allOn = rows.length > 0 && enabledCount === rows.length;
+  return `
+  <div class="space-y-4 fade">
+    <div class="bg-gradient-to-br from-amber-500/20 via-emerald-500/10 to-purple-500/10 border-2 border-amber-500/60 rounded-3xl p-5 sm:p-6 relative overflow-hidden">
+      <div class="flex items-start gap-3 mb-4">
+        <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-amber-400 to-amber-600 text-slate-950 flex items-center justify-center font-black text-2xl shrink-0"><i class="fa-solid fa-bolt"></i></div>
+        <div class="flex-1 min-w-0">
+          <div class="flex items-center gap-2 flex-wrap">
+            <h3 class="text-lg sm:text-xl font-black text-white">Full Automation — Special Mode</h3>
+            <span class="autobadge">40 CAPS + 17 OPS</span>
+            <span class="badge-worldclass">WORLD-CLASS</span>
+          </div>
+          <p class="text-xs text-slate-300 mt-1 leading-relaxed">Monitor coordinated execution of 17 Data Ops + 40 Capabilities across all organizations. Data arrival triggers automatic pipeline.</p>
+        </div>
+        <button onclick="toggleAllFullAuto()" class="px-3 py-2 ${allOn?'bg-rose-500 text-white':'bg-amber-500 text-slate-950'} font-black text-[10px] rounded-lg shrink-0">
+          <i class="fa-solid fa-power-off mr-1"></i>${allOn?'Disable All':'Enable All'}
+        </button>
+      </div>
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+        <div class="p-3 rounded-xl bg-slate-950/80 border border-amber-500/40"><div class="text-[9px] text-slate-400 mono uppercase">Orgs ON</div><div class="text-xl font-black text-amber-400 mono mt-0.5">${enabledCount}/${rows.length}</div></div>
+        <div class="p-3 rounded-xl bg-slate-950/80 border border-emerald-500/40"><div class="text-[9px] text-slate-400 mono uppercase">Total Runs</div><div class="text-xl font-black text-emerald-400 mono mt-0.5">${totalRuns}</div></div>
+        <div class="p-3 rounded-xl bg-slate-950/80 border border-purple-500/40"><div class="text-[9px] text-slate-400 mono uppercase">Ops/Caps</div><div class="text-xl font-black text-purple-400 mono mt-0.5">17+40</div></div>
+        <div class="p-3 rounded-xl bg-slate-950/80 border border-sky-500/40"><div class="text-[9px] text-slate-400 mono uppercase">Last Run</div><div class="text-xs font-bold text-sky-400 mono mt-1.5 truncate">${lastRun ? fmtDate(lastRun) : 'Never'}</div></div>
+      </div>
+    </div>
+
+    <div class="bg-slate-900/80 border border-slate-800 rounded-2xl overflow-x-auto">
+      <table class="w-full text-xs dp-table">
+        <thead class="text-slate-400 uppercase text-[10px] mono border-b border-slate-800">
+          <tr>
+            <th class="p-3 text-left">Organization</th>
+            <th class="p-3 text-left">Status</th>
+            <th class="p-3 text-right">Runs</th>
+            <th class="p-3 text-right">Ops Run</th>
+            <th class="p-3 text-right">Caps Run</th>
+            <th class="p-3 text-left">Last Run</th>
+            <th class="p-3 text-right">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-800/60 mono text-slate-300">
+          ${rows.length ? rows.map(r => `<tr>
+            <td data-l="Org" class="p-3"><div class="font-sans font-bold text-white text-xs">${esc(r.org.name)}</div><div class="text-[10px] text-slate-500">${esc(r.org.id)}</div></td>
+            <td data-l="Status" class="p-3">${r.enabled ? `<span class="autobadge">⚡ ACTIVE</span>` : `<span class="text-[10px] text-slate-500">○ IDLE</span>`}</td>
+            <td data-l="Runs" class="p-3 text-right font-bold text-emerald-400 mono">${r.stats.runs||0}</td>
+            <td data-l="Ops Run" class="p-3 text-right text-amber-400 mono">${r.stats.opsRun||0}</td>
+            <td data-l="Caps Run" class="p-3 text-right text-purple-400 mono">${r.stats.capsRun||0}</td>
+            <td data-l="Last Run" class="p-3 text-[10px] text-slate-400">${r.stats.lastRun ? fmtDate(r.stats.lastRun) : '—'}</td>
+            <td data-l="Actions" class="p-3 text-right"><div class="inline-flex gap-1">
+              <button onclick="toggleFullAuto('${esc(r.org.id)}')" title="${r.enabled?'Disable':'Enable'}" class="px-2 py-1 ${r.enabled?'bg-amber-500 text-slate-950':'bg-slate-800 text-amber-400'} rounded-lg text-[10px] font-bold"><i class="fa-solid fa-power-off"></i></button>
+              <button onclick="runFullAuto('${esc(r.org.id)}')" title="Trigger Run" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 text-emerald-400 rounded-lg text-[10px]"><i class="fa-solid fa-play"></i></button>
+              <button onclick="viewOrgData('${esc(r.org.id)}')" title="View Data" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 text-sky-400 rounded-lg text-[10px]"><i class="fa-solid fa-database"></i></button>
+            </div></td>
+          </tr>`).join('') : `<tr><td colspan="7" class="p-8 text-center text-slate-500">No organizations registered yet.</td></tr>`}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 sm:p-5">
+      <h4 class="text-sm font-bold text-white mb-3"><i class="fa-solid fa-info-circle text-amber-400 mr-2"></i>How Full Automation Works</h4>
+      <ol class="text-[11px] text-slate-400 space-y-1.5 list-decimal list-inside">
+        <li>Toggle <b class="text-amber-400">ON</b> for any organization (button above or in Orgs tab)</li>
+        <li>When that org ingests any data (file, API, link, manual), the pipeline auto-triggers</li>
+        <li><b class="text-emerald-400">Phase 1:</b> 17 Data Ops run in sequence (clean, dedupe, label, mask, analyze…)</li>
+        <li><b class="text-purple-400">Phase 2:</b> 40 Capabilities execute (predict, forecast, cluster, report…)</li>
+        <li>Results save to localStorage + Firestore <code class="text-emerald-400">datasets/{orgId}</code></li>
+        <li>Admin sees live stats synced from <code class="text-amber-400">fullauto/{orgId}</code> collection</li>
+        <li>Total runtime: ~5-10 seconds per pipeline run (dependent on row count)</li>
+      </ol>
+    </div>
+  </div>`;
 }
 
-/* ENHANCED */ async function toggleFullAuto(orgId) {
-  var org = state.orgs.find(function(o){ return o.id === orgId; });
-  if (!org) { toast('Org not found', 'error'); return; }
-  var cur = getFullAutoStats(orgId);
-  var willEnable = !cur.enabled;
-  if (willEnable) {
-    if (!confirm('Enable Full Automation for "' + org.name + '"?\n\nThis runs 17 Data Ops + 40 Capabilities on every data arrival.\n\nContinue?')) return;
-  } else {
-    if (!confirm('Disable Full Automation for "' + org.name + '"?')) return;
-  }
-  var updated = { enabled: willEnable, runs: cur.runs || 0, capsRun: willEnable ? 40 : 0, opsRun: willEnable ? 17 : 0, lastRun: cur.lastRun || null, updatedAt: nowIso(), enabledAt: willEnable ? nowIso() : null, enabledBy: state.admin.email, orgName: org.name };
+async function toggleFullAuto(orgId) {
+  const org = state.orgs.find(o => o.id === orgId);
+  if (!org) return;
+  const cur = getFullAutoStats(orgId);
+  const nowEnabled = !cur.enabled;
+  const updated = {
+    enabled: nowEnabled,
+    runs: cur.runs || 0,
+    capsRun: nowEnabled ? (cur.capsRun || 40) : 0,
+    opsRun: nowEnabled ? (cur.opsRun || 17) : 0,
+    lastRun: cur.lastRun || null,
+    updatedAt: nowIso()
+  };
   state.fullAutoStats[orgId] = updated;
-  LS.set('dp_full_auto_' + orgId, updated);
-  if (willEnable) LS.set('dp_full_auto', true);
+  LS.set('dp_full_auto_'+orgId, updated);
+  if (nowEnabled) LS.set('dp_full_auto', true);
   persistFullAutoStats();
-  if (firebaseReady) { try { await fbDb.collection('fullauto').doc(orgId).set(updated, { merge:true }); } catch(e){} }
-  auditLog(willEnable ? 'FULL_AUTO_ENABLE' : 'FULL_AUTO_DISABLE', orgId, { orgName: org.name });
-  if (willEnable) { celebrate(); toast('Full Auto ENABLED for ' + org.name, 'success'); setTimeout(function(){ toast('40 caps + 17 ops ready', 'info'); }, 1400); }
-  else toast('Full Auto DISABLED for ' + org.name, 'info');
+  if (firebaseReady) {
+    try { await fbDb.collection('fullauto').doc(orgId).set(updated, { merge:true }); } catch(e){}
+  }
+  auditLog(nowEnabled ? 'FULL_AUTO_ENABLE' : 'FULL_AUTO_DISABLE', orgId, { orgName: org.name });
+  toast(`⚡ Full Automation ${nowEnabled?'ENABLED':'DISABLED'} for ${org.name}`, nowEnabled?'success':'info');
   render();
   renderNav();
-  setTimeout(function(){ var row = document.querySelector('[data-org-row="' + orgId + '"]'); if (row && willEnable) { row.classList.add('fa-enabled-flash'); setTimeout(function(){ row.classList.remove('fa-enabled-flash'); }, 1500); } }, 200);
 }
 
 async function runFullAuto(orgId) {
@@ -2903,704 +2912,6 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
-
-/* ═══ vFeedback — Admin Feedback Dashboard ═══ */
-function vFeedback() {
-  var list = LS.get('dp_feedback', []);
-  list.sort(function(a,b){ return new Date(b.at||0) - new Date(a.at||0); });
-  var filter = state.fbFilter || 'all';
-  var npsList = list.filter(function(f){ return f.nps != null && f.nps !== ''; });
-  var promoters  = npsList.filter(function(f){ return f.nps >= 9; }).length;
-  var passives   = npsList.filter(function(f){ return f.nps >= 7 && f.nps <= 8; }).length;
-  var detractors = npsList.filter(function(f){ return f.nps <= 6; }).length;
-  var nps = npsList.length ? Math.round((promoters - detractors) / npsList.length * 100) : null;
-  var avg = list.length ? (list.reduce(function(s,f){ return s + (f.rating||0); }, 0) / list.length).toFixed(2) : '0.00';
-  var byType = { bug:0, idea:0, feature:0, praise:0, other:0 };
-  list.forEach(function(f){ byType[f.type] = (byType[f.type]||0) + 1; });
-  var testimonials = list.filter(function(f){ return f.testimonialApproved || (f.public && f.rating === 5); }).length;
-  var since7 = list.filter(function(f){ return Date.now() - new Date(f.at).getTime() < 7*864e5; }).length;
-
-  var filtered = filter === 'all' ? list
-    : filter === 'public' ? list.filter(function(f){ return f.public; })
-    : filter === 'testimonial' ? list.filter(function(f){ return f.testimonialApproved || (f.public && f.rating === 5); })
-    : filter === 'nps-low' ? npsList.filter(function(f){ return f.nps <= 6; })
-    : list.filter(function(f){ return f.type === filter; });
-
-  function typeColor(t){
-    if (t === 'bug') return 'background:rgba(244,63,94,.2);color:#fb7185;border-color:rgba(244,63,94,.4)';
-    if (t === 'idea') return 'background:rgba(56,189,248,.2);color:#38bdf8;border-color:rgba(56,189,248,.4)';
-    if (t === 'feature') return 'background:rgba(99,102,241,.2);color:#818cf8;border-color:rgba(99,102,241,.4)';
-    if (t === 'praise') return 'background:rgba(168,85,247,.2);color:#c084fc;border-color:rgba(168,85,247,.4)';
-    return 'background:rgba(148,163,184,.2);color:#94a3b8;border-color:rgba(148,163,184,.4)';
-  }
-
-  return '<div class="space-y-4 fade">' +
-    '<div class="bg-gradient-to-br from-amber-500/20 via-purple-500/10 to-emerald-500/5 border-2 border-amber-500/50 rounded-3xl p-5">' +
-      '<div class="flex items-start gap-3 mb-4 flex-wrap">' +
-        '<div class="w-14 h-14 rounded-2xl flex items-center justify-center font-black text-2xl shrink-0" style="background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#0b0f19"><i class="fa-solid fa-comment-dots"></i></div>' +
-        '<div class="flex-1 min-w-0">' +
-          '<div class="flex items-center gap-2 flex-wrap"><h3 class="text-lg font-black text-white">User Feedback</h3>' +
-          '<span class="badge-worldclass">WORLD-CLASS</span>' +
-          (nps != null ? '<span class="sync-badge ' + (nps>=30?'synced':nps>=0?'pending':'error') + '"><i class="fa-solid fa-chart-line"></i>NPS ' + nps + '</span>' : '') +
-          '</div>' +
-          '<p class="text-xs text-slate-300 mt-1">Real voices — GDPR · CCPA compliant.</p>' +
-        '</div>' +
-        '<button onclick="ADM.feedbackPullFromCloud()" class="px-3 py-2 bg-slate-900 border border-sky-500/40 text-sky-400 font-bold text-[10px] rounded-lg"><i class="fa-solid fa-cloud-arrow-down mr-1"></i>Pull from Cloud</button>' +
-      '</div>' +
-      '<div class="grid grid-cols-2 sm:grid-cols-6 gap-2">' +
-        '<div class="p-3 rounded-xl bg-slate-950/80 border border-amber-500/40"><div class="text-[9px] text-slate-400 mono uppercase">Total</div><div class="text-xl font-black text-amber-400 mono">' + list.length + '</div><div class="text-[9px] text-slate-500">' + since7 + ' this week</div></div>' +
-        '<div class="p-3 rounded-xl bg-slate-950/80 border border-emerald-500/40"><div class="text-[9px] text-slate-400 mono uppercase">Avg Rating</div><div class="text-xl font-black text-emerald-400 mono">' + avg + '</div><div class="text-[9px] text-slate-500">out of 5</div></div>' +
-        '<div class="p-3 rounded-xl bg-slate-950/80 border border-' + (nps==null?'slate-700':nps>=30?'emerald-500/40':nps>=0?'amber-500/40':'rose-500/40') + '"><div class="text-[9px] text-slate-400 mono uppercase">NPS</div><div class="text-xl font-black mono ' + (nps==null?'text-slate-500':nps>=30?'text-emerald-400':nps>=0?'text-amber-400':'text-rose-400') + '">' + (nps==null?'—':nps) + '</div><div class="text-[9px] text-slate-500">' + npsList.length + ' responses</div></div>' +
-        '<div class="p-3 rounded-xl bg-slate-950/80 border border-rose-500/40"><div class="text-[9px] text-slate-400 mono uppercase">Bugs</div><div class="text-xl font-black text-rose-400 mono">' + byType.bug + '</div></div>' +
-        '<div class="p-3 rounded-xl bg-slate-950/80 border border-sky-500/40"><div class="text-[9px] text-slate-400 mono uppercase">Ideas</div><div class="text-xl font-black text-sky-400 mono">' + (byType.idea + byType.feature) + '</div></div>' +
-        '<div class="p-3 rounded-xl bg-slate-950/80 border border-purple-500/40"><div class="text-[9px] text-slate-400 mono uppercase">Praise</div><div class="text-xl font-black text-purple-400 mono">' + byType.praise + '</div><div class="text-[9px] text-slate-500">' + testimonials + ' testimonials</div></div>' +
-      '</div>' +
-    '</div>' +
-
-    '<div class="flex flex-wrap gap-2">' +
-      [['all','All (' + list.length + ')'],['bug','Bugs (' + byType.bug + ')'],['idea','Ideas (' + byType.idea + ')'],['feature','Features (' + byType.feature + ')'],['praise','Praise (' + byType.praise + ')'],['testimonial','Testimonial (' + testimonials + ')'],['nps-low','At-risk (' + detractors + ')'],['other','Other (' + byType.other + ')']].map(function(t){
-        return '<button onclick="state.fbFilter=\'' + t[0] + '\';render()" class="solution-tab ' + (filter===t[0]?'active':'text-slate-400') + '">' + t[1] + '</button>';
-      }).join('') +
-    '</div>' +
-
-    (filtered.length ? '<div class="space-y-3">' + filtered.map(function(f){
-      var stars = '★'.repeat(f.rating||0) + '☆'.repeat(5-(f.rating||0));
-      var npsCol = f.nps == null ? 'text-slate-500' : f.nps >= 9 ? 'text-emerald-400' : f.nps >= 7 ? 'text-amber-400' : 'text-rose-400';
-      return '<div class="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 hover:border-amber-500/40 transition">' +
-        '<div class="flex items-start justify-between gap-3 flex-wrap">' +
-          '<div class="flex items-center gap-2 flex-wrap">' +
-            '<span class="px-2 py-0.5 rounded text-[10px] font-black border uppercase" style="' + typeColor(f.type) + '">' + (f.type||'other') + '</span>' +
-            '<span class="text-amber-400 text-sm font-mono">' + stars + '</span>' +
-            (f.nps != null ? '<span class="text-[10px] mono ' + npsCol + '">NPS ' + f.nps + '</span>' : '') +
-            '<span class="text-[10px] mono text-slate-500">' + (f.id||'') + '</span>' +
-            (f.testimonialApproved ? '<span class="px-1.5 py-0.5 rounded text-[9px] font-bold bg-amber-500/20 text-amber-400 border border-amber-500/40">⭐ TESTIMONIAL</span>' : '') +
-            (f.public ? '<span class="px-1.5 py-0.5 rounded text-[9px] font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/40">PUBLIC</span>' : '') +
-          '</div>' +
-          '<div class="text-[10px] text-slate-500 mono">' + (f.at ? new Date(f.at).toLocaleString() : '—') + '</div>' +
-        '</div>' +
-        '<p class="text-xs text-slate-200 mt-3 leading-relaxed whitespace-pre-wrap">' + (f.message||'').replace(/[<>&]/g, function(c){ return {'<':'&lt;','>':'&gt;','&':'&amp;'}[c]; }) + '</p>' +
-        '<div class="flex items-center justify-between gap-2 mt-3 flex-wrap">' +
-          '<div class="flex items-center gap-2 text-[10px] text-slate-500 mono flex-wrap">' +
-            '<i class="fa-solid fa-user"></i>' + (f.userName||f.name||'—') +
-            (f.email ? ' · <i class="fa-solid fa-envelope"></i><a href="mailto:' + f.email + '" class="text-emerald-400 hover:underline">' + f.email + '</a>' : '') +
-            (f.orgName ? ' · <i class="fa-solid fa-building"></i>' + f.orgName : '') +
-            (f.plan ? ' · <span class="text-purple-400">' + f.plan + '</span>' : '') +
-          '</div>' +
-          '<div class="flex gap-1">' +
-            (f.email ? '<a href="mailto:' + f.email + '?subject=Re: DataPulse feedback ' + f.id + '" class="px-2 py-1 rounded text-[10px] bg-slate-800 text-sky-400 hover:bg-slate-700" title="Reply"><i class="fa-solid fa-reply"></i></a>' : '') +
-            '<button onclick="deleteFeedback(\'' + f.id + '\')" class="px-2 py-1 rounded text-[10px] bg-slate-800 text-rose-400 hover:bg-slate-700"><i class="fa-solid fa-trash"></i></button>' +
-          '</div>' +
-        '</div>' +
-      '</div>';
-    }).join('') + '</div>'
-    : '<div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-10 text-center text-slate-500"><i class="fa-solid fa-inbox text-5xl text-slate-700 mb-3 block"></i><p class="font-bold text-slate-400 mb-1">No feedback ' + (filter !== 'all' ? 'matching this filter' : 'yet') + '</p><p class="text-[10px]">' + (filter !== 'all' ? 'Try a different filter' : 'Users will appear here when they submit.') + '</p></div>') +
-
-    (list.length ? '<div class="bg-gradient-to-br from-emerald-500/10 to-sky-500/5 border border-emerald-500/40 rounded-2xl p-4"><h4 class="text-sm font-bold text-white mb-3"><i class="fa-solid fa-lightbulb text-emerald-400 mr-2"></i>Weekly Action Plan</h4><div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-[11px]"><div class="p-3 rounded-xl bg-slate-950 border border-rose-500/30"><div class="text-[9px] mono text-rose-400 uppercase font-bold mb-1">🔴 Critical (fix this week)</div><div class="text-white font-bold">' + byType.bug + ' open bugs' + (detractors ? ' · ' + detractors + ' unhappy' : '') + '</div></div><div class="p-3 rounded-xl bg-slate-950 border border-amber-500/30"><div class="text-[9px] mono text-amber-400 uppercase font-bold mb-1">🟡 Important (next 2 weeks)</div><div class="text-white font-bold">' + (byType.idea + byType.feature) + ' ideas & feature requests</div></div><div class="p-3 rounded-xl bg-slate-950 border border-emerald-500/30"><div class="text-[9px] mono text-emerald-400 uppercase font-bold mb-1">🟢 Backlog</div><div class="text-white font-bold">' + testimonials + ' testimonials to feature</div></div></div></div>' : '') +
-  '</div>';
-}
-
-function deleteFeedback(id) {
-  if (!confirm('Delete this feedback permanently?')) return;
-  var list = LS.get('dp_feedback', []).filter(function(f){ return f.id !== id; });
-  LS.set('dp_feedback', list);
-  if (typeof firebaseReady !== 'undefined' && firebaseReady && typeof fbDb !== 'undefined' && fbDb) {
-    try { fbDb.collection('feedback').doc(id).delete(); } catch(e){}
-  }
-  if (typeof auditLog === 'function') auditLog('FEEDBACK_DELETE', id);
-  if (typeof toast === 'function') toast('Feedback deleted','warn');
-  render();
-}
-
-ADM.feedbackPullFromCloud = async function() {
-  if (typeof firebaseReady === 'undefined' || !firebaseReady || !fbDb) {
-    if (typeof toast === 'function') toast('Firebase not connected','warn');
-    return;
-  }
-  try {
-    if (typeof toast === 'function') toast('Pulling from cloud…','info');
-    var snap = await fbDb.collection('feedback').orderBy('at','desc').limit(500).get().catch(function(){
-      return fbDb.collection('feedback').limit(500).get();
-    });
-    var remote = snap.docs.map(function(d){ var o = d.data(); o.id = d.id; return o; });
-    var local = LS.get('dp_feedback', []);
-    var map = new Map();
-    local.concat(remote).forEach(function(f){
-      var prev = map.get(f.id);
-      if (!prev) { map.set(f.id, f); return; }
-      var tPrev = new Date(prev.at || 0).getTime();
-      var tNew  = new Date(f.at || 0).getTime();
-      map.set(f.id, tNew >= tPrev ? Object.assign({}, prev, f) : Object.assign({}, f, prev));
-    });
-    var merged = Array.from(map.values()).sort(function(a,b){
-      return new Date(b.at || 0) - new Date(a.at || 0);
-    });
-    LS.set('dp_feedback', merged.slice(0, 500));
-    if (typeof toast === 'function') toast('Pulled ' + remote.length + ' feedback ✓','success');
-    if (typeof render === 'function') render();
-  } catch(e) {
-    if (typeof toast === 'function') toast('Pull failed: ' + e.message,'error');
-  }
-};
-
-
-function vMeasure() {
-  var range = state.measureRange || '30d';
-  var rangeDays = range === '7d' ? 7 : range === '30d' ? 30 : range === '90d' ? 90 : 3650;
-  var since = Date.now() - rangeDays * 86400000;
-  var feedback = LS.get('dp_feedback', []);
-  var audQueue = LS.get('dp_analytics_queue', []);
-  var errCount = (ADM.errors && ADM.errors.list) ? ADM.errors.list.length : 0;
-  var s = aggStats();
-  var recentAudits = state.audits.filter(function(a){ return new Date(a.at || a.performed_at).getTime() >= since; });
-  var funnel = {
-    visits:      recentAudits.filter(function(a){ return a.action === 'LOGIN' || a.action === 'ORG_CREATE'; }).length * 3,
-    signups:     recentAudits.filter(function(a){ return a.action === 'ORG_CREATE'; }).length,
-    logins:      recentAudits.filter(function(a){ return a.action === 'LOGIN' || a.action === 'ADMIN_LOGIN'; }).length,
-    dataActions: recentAudits.filter(function(a){ return /PROCESS|UPLOAD|MANUAL|OP_|CAP_/.test(a.action); }).length,
-    purchases:   recentAudits.filter(function(a){ return a.action === 'CONTRACT_ACTIVATE' || a.action === 'CONTRACT_CREATE'; }).length,
-    exports:     recentAudits.filter(function(a){ return /^EXPORT_/.test(a.action); }).length
-  };
-  var conversionRate = s.totalOrgs > 0 ? (s.paidOrgs / s.totalOrgs * 100).toFixed(1) : '0.0';
-  var churnRate = s.totalOrgs > 0 ? (s.cancelledContracts / s.totalOrgs * 100).toFixed(1) : '0.0';
-  var arpu = s.paidOrgs > 0 ? (s.mrr / s.paidOrgs) : 0;
-  var ltv = arpu * 12;
-  var npsList = feedback.filter(function(f){ return f.nps != null; });
-  var npsPromoters = npsList.filter(function(f){ return f.nps >= 9; }).length;
-  var npsPassives = npsList.filter(function(f){ return f.nps >= 7 && f.nps <= 8; }).length;
-  var npsDetractors = npsList.filter(function(f){ return f.nps <= 6; }).length;
-  var npsScore = npsList.length ? Math.round((npsPromoters/npsList.length - npsDetractors/npsList.length) * 100) : null;
-  var avgRating = feedback.length ? (feedback.reduce(function(a,f){ return a + (f.rating||0); }, 0) / feedback.length).toFixed(2) : '—';
-  var insights = ADM.measureAI.generateInsights({ s:s, conversionRate:conversionRate, churnRate:churnRate, npsScore:npsScore, avgRating:avgRating, errCount:errCount, feedback:feedback });
-  var priorityActions = insights.filter(function(i){ return i.priority === 'high'; }).slice(0, 3);
-  var reviews = state.weeklyReviews || [];
-
-  function stepHtml(step, i, arr) {
-    var max = Math.max.apply(null, arr.map(function(x){ return x.value; }).concat([1]));
-    var pct = Math.round(step.value / max * 100);
-    var dropoff = i > 0 && arr[i-1].value > 0 ? (100 - (step.value / arr[i-1].value * 100)).toFixed(0) : null;
-    return '<div><div class="flex justify-between items-center text-[10px] mono mb-1"><span class="text-slate-300"><i class="fa-solid ' + step.icon + ' text-' + step.color + '-400 mr-1"></i>' + step.label + '</span><span class="text-white font-bold">' + step.value + (dropoff && step.value > 0 ? ' <span class="text-rose-400">↓' + dropoff + '%</span>' : '') + '</span></div><div class="h-2 rounded-full bg-slate-800 overflow-hidden"><div class="h-full bg-gradient-to-r from-' + step.color + '-500 to-' + step.color + '-400 transition-all" style="width:' + pct + '%"></div></div></div>';
-  }
-
-  var steps = [
-    { label:'Visits', value:funnel.visits, icon:'fa-eye', color:'sky' },
-    { label:'Signups', value:funnel.signups, icon:'fa-user-plus', color:'purple' },
-    { label:'Logins', value:funnel.logins, icon:'fa-right-to-bracket', color:'emerald' },
-    { label:'Data actions', value:funnel.dataActions, icon:'fa-database', color:'amber' },
-    { label:'Purchases', value:funnel.purchases, icon:'fa-credit-card', color:'rose' },
-    { label:'Exports', value:funnel.exports, icon:'fa-download', color:'teal' }
-  ];
-
-  return '<div class="space-y-4 fade">' +
-    '<div class="bg-gradient-to-br from-sky-500/20 via-emerald-500/10 to-purple-500/10 border-2 border-sky-500/50 rounded-3xl p-5 sm:p-6">' +
-      '<div class="flex flex-col sm:flex-row items-start gap-3 mb-4">' +
-        '<div class="flex items-center gap-3 w-full sm:w-auto">' +
-        '<div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-sky-400 to-sky-600 text-slate-950 flex items-center justify-center font-black text-2xl shrink-0"><i class="fa-solid fa-chart-line"></i></div>' +
-        '<div class="flex-1 min-w-0"><div class="flex items-center gap-2 flex-wrap"><h3 class="text-lg sm:text-xl font-black text-white">Measure & Improve</h3><span class="badge-worldclass">WORLD-CLASS</span><span class="sync-badge ' + (typeof DP !== "undefined" && DP.analytics && DP.analytics.ready_ga ? 'synced' : 'offline') + '"><i class="fa-solid fa-signal"></i>GA4 ' + (typeof DP !== "undefined" && DP.analytics && DP.analytics.ready_ga ? 'LIVE' : 'QUEUED') + '</span><span class="sync-badge ' + (errCount === 0 ? 'synced' : 'error') + '"><i class="fa-solid fa-bug"></i>' + errCount + '</span></div><p class="text-xs text-slate-300 mt-1">Track metrics, fix problems, ship improvements.</p></div>' +
-        '<div class="flex gap-2 flex-wrap"><select onchange="state.measureRange=this.value;render()" class="input !w-auto !text-[10px] !py-1.5"><option value="7d" ' + (range==='7d'?'selected':'') + '>7d</option><option value="30d" ' + (range==='30d'?'selected':'') + '>30d</option><option value="90d" ' + (range==='90d'?'selected':'') + '>90d</option><option value="all" ' + (range==='all'?'selected':'') + '>All</option></select><button onclick="openWeeklyReview()" class="btn btn-primary !text-[10px]"><i class="fa-solid fa-clipboard-check mr-1"></i>New Review</button><button onclick="exportMeasurements()" class="btn btn-ghost !text-[10px]"><i class="fa-solid fa-download"></i></button></div>' +
-      '</div>' +
-      '<div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-2">' +
-        '<div class="p-3 rounded-xl bg-slate-950/80 border border-purple-500/40"><div class="text-[9px] text-slate-400 mono uppercase">Orgs</div><div class="text-xl font-black text-purple-400 mono mt-0.5">' + s.totalOrgs + '</div><div class="text-[9px] text-slate-500 mt-0.5">' + s.paidOrgs + ' paying</div></div>' +
-        '<div class="p-3 rounded-xl bg-slate-950/80 border border-emerald-500/40"><div class="text-[9px] text-slate-400 mono uppercase">MRR</div><div class="text-xl font-black text-emerald-400 mono mt-0.5">' + ADM.currency.format(s.mrr) + '</div></div>' +
-        '<div class="p-3 rounded-xl bg-slate-950/80 border border-amber-500/40"><div class="text-[9px] text-slate-400 mono uppercase">Conversion</div><div class="text-xl font-black text-amber-400 mono mt-0.5">' + conversionRate + '%</div></div>' +
-        '<div class="p-3 rounded-xl bg-slate-950/80 border border-rose-500/40"><div class="text-[9px] text-slate-400 mono uppercase">Churn</div><div class="text-xl font-black text-rose-400 mono mt-0.5">' + churnRate + '%</div></div>' +
-        '<div class="p-3 rounded-xl bg-slate-950/80 border border-sky-500/40"><div class="text-[9px] text-slate-400 mono uppercase">ARPU/LTV</div><div class="text-lg font-black text-sky-400 mono mt-0.5">' + ADM.currency.format(arpu) + '</div><div class="text-[9px] text-slate-500 mt-0.5">LTV ' + ADM.currency.format(ltv) + '</div></div>' +
-        '<div class="p-3 rounded-xl bg-slate-950/80 border ' + (npsScore==null?'border-slate-700':npsScore>=30?'border-emerald-500/40':npsScore>=0?'border-amber-500/40':'border-rose-500/40') + '"><div class="text-[9px] text-slate-400 mono uppercase">NPS</div><div class="text-xl font-black mono mt-0.5 ' + (npsScore==null?'text-slate-500':npsScore>=30?'text-emerald-400':npsScore>=0?'text-amber-400':'text-rose-400') + '">' + (npsScore==null?'—':npsScore) + '</div><div class="text-[9px] text-slate-500 mt-0.5">avg ⭐ ' + avgRating + '</div></div>' +
-      '</div></div>' +
-
-    (priorityActions.length ? '<div class="bg-gradient-to-r from-rose-500/15 via-amber-500/10 to-emerald-500/10 border-2 border-amber-500/60 rounded-2xl p-4"><div class="flex items-center gap-2 mb-3"><i class="fa-solid fa-brain text-amber-400 text-lg"></i><h4 class="text-sm font-black text-white">🎯 AI Priority Actions</h4><span class="badge-worldclass">AUTO</span></div><div class="space-y-2">' + priorityActions.map(function(a){ return '<div class="flex items-start gap-3 p-3 rounded-xl bg-slate-950/70 border border-' + a.color + '-500/40"><div class="w-9 h-9 rounded-lg bg-' + a.color + '-500/20 text-' + a.color + '-400 flex items-center justify-center shrink-0"><i class="fa-solid ' + a.icon + '"></i></div><div class="flex-1 min-w-0"><div class="text-xs font-bold text-white">' + a.title + '</div><div class="text-[10px] text-slate-400 mt-0.5">' + a.detail + '</div></div>' + (a.action ? '<button onclick="' + a.action + '" class="px-3 py-1.5 bg-' + a.color + '-500 text-slate-950 font-black text-[10px] rounded-lg shrink-0">' + (a.actionLabel||'Go') + '</button>' : '') + '</div>'; }).join('') + '</div></div>' : '') +
-
-    '<div class="grid grid-cols-1 lg:grid-cols-2 gap-3">' +
-      '<div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-4"><div class="flex justify-between items-center mb-3"><span class="text-xs font-bold text-white"><i class="fa-solid fa-filter text-sky-400 mr-2"></i>User Funnel</span><span class="text-[10px] text-slate-500 mono">' + range + '</span></div><div class="space-y-2">' + steps.map(function(st,i){ return stepHtml(st,i,steps); }).join('') + '</div></div>' +
-      '<div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-4"><div class="flex justify-between items-center mb-3"><span class="text-xs font-bold text-white"><i class="fa-solid fa-chart-line text-emerald-400 mr-2"></i>Activity Trend</span></div><div style="height:220px"><canvas id="measureTrendChart"></canvas></div></div>' +
-    '</div>' +
-
-    '<div class="grid grid-cols-1 lg:grid-cols-2 gap-3">' +
-      '<div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-4"><h4 class="text-xs font-bold text-white mb-3"><i class="fa-solid fa-fire text-amber-400 mr-2"></i>Top Events</h4><div style="height:220px"><canvas id="measureEventsChart"></canvas></div></div>' +
-      '<div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-4"><h4 class="text-xs font-bold text-white mb-3"><i class="fa-solid fa-bell text-rose-400 mr-2"></i>Error Monitor</h4><div class="grid grid-cols-2 gap-2 mb-3"><div class="p-2.5 rounded-lg bg-slate-950 border border-rose-500/30"><div class="text-[9px] text-slate-400 mono uppercase">Errors</div><div class="text-lg font-black text-rose-400 mono">' + errCount + '</div></div><div class="p-2.5 rounded-lg bg-slate-950 border ' + (SENTRY_DSN ? 'border-emerald-500/30' : 'border-slate-700') + '"><div class="text-[9px] text-slate-400 mono uppercase">Sentry</div><div class="text-xs font-bold ' + (SENTRY_DSN ? 'text-emerald-400' : 'text-slate-500') + ' mt-1">' + (SENTRY_DSN ? '✓ Connected' : '○ Not set') + '</div></div></div>' + (errCount === 0 ? '<div class="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-center"><i class="fa-solid fa-circle-check text-emerald-400 text-2xl mb-1"></i><div class="text-xs font-bold text-emerald-400">All systems healthy!</div></div>' : '<div class="space-y-1 max-h-40 overflow-y-auto">' + (ADM.errors.list||[]).slice(0,5).map(function(e){ return '<div class="p-2 rounded-lg bg-slate-950 border border-rose-500/30 text-[10px] mono"><div class="text-rose-400 truncate">' + e.msg + '</div><div class="text-slate-500">' + new Date(e.at).toLocaleTimeString() + '</div></div>'; }).join('') + '</div>') + '<div class="grid grid-cols-2 gap-2 mt-3"><a href="https://sentry.io" target="_blank" class="py-2 bg-slate-950 border border-rose-500/40 text-rose-400 font-bold text-[10px] rounded-lg text-center"><i class="fa-solid fa-external-link-alt mr-1"></i>Sentry</a><button onclick="ADM.errors.show()" class="py-2 bg-slate-950 border border-slate-700 text-slate-300 font-bold text-[10px] rounded-lg"><i class="fa-solid fa-list mr-1"></i>Log</button></div></div>' +
-    '</div>' +
-
-    '<div class="grid grid-cols-1 md:grid-cols-3 gap-3">' +
-      '<div class="bg-slate-900/90 border border-emerald-500/40 rounded-2xl p-4"><div class="flex items-center gap-2 mb-3"><i class="fa-solid fa-heart-pulse text-emerald-400 text-lg"></i><span class="text-xs font-bold text-white">Uptime</span></div><div class="space-y-1 text-[10px] mono"><div class="flex justify-between"><span class="text-slate-400">Backend:</span><span class="' + (state.backendOnline?'text-emerald-400':'text-rose-400') + '">' + (state.backendOnline?'✓ Online':'○ Offline') + '</span></div><div class="flex justify-between"><span class="text-slate-400">Network:</span><span class="' + (navigator.onLine?'text-emerald-400':'text-rose-400') + '">' + (navigator.onLine?'✓ Online':'○ Offline') + '</span></div><div class="flex justify-between"><span class="text-slate-400">Firestore:</span><span class="' + (firebaseReady?'text-emerald-400':'text-rose-400') + '">' + (firebaseReady?'✓ Connected':'○ Offline') + '</span></div></div><a href="https://uptimerobot.com" target="_blank" class="block w-full mt-3 py-2 bg-slate-950 border border-emerald-500/40 text-emerald-400 font-bold text-[10px] rounded-lg text-center"><i class="fa-solid fa-external-link-alt mr-1"></i>UptimeRobot</a></div>' +
-      '<div class="bg-slate-900/90 border border-sky-500/40 rounded-2xl p-4"><div class="flex items-center gap-2 mb-3"><i class="fa-solid fa-chart-simple text-sky-400 text-lg"></i><span class="text-xs font-bold text-white">GA4</span></div><div class="space-y-1 text-[10px] mono"><div class="flex justify-between"><span class="text-slate-400">Status:</span><span class="' + (typeof DP !== "undefined" && DP.analytics && DP.analytics.ready_ga ?'text-emerald-400':'text-amber-400') + '">' + (typeof DP !== "undefined" && DP.analytics && DP.analytics.ready_ga ?'✓ LIVE':'○ Queued') + '</span></div><div class="flex justify-between"><span class="text-slate-400">GA ID:</span><span class="text-white truncate">' + (ANALYTICS_ID || '—') + '</span></div><div class="flex justify-between"><span class="text-slate-400">Queue:</span><span class="text-amber-400">' + audQueue.length + '</span></div></div><a href="https://analytics.google.com" target="_blank" class="block w-full mt-3 py-2 bg-slate-950 border border-sky-500/40 text-sky-400 font-bold text-[10px] rounded-lg text-center"><i class="fa-solid fa-external-link-alt mr-1"></i>GA4</a></div>' +
-      '<div class="bg-slate-900/90 border border-purple-500/40 rounded-2xl p-4"><div class="flex items-center gap-2 mb-3"><i class="fa-solid fa-clipboard-check text-purple-400 text-lg"></i><span class="text-xs font-bold text-white">Weekly Reviews</span></div><div class="space-y-1 text-[10px] mono"><div class="flex justify-between"><span class="text-slate-400">Total:</span><span class="text-white">' + reviews.length + '</span></div><div class="flex justify-between"><span class="text-slate-400">Last:</span><span class="text-white">' + (reviews.length ? fmtDateShort(reviews[0].at) : '—') + '</span></div></div><button onclick="openWeeklyReview()" class="w-full mt-3 py-2 bg-slate-950 border border-purple-500/40 text-purple-400 font-bold text-[10px] rounded-lg"><i class="fa-solid fa-plus mr-1"></i>New Review</button></div>' +
-    '</div>' +
-  '</div>';
-}
-
-async function drawMeasureCharts() {
-  var ChartLib = await ADM.loadChart();
-  if (!ChartLib) return;
-  try {
-    ChartLib.defaults.color = ADM.theme.current()==='dark' ? '#94a3b8' : '#475569';
-    var days = 14, labels = [], signupsByDay = [], actionsByDay = [];
-    for (var i = days - 1; i >= 0; i--) {
-      var d = new Date(Date.now() - i * 86400000);
-      var key = d.toISOString().slice(0,10);
-      labels.push(d.toLocaleDateString('en-GB', { day:'2-digit', month:'short' }));
-      var dayAudits = state.audits.filter(function(a){ return (a.at||a.performed_at||'').slice(0,10) === key; });
-      signupsByDay.push(dayAudits.filter(function(a){ return a.action === 'ORG_CREATE'; }).length);
-      actionsByDay.push(dayAudits.filter(function(a){ return !/LOGIN|LOGOUT/.test(a.action); }).length);
-    }
-    var tc = document.getElementById('measureTrendChart');
-    if (tc) {
-      state.measureChart = new ChartLib(tc, {
-        type: 'line',
-        data: { labels: labels, datasets: [
-          { label: 'Signups', data: signupsByDay, borderColor:'#a855f7', backgroundColor:'rgba(168,85,247,.15)', fill:true, tension:.4, borderWidth:2.5, pointRadius:3 },
-          { label: 'Actions', data: actionsByDay, borderColor:'#10b981', backgroundColor:'rgba(16,185,129,.15)', fill:true, tension:.4, borderWidth:2.5, pointRadius:3 }
-        ]},
-        options: { responsive:true, maintainAspectRatio:false, plugins:{ legend:{ position:'bottom', labels:{boxWidth:10, font:{size:10}} } } }
-      });
-    }
-    var audits = state.audits.slice(0, 500);
-    var byAction = {};
-    audits.forEach(function(a){ byAction[a.action] = (byAction[a.action]||0) + 1; });
-    var topEvents = Object.entries(byAction).sort(function(a,b){ return b[1]-a[1]; }).slice(0, 8);
-    var ec = document.getElementById('measureEventsChart');
-    if (ec) {
-      state.charts.events = new ChartLib(ec, {
-        type: 'bar',
-        data: { labels: topEvents.map(function(e){ return e[0].slice(0, 20); }), datasets: [{ label:'Count', data: topEvents.map(function(e){ return e[1]; }), backgroundColor:['rgba(168,85,247,.7)','rgba(16,185,129,.7)','rgba(56,189,248,.7)','rgba(245,158,11,.7)','rgba(244,63,94,.7)','rgba(99,102,241,.7)','rgba(20,184,166,.7)','rgba(251,113,133,.7)'], borderRadius:5 }]},
-        options: { responsive:true, maintainAspectRatio:false, plugins:{ legend:{display:false} }, indexAxis:'y' }
-      });
-    }
-  } catch(e) { console.warn('drawMeasureCharts error:', e); }
-}
-
-ADM.measureAI = {
-  generateInsights: function(o) {
-    var s = o.s, conversionRate = o.conversionRate, churnRate = o.churnRate, npsScore = o.npsScore, avgRating = o.avgRating, errCount = o.errCount, feedback = o.feedback;
-    var insights = [];
-    if (s.totalOrgs >= 5 && parseFloat(conversionRate) < 20) insights.push({ priority:'high', color:'amber', icon:'fa-arrow-trend-up', title:'Low conversion (' + conversionRate + '%)', detail:'Only ' + s.paidOrgs + '/' + s.totalOrgs + ' orgs paying.', action:"go('contracts')", actionLabel:'Plans' });
-    if (parseFloat(churnRate) > 10) insights.push({ priority:'high', color:'rose', icon:'fa-user-slash', title:'High churn (' + churnRate + '%)', detail:s.cancelledContracts + ' cancelled. Ask users why.', action:"go('feedback')", actionLabel:'Feedback' });
-    if (npsScore != null && npsScore < 30) insights.push({ priority:'high', color:'rose', icon:'fa-face-frown', title:'NPS below target (' + npsScore + ')', detail:'Target 30+. Reach out to detractors.', action:"go('feedback')", actionLabel:'Review' });
-    if (errCount > 5) insights.push({ priority:'high', color:'rose', icon:'fa-bug', title:errCount + ' errors logged', detail:'Open Sentry to triage.', action:'ADM.errors.show()', actionLabel:'Log' });
-    if (!isNaN(parseFloat(avgRating)) && parseFloat(avgRating) < 4.0 && feedback.length >= 3) insights.push({ priority:'high', color:'amber', icon:'fa-star-half-stroke', title:'Avg rating ' + avgRating + '/5', detail:'Below 4.0. Fix root causes.', action:"go('feedback')", actionLabel:'Read' });
-    if (s.totalOrgs === 0) insights.push({ priority:'high', color:'sky', icon:'fa-user-plus', title:'No orgs yet', detail:'Outreach — WhatsApp 10 people.', action:"go('orgs')", actionLabel:'Add' });
-    else if (s.paidOrgs === 0) insights.push({ priority:'high', color:'amber', icon:'fa-credit-card', title:'No paying users yet', detail:s.totalOrgs + ' free users. Ask 3 why.', action:"go('feedback')", actionLabel:'Ask' });
-    if (s.totalRecords < 100) insights.push({ priority:'medium', color:'sky', icon:'fa-database', title:'Low data volume', detail:s.totalRecords + ' records. Encourage more.', action:"go('datasets')", actionLabel:'View' });
-    return insights;
-  }
-};
-
-function openWeeklyReview() {
-  var s = aggStats();
-  var weekNum = (state.weeklyReviews || []).length + 1;
-  var html = '<div class="fixed inset-0 z-[9700] bg-slate-950/90 backdrop-blur flex items-center justify-center p-3 sm:p-4 overflow-y-auto" id="weeklyReviewModal">' +
-    '<div class="bg-slate-900 border-2 border-purple-500/60 rounded-3xl p-5 sm:p-6 max-w-2xl w-full my-8 modal-in">' +
-    '<div class="flex justify-between items-start mb-4"><div><h3 class="text-base font-black text-white">Weekly Review — Week ' + weekNum + '</h3><p class="text-[11px] text-slate-400 mt-1">Auto-filled from current metrics.</p></div><button onclick="document.getElementById(\'weeklyReviewModal\').remove()" class="text-slate-400 hover:text-rose-400 text-lg"><i class="fa-solid fa-times"></i></button></div>' +
-    '<div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-4"><div class="p-2.5 rounded-lg bg-slate-950 border border-emerald-500/30"><div class="text-[9px] text-slate-400 mono uppercase">Orgs</div><div class="text-lg font-black text-emerald-400 mono">' + s.totalOrgs + '</div></div><div class="p-2.5 rounded-lg bg-slate-950 border border-amber-500/30"><div class="text-[9px] text-slate-400 mono uppercase">MRR</div><div class="text-lg font-black text-amber-400 mono">' + ADM.currency.format(s.mrr) + '</div></div><div class="p-2.5 rounded-lg bg-slate-950 border border-sky-500/30"><div class="text-[9px] text-slate-400 mono uppercase">Paid</div><div class="text-lg font-black text-sky-400 mono">' + s.paidOrgs + '</div></div><div class="p-2.5 rounded-lg bg-slate-950 border border-purple-500/30"><div class="text-[9px] text-slate-400 mono uppercase">Records</div><div class="text-lg font-black text-purple-400 mono">' + s.totalRecords + '</div></div></div>' +
-    '<div class="space-y-3"><div><label class="text-[11px] font-bold text-slate-300 block mb-1.5">✅ What worked?</label><textarea id="wrWorked" rows="2" class="input"></textarea></div>' +
-    '<div><label class="text-[11px] font-bold text-slate-300 block mb-1.5">❌ What failed?</label><textarea id="wrFailed" rows="2" class="input"></textarea></div>' +
-    '<div><label class="text-[11px] font-bold text-slate-300 block mb-1.5">🎯 Next week focus</label><input id="wrFocus1" placeholder="1. Priority one" class="input mb-2"><input id="wrFocus2" placeholder="2. Priority two" class="input mb-2"><input id="wrFocus3" placeholder="3. Priority three" class="input"></div>' +
-    '<div><label class="text-[11px] font-bold text-slate-300 block mb-1.5">🏆 Biggest win</label><input id="wrWin" class="input"></div>' +
-    '<div><label class="text-[11px] font-bold text-slate-300 block mb-1.5">💡 Biggest lesson</label><input id="wrLesson" class="input"></div></div>' +
-    '<div class="grid grid-cols-2 gap-2 mt-5"><button onclick="document.getElementById(\'weeklyReviewModal\').remove()" class="py-3 bg-slate-800 border border-slate-700 text-slate-300 font-bold text-xs rounded-2xl">Cancel</button><button onclick="saveWeeklyReview()" class="py-3 bg-purple-500 text-slate-950 font-black text-xs rounded-2xl"><i class="fa-solid fa-floppy-disk mr-1"></i>Save</button></div>' +
-    '</div></div>';
-  var div = document.createElement('div');
-  div.innerHTML = html;
-  document.body.appendChild(div.firstElementChild);
-}
-
-function saveWeeklyReview() {
-  var s = aggStats();
-  var review = {
-    id: 'WR-' + Date.now().toString(36),
-    week: (state.weeklyReviews || []).length + 1,
-    at: nowIso(),
-    by: state.admin.email,
-    orgs: s.totalOrgs, mrr: s.mrr, paidOrgs: s.paidOrgs, records: s.totalRecords,
-    errors: ADM.errors.list.length,
-    worked: document.getElementById('wrWorked').value,
-    failed: document.getElementById('wrFailed').value,
-    focus: [document.getElementById('wrFocus1').value, document.getElementById('wrFocus2').value, document.getElementById('wrFocus3').value],
-    win: document.getElementById('wrWin').value,
-    lesson: document.getElementById('wrLesson').value
-  };
-  state.weeklyReviews = state.weeklyReviews || [];
-  state.weeklyReviews.unshift(review);
-  LS.set('dp_weekly_reviews', state.weeklyReviews.slice(0, 50));
-  if (firebaseReady) { try { fbDb.collection('reviews').doc(review.id).set(review); } catch(e){} }
-  auditLog('WEEKLY_REVIEW_SAVE', review.id);
-  toast('✅ Weekly review saved!', 'success');
-  var el = document.getElementById('weeklyReviewModal'); if (el) el.remove();
-  render();
-}
-
-function exportMeasurements() {
-  try {
-    var s = aggStats();
-    var feedback = LS.get('dp_feedback', []);
-    var npsList = feedback.filter(function(f){ return f.nps != null; });
-    var npsScore = npsList.length ? Math.round((npsList.filter(function(f){return f.nps>=9;}).length/npsList.length - npsList.filter(function(f){return f.nps<=6;}).length/npsList.length) * 100) : 0;
-    var rows = [
-      { Metric:'Organizations (total)', Value: s.totalOrgs },
-      { Metric:'Organizations (paid)', Value: s.paidOrgs },
-      { Metric:'Conversion rate %', Value: s.totalOrgs > 0 ? (s.paidOrgs/s.totalOrgs*100).toFixed(2) : '0' },
-      { Metric:'Churn rate %', Value: s.totalOrgs > 0 ? (s.cancelledContracts/s.totalOrgs*100).toFixed(2) : '0' },
-      { Metric:'Active contracts', Value: s.activeContracts },
-      { Metric:'MRR (USD)', Value: s.mrr },
-      { Metric:'ARR (USD)', Value: s.arr },
-      { Metric:'ARPU (USD)', Value: s.paidOrgs > 0 ? (s.mrr/s.paidOrgs).toFixed(2) : '0' },
-      { Metric:'Total records', Value: s.totalRecords },
-      { Metric:'Feedback entries', Value: feedback.length },
-      { Metric:'Avg rating', Value: feedback.length ? (feedback.reduce(function(a,f){return a+(f.rating||0);},0)/feedback.length).toFixed(2) : '0' },
-      { Metric:'NPS score', Value: npsScore },
-      { Metric:'Errors', Value: ADM.errors.list.length },
-      { Metric:'Exported', Value: nowIso() }
-    ];
-    var h = Object.keys(rows[0]);
-    var csv = '\uFEFF' + [h.join(','), rows.map(function(r){ return h.map(function(k){ return '"' + String(r[k]||'').replace(/"/g,'""') + '"'; }).join(','); }).join('\n')].join('\n');
-    download(new Blob([csv], { type:'text/csv;charset=utf-8' }), 'datapulse-metrics-' + Date.now() + '.csv');
-    auditLog('METRICS_EXPORT');
-    toast('Metrics exported ✓','success');
-  } catch(e){ toast('Export failed: ' + e.message,'error'); }
-}
-
-
-function renderVerificationRows() {
-  var checks = [
-    { label:'Firestore Connected', detail: firebaseReady ? 'Cloud sync active' : 'Local mode OK', pass: true },
-    { label:'LocalStorage Saved', detail: Object.keys(state.fullAutoStats).length + ' orgs stored', pass: Object.keys(state.fullAutoStats).length > 0 },
-    { label:'Global Flag (dp_full_auto)', detail: LS.get('dp_full_auto', false) ? 'Enabled' : 'Disabled', pass: !!LS.get('dp_full_auto', false) },
-    { label:'At Least 1 Org Enabled', detail: state.orgs.filter(function(o){return fullAutoEnabled(o.id);}).length + '/' + state.orgs.length + ' orgs', pass: state.orgs.some(function(o){return fullAutoEnabled(o.id);}) },
-    { label:'Backend', detail: state.backendOnline ? 'Online' : 'Offline OK', pass: true },
-    { label:'Audit Logging', detail: state.audits.length + ' entries', pass: state.audits.length > 0 }
-  ];
-  return checks.map(function(c){
-    return '<div class="fa-verify-row ' + (c.pass ? 'pass' : 'fail') + '"><div class="fa-verify-icon ' + (c.pass ? 'bg-emerald-500/20 text-emerald-400' : 'bg-rose-500/20 text-rose-400') + '"><i class="fa-solid ' + (c.pass ? 'fa-check' : 'fa-times') + '"></i></div><div class="flex-1 min-w-0"><div class="text-[11px] font-bold text-white">' + c.label + '</div><div class="text-[10px] text-slate-400">' + c.detail + '</div></div><div class="text-[9px] font-bold mono ' + (c.pass ? 'text-emerald-400' : 'text-rose-400') + '">' + (c.pass ? 'PASS' : 'FAIL') + '</div></div>';
-  }).join('');
-}
-async function runFullAutoDiagnostics() {
-  var panel = document.getElementById('faVerifyPanel');
-  if (panel) panel.innerHTML = '<div class="text-center py-6"><i class="fa-solid fa-spinner spin text-2xl text-sky-400"></i><p class="text-[11px] text-slate-400 mt-2">Running…</p></div>';
-  var results = [];
-  var wait = function(ms){ return new Promise(function(r){ setTimeout(r, ms); }); };
-  await wait(300);
-  results.push({ name:'LocalStorage write/read', pass: (function(){ try { LS.set('_fa_test',{ok:1}); var v = LS.get('_fa_test',null); LS.del('_fa_test'); return v && v.ok === 1; } catch(e){ return false; } })() });
-  await wait(300);
-  var fsPass = false;
-  if (firebaseReady) { try { await fbDb.collection('_healthcheck').doc('admin').set({ at: nowIso() }, { merge:true }); fsPass = true; } catch(e){} }
-  results.push({ name:'Firestore write', pass: fsPass });
-  await wait(300);
-  results.push({ name:'Full auto stats readable', pass: state.orgs.every(function(o){ var s = getFullAutoStats(o.id); return s && typeof s.enabled === 'boolean'; }) });
-  await wait(300);
-  var aP = false; try { auditLog('FULL_AUTO_DIAGNOSTIC', 'test'); aP = state.audits[0] && state.audits[0].action === 'FULL_AUTO_DIAGNOSTIC'; } catch(e){}
-  results.push({ name:'Audit logging', pass: aP });
-  await wait(200);
-  results.push({ name:'Backend (optional)', pass: true, detail: state.backendOnline ? 'online' : 'offline' });
-  var passCount = results.filter(function(r){ return r.pass; }).length;
-  var total = results.length;
-  var allPass = passCount === total;
-  var html = '<div class="space-y-2">' + results.map(function(r){
-    return '<div class="fa-verify-row ' + (r.pass ? 'pass' : 'fail') + '"><div class="fa-verify-icon ' + (r.pass ? 'bg-emerald-500/20 text-emerald-400' : 'bg-rose-500/20 text-rose-400') + '"><i class="fa-solid ' + (r.pass ? 'fa-check' : 'fa-times') + '"></i></div><div class="flex-1 min-w-0"><div class="text-[11px] font-bold text-white">' + r.name + '</div>' + (r.detail ? '<div class="text-[10px] text-slate-400">' + r.detail + '</div>' : '') + '</div><div class="text-[9px] font-bold mono ' + (r.pass ? 'text-emerald-400' : 'text-rose-400') + '">' + (r.pass ? 'PASS' : 'FAIL') + '</div></div>';
-  }).join('') + '<div class="mt-3 p-3 rounded-xl ' + (allPass ? 'bg-emerald-500/10 border border-emerald-500/40' : 'bg-amber-500/10 border border-amber-500/40') + '"><div class="flex items-center justify-between"><span class="text-xs font-black ' + (allPass ? 'text-emerald-400' : 'text-amber-400') + '">' + (allPass ? '✅ All passed' : '⚠️ ' + (total-passCount) + ' failed') + '</span><span class="text-[10px] mono">' + passCount + '/' + total + '</span></div></div></div>';
-  if (panel) panel.innerHTML = html;
-  toast(allPass ? '✅ Diagnostics passed' : '⚠️ Issues found', allPass ? 'success' : 'warn');
-  auditLog('FULL_AUTO_DIAG_COMPLETE', passCount + '/' + total);
-}
-
-
-/* FA_SHORTCUTS_ADDED */
-(function(){
-  setInterval(function(){
-    if (typeof state === 'undefined' || !state.loggedIn) return;
-    if (state.tab !== 'fullauto') return;
-    var p = document.getElementById('faVerifyPanel');
-    if (p && typeof renderVerificationRows === 'function') p.innerHTML = renderVerificationRows();
-  }, 15000);
-  document.addEventListener('keydown', function(e){
-    if (typeof state === 'undefined' || !state.loggedIn) return;
-    if (e.altKey && !e.shiftKey && (e.key === 'f' || e.key === 'F')) { e.preventDefault(); if (typeof go === 'function') go('fullauto'); }
-    if (e.altKey && e.shiftKey && (e.key === 'F' || e.key === 'f')) { e.preventDefault(); if (typeof toggleAllFullAuto === 'function') toggleAllFullAuto(); }
-  });
-})();
-
-
-function vMarketing() {
-  var feedback = LS.get('dp_feedback', []);
-  var praise = feedback.filter(function(f){ return f.type === 'praise' && f.rating >= 4; });
-  var referrals = state.mkReferrals || [];
-  var scheduled = state.mkSchedule || [];
-  var channels = [
-    { icon:'fa-link', color:'emerald', title:'Referral Engine', desc:'Unique code per user — both get 1 month Pro free.', action:'openReferralPanel()', label:'Manage' },
-    { icon:'fa-share-nodes', color:'sky', title:'Social Share', desc:'WhatsApp, FB, X, LinkedIn, Telegram, Reddit, Email, QR — built into app.', action:'previewShare()', label:'Preview' },
-    { icon:'fa-magic', color:'purple', title:'Content Generator', desc:'Auto-writes posts from your live stats + praise.', action:'openContentGenerator()', label:'Generate' },
-    { icon:'fa-calendar-days', color:'amber', title:'Schedule & Post', desc:'Buffer / Zapier / Telegram — one post, many channels.', action:'openScheduler()', label:'Schedule' },
-    { icon:'fa-magnifying-glass-chart', color:'teal', title:'SEO & Structured Data', desc:'JSON-LD, OG tags, Twitter Cards — auto-injected.', action:'checkSEO()', label:'Check SEO' },
-    { icon:'fa-envelope-open-text', color:'rose', title:'Outreach CSV', desc:'Export orgs + praised feedback for manual outreach.', action:'exportOutreachList()', label:'Export' }
-  ];
-  var templates = [
-    { title:'📱 WhatsApp', txt:'🚀 DataPulse — Automate every data workflow!\n\n✓ 40 AI capabilities\n✓ 17 data ops\n✓ 12 sources\n✓ Free 14-day trial\n\nTry it 👉 ' + location.origin },
-    { title:'🐦 X / Twitter', txt:'Just shipped DataPulse v8.0 🚀\n\n• 40 AI data capabilities\n• 17 data ops\n• 12 sources\n• 24 languages\n\nBuilt from Africa 🇪🇹 for the world.\n\nFree trial 👉 ' + location.origin },
-    { title:'💼 LinkedIn', txt:'Excited to launch DataPulse Enterprise — the all-in-one data platform.\n\n40 AI capabilities + 17 data ops + 12 sources, automated.\n\n👉 ' + location.origin + '\n\n#DataPulse #DataAutomation #AI' },
-    { title:'📧 Email', txt:'Subject: Automate your data workflows\n\nHi [Name],\n\nI built DataPulse to help businesses automate data workflows — in seconds.\n\nFree 14-day trial: ' + location.origin + '\n\n— Muleta Legese Gemeda\nFounder, DataPulse' }
-  ];
-
-  return '<div class="space-y-4 fade">' +
-    '<div class="bg-gradient-to-br from-sky-500/20 via-purple-500/10 to-emerald-500/10 border-2 border-sky-500/50 rounded-3xl p-5"><div class="flex items-start gap-3 mb-4 flex-wrap"><div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-sky-400 to-sky-600 text-slate-950 flex items-center justify-center font-black text-2xl shrink-0"><i class="fa-solid fa-bullhorn"></i></div><div class="flex-1 min-w-0"><div class="flex items-center gap-2 flex-wrap"><h3 class="text-lg sm:text-xl font-black text-white">Marketing Automation</h3><span class="badge-worldclass">ETHICAL GROWTH</span></div><p class="text-xs text-slate-300 mt-1">Auto-generate content, schedule posts, track referrals — <b class="text-emerald-400">no spam, GDPR/CCPA compliant</b>.</p></div><button onclick="openMarketingHub()" class="px-4 py-2.5 bg-sky-500 text-slate-950 font-black text-[11px] rounded-xl"><i class="fa-solid fa-rocket mr-1"></i>Hub</button></div><div class="grid grid-cols-2 sm:grid-cols-4 gap-2"><div class="p-3 rounded-xl bg-slate-950/80 border border-sky-500/40"><div class="text-[9px] text-slate-400 mono uppercase">Referrals</div><div class="text-xl font-black text-sky-400 mono">' + referrals.length + '</div></div><div class="p-3 rounded-xl bg-slate-950/80 border border-emerald-500/40"><div class="text-[9px] text-slate-400 mono uppercase">Praise</div><div class="text-xl font-black text-emerald-400 mono">' + praise.length + '</div></div><div class="p-3 rounded-xl bg-slate-950/80 border border-amber-500/40"><div class="text-[9px] text-slate-400 mono uppercase">Scheduled</div><div class="text-xl font-black text-amber-400 mono">' + scheduled.length + '</div></div><div class="p-3 rounded-xl bg-slate-950/80 border border-purple-500/40"><div class="text-[9px] text-slate-400 mono uppercase">Orgs</div><div class="text-xl font-black text-purple-400 mono">' + state.orgs.length + '</div></div></div></div>' +
-    '<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">' + channels.map(function(c){
-      return '<div class="p-4 rounded-2xl bg-slate-900/80 border border-' + c.color + '-500/40 hover:border-' + c.color + '-500/70 transition"><div class="w-12 h-12 rounded-xl bg-' + c.color + '-500/20 text-' + c.color + '-400 flex items-center justify-center mb-3"><i class="fa-solid ' + c.icon + ' text-lg"></i></div><div class="text-xs font-black text-white">' + c.title + '</div><p class="text-[10px] text-slate-400 mt-1.5 leading-relaxed min-h-[42px]">' + c.desc + '</p><button onclick="' + c.action + '" class="w-full mt-3 py-2 bg-' + c.color + '-500/20 border border-' + c.color + '-500/50 text-' + c.color + '-400 font-bold text-[10px] rounded-lg">' + c.label + '</button></div>';
-    }).join('') + '</div>' +
-    '<div class="bg-slate-900/80 border border-emerald-500/40 rounded-2xl p-5"><div class="flex items-center justify-between mb-3 flex-wrap gap-2"><h4 class="text-sm font-bold text-white"><i class="fa-solid fa-star text-emerald-400 mr-2"></i>Testimonial Publisher</h4><button onclick="publishTestimonials()" class="px-3 py-1.5 bg-emerald-500 text-slate-950 font-black text-[10px] rounded-lg"><i class="fa-solid fa-share mr-1"></i>Publish</button></div>' + (praise.length ? '<div class="grid grid-cols-1 sm:grid-cols-2 gap-2">' + praise.slice(0,6).map(function(p){ return '<div class="p-3 rounded-xl bg-slate-950 border border-emerald-500/30"><div class="text-amber-400 text-sm mb-1">' + '★'.repeat(p.rating||5) + '</div><p class="text-[11px] text-slate-300 italic">"' + esc((p.message||'').slice(0,120)) + '"</p><div class="text-[10px] text-emerald-400 font-bold mt-2">— ' + esc(p.userName || p.name || 'Anonymous') + '</div></div>'; }).join('') + '</div>' : '<p class="text-xs text-slate-500 text-center py-6">No public praise yet.</p>') + '</div>' +
-    '<div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-5"><h4 class="text-sm font-bold text-white mb-3"><i class="fa-solid fa-clipboard text-sky-400 mr-2"></i>Ready-to-post Templates</h4><div class="grid grid-cols-1 md:grid-cols-2 gap-3">' + templates.map(function(t){
-      return '<div class="p-3 rounded-xl bg-slate-950 border border-slate-800"><div class="flex justify-between items-center mb-2"><span class="text-[11px] font-black text-white">' + t.title + '</span><button onclick="copyText(' + JSON.stringify(t.txt).replace(/"/g, '&quot;') + ');toast(\'Copied ✓\',\'success\')" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 text-sky-400 rounded-lg text-[10px]"><i class="fa-solid fa-copy"></i></button></div><pre class="text-[10px] text-slate-300 whitespace-pre-wrap font-mono leading-relaxed max-h-32 overflow-y-auto">' + esc(t.txt) + '</pre></div>';
-    }).join('') + '</div></div>' +
-    '<div class="bg-slate-900/80 border border-amber-500/40 rounded-2xl p-5"><h4 class="text-sm font-bold text-white mb-3"><i class="fa-solid fa-robot text-amber-400 mr-2"></i>Auto-Post Integration</h4><p class="text-[11px] text-slate-400 mb-3">DataPulse sends webhooks. Connect to Buffer/Zapier/Make for auto-post to YOUR accounts.</p><div class="grid grid-cols-2 md:grid-cols-4 gap-2"><a href="https://buffer.com" target="_blank" class="p-3 rounded-xl bg-slate-950 border border-slate-800 text-center"><i class="fa-solid fa-layer-group text-sky-400 text-xl mb-1"></i><div class="text-[10px] font-bold text-white">Buffer</div><div class="text-[9px] text-slate-500">Free 3 channels</div></a><a href="https://zapier.com" target="_blank" class="p-3 rounded-xl bg-slate-950 border border-slate-800 text-center"><i class="fa-solid fa-bolt text-amber-400 text-xl mb-1"></i><div class="text-[10px] font-bold text-white">Zapier</div><div class="text-[9px] text-slate-500">Free 100 tasks</div></a><a href="https://www.make.com" target="_blank" class="p-3 rounded-xl bg-slate-950 border border-slate-800 text-center"><i class="fa-solid fa-diagram-project text-purple-400 text-xl mb-1"></i><div class="text-[10px] font-bold text-white">Make</div><div class="text-[9px] text-slate-500">Free 1000 ops</div></a><button onclick="generateTelegramBot()" class="p-3 rounded-xl bg-slate-950 border border-slate-800 text-center"><i class="fa-brands fa-telegram text-emerald-400 text-xl mb-1"></i><div class="text-[10px] font-bold text-white">Telegram</div><div class="text-[9px] text-slate-500">Auto-post</div></button></div></div>' +
-    '<div class="bg-gradient-to-r from-rose-500/10 to-amber-500/10 border border-rose-500/40 rounded-2xl p-4"><div class="flex items-start gap-3"><i class="fa-solid fa-triangle-exclamation text-rose-400 text-xl mt-0.5"></i><div class="text-[11px] text-slate-300 leading-relaxed"><b class="text-rose-400">⚠️ Legal:</b> No spam, mass DM, fake reviews, scraping. GDPR · CCPA · CAN-SPAM compliant. Only consent-based sharing.</div></div></div>' +
-  '</div>';
-}
-
-function openMarketingHub() {
-  showResults('🚀 Marketing Hub', '<div class="space-y-2"><button onclick="previewShare()" class="w-full py-2.5 bg-sky-500/20 border border-sky-500/40 text-sky-400 font-bold text-xs rounded-xl">📱 Preview Share UI</button><button onclick="openContentGenerator()" class="w-full py-2.5 bg-purple-500/20 border border-purple-500/40 text-purple-400 font-bold text-xs rounded-xl">✨ Generate Content</button><button onclick="openScheduler()" class="w-full py-2.5 bg-amber-500/20 border border-amber-500/40 text-amber-400 font-bold text-xs rounded-xl">📅 Schedule Post</button><button onclick="openReferralPanel()" class="w-full py-2.5 bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 font-bold text-xs rounded-xl">🔗 Referrals</button><button onclick="exportOutreachList()" class="w-full py-2.5 bg-rose-500/20 border border-rose-500/40 text-rose-400 font-bold text-xs rounded-xl">📥 Export CSV</button></div>');
-}
-
-function previewShare() {
-  showResults('📱 Share Preview', '<div class="p-3 rounded-xl bg-slate-950 border border-slate-800 text-[11px]"><div class="text-emerald-400 font-black mb-2">Link:</div><code class="text-slate-300 text-[10px] break-all">' + esc(location.origin + '?ref=DP-PREVIEW') + '</code><div class="text-emerald-400 font-black mt-3 mb-2">Message:</div><div class="p-2 rounded-lg bg-slate-900 border-l-4 border-emerald-500"><div class="text-[10px] text-slate-200 whitespace-pre-wrap">🚀 DataPulse — Automate every data workflow!\n\n✓ 40 AI capabilities\n✓ 17 data ops\n✓ Free trial\n\nTry: ' + esc(location.origin) + '</div></div></div>');
-}
-
-function openContentGenerator() {
-  var fb = LS.get('dp_feedback', []);
-  var praise = fb.filter(function(f){ return f.type === 'praise' && f.rating >= 4; }).slice(0, 3);
-  var stats = { orgs: state.orgs.length, records: Object.values(state.records||{}).reduce(function(s,r){ return s + r.length; }, 0) };
-  showResults('✨ Content Generator', '<div class="space-y-2"><div class="p-3 rounded-lg bg-slate-950 border border-slate-800 text-[11px]"><div class="text-purple-400 font-black mb-1">📊 Stats</div><div class="text-slate-300">• ' + stats.orgs + ' orgs · ' + stats.records + ' records</div></div><div class="p-3 rounded-lg bg-slate-950 border border-slate-800 text-[11px]"><div class="text-emerald-400 font-black mb-1">💚 Praise</div>' + (praise.length ? praise.map(function(p){ return '<div class="text-slate-300 italic mb-1">"' + esc((p.message||'').slice(0,100)) + '"</div>'; }).join('') : '<div class="text-slate-500">None yet</div>') + '</div><button onclick="generatePost(\'twitter\')" class="w-full py-2 bg-sky-500/20 border border-sky-500/40 text-sky-400 font-bold text-xs rounded-xl">🐦 X Post</button><button onclick="generatePost(\'linkedin\')" class="w-full py-2 bg-indigo-500/20 border border-indigo-500/40 text-indigo-400 font-bold text-xs rounded-xl">💼 LinkedIn Post</button><button onclick="generatePost(\'whatsapp\')" class="w-full py-2 bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 font-bold text-xs rounded-xl">📱 WhatsApp</button></div>');
-}
-
-function generatePost(channel) {
-  var stats = { orgs: state.orgs.length, records: Object.values(state.records||{}).reduce(function(s,r){ return s + r.length; }, 0) };
-  var fb = LS.get('dp_feedback', []);
-  var praise = fb.filter(function(f){ return f.type === 'praise' && f.rating >= 4; })[0];
-  var quote = praise ? '\n\n"' + (praise.message||'').slice(0,120) + '"\n— ' + (praise.userName || 'User') : '';
-  var templates = {
-    twitter: '🚀 DataPulse growing!\n\n' + stats.orgs + ' orgs · ' + stats.records.toLocaleString() + ' records' + quote + '\n\n40 AI caps + 17 ops, automated.\n\nFree trial 👉 ' + location.origin + '\n\n#DataPulse #AI',
-    linkedin: 'Building DataPulse — the all-in-one data platform.\n\n📊 ' + stats.orgs + ' orgs · ' + stats.records.toLocaleString() + ' records' + quote + '\n\nBuilt from Africa 🇪🇹 for the world 🌍.\n\n👉 ' + location.origin,
-    whatsapp: '🚀 DataPulse News!\n\n' + stats.orgs + ' orgs use DataPulse.\n\n✓ 40 AI caps\n✓ 17 ops\n✓ Free trial\n\n👉 ' + location.origin
-  };
-  var text = templates[channel] || templates.twitter;
-  copyText(text);
-  auditLog('MARKETING_CONTENT_GEN', channel);
-  toast(channel.toUpperCase() + ' post copied 📋', 'success');
-  showResults('✅ ' + channel.toUpperCase() + ' Ready', '<div class="p-3 rounded-xl bg-slate-950 border border-emerald-500/40"><div class="text-emerald-400 font-black mb-2">📋 Copied</div><pre class="text-slate-300 whitespace-pre-wrap font-mono text-[10px] max-h-64 overflow-y-auto">' + esc(text) + '</pre></div>');
-}
-
-function openScheduler() {
-  var txt = prompt('Post to schedule:', state.mkCopy || '🚀 DataPulse — Automate your data workflows! Try: ' + location.origin);
-  if (!txt) return;
-  var when = prompt('When (YYYY-MM-DD HH:MM) or leave blank:', new Date(Date.now()+3600000).toISOString().slice(0,16).replace('T',' '));
-  if (when === null) return;
-  var sch = state.mkSchedule || [];
-  sch.unshift({ id:'SCH-'+Date.now().toString(36), content:txt, when:when || nowIso(), at:nowIso(), by:state.admin.email, status:when?'scheduled':'ready' });
-  state.mkSchedule = sch;
-  LS.set('dp_mk_schedule', sch);
-  copyText(txt);
-  auditLog('MARKETING_SCHEDULE', sch[0].id);
-  toast('Scheduled + copied! Paste into Buffer/Zapier 📋','success');
-  render();
-}
-
-function openReferralPanel() {
-  var refs = state.mkReferrals || [];
-  showResults('🔗 Referral Analytics', '<div class="text-[11px] space-y-2"><div class="p-3 rounded-lg bg-slate-950 border border-emerald-500/30"><div class="text-emerald-400 font-black mb-1">Total: ' + refs.length + '</div><div class="text-slate-400">Each = 1 month Pro free</div></div>' + (refs.length ? refs.slice(0,10).map(function(r){ return '<div class="p-2 rounded bg-slate-950 border border-slate-800 text-[10px]"><div class="text-slate-300">' + esc(r.refCode||'—') + '</div><div class="text-slate-500">' + fmtDate(r.at) + '</div></div>'; }).join('') : '<div class="text-slate-500 text-center py-4">No referrals yet</div>') + '</div>');
-}
-
-function exportOutreachList() {
-  try {
-    var rows = state.orgs.map(function(o){ return { Name:o.name, Admin:o.adminName, Email:o.email, Phone:o.phone, Type:o.accountType, Plan:o.plan, Status:o.status||'active', Paid:isPaid(o.id)?'yes':'no', Joined:o.createdAt, Records:o.dataCount||0 }; });
-    if (!rows.length) { toast('No orgs','warn'); return; }
-    var h = Object.keys(rows[0]);
-    var csv = '\uFEFF' + [h.join(','), rows.map(function(r){ return h.map(function(k){ return '"' + String(r[k]||'').replace(/"/g,'""') + '"'; }).join(','); }).join('\n')].join('\n');
-    download(new Blob([csv], { type:'text/csv;charset=utf-8' }), 'datapulse-outreach-' + Date.now() + '.csv');
-    auditLog('MARKETING_EXPORT', rows.length + ' orgs');
-    toast('Exported ✓','success');
-  } catch(e){ toast('Export failed: ' + e.message,'error'); }
-}
-
-function publishTestimonials() {
-  var fb = LS.get('dp_feedback', []);
-  var praise = fb.filter(function(f){ return f.type === 'praise' && f.rating >= 4 && (f.public || f.testimonialApproved); });
-  if (!praise.length) { toast('No public praise','warn'); return; }
-  LS.set('dp_testimonials', praise.slice(0, 12));
-  if (firebaseReady) { try { fbDb.collection('site').doc('testimonials').set({ items:praise.slice(0,12).map(function(p){ return { name:p.userName||p.name||'Anonymous', org:p.orgName||'', rating:p.rating, message:p.message, at:p.at }; }), updatedAt:nowIso() }); } catch(e){} }
-  auditLog('MARKETING_TESTIMONIALS_PUBLISH', praise.length);
-  toast('Testimonials published ✓','success');
-}
-
-function checkSEO() {
-  var checks = [
-    { name:'Title tag', pass:!!document.querySelector('meta[property="og:title"]') },
-    { name:'Description', pass:!!document.querySelector('meta[name="description"]') },
-    { name:'OG image', pass:!!document.querySelector('meta[property="og:image"]') },
-    { name:'Canonical', pass:!!document.querySelector('link[rel="canonical"]') },
-    { name:'Robots', pass:!!document.querySelector('meta[name="robots"]') },
-    { name:'Twitter Card', pass:!!document.querySelector('meta[name="twitter:card"]') },
-    { name:'Structured data', pass:!!document.querySelector('script[type="application/ld+json"]') },
-    { name:'Viewport', pass:!!document.querySelector('meta[name="viewport"]') },
-    { name:'HTTPS', pass:location.protocol === 'https:' }
-  ];
-  var p = checks.filter(function(c){ return c.pass; }).length;
-  showResults('🔍 SEO — ' + p + '/' + checks.length, '<div class="space-y-1">' + checks.map(function(c){ return '<div class="flex items-center gap-2 p-2 rounded-lg bg-slate-950 border ' + (c.pass?'border-emerald-500/30':'border-rose-500/30') + ' text-[11px]"><i class="fa-solid ' + (c.pass?'fa-check text-emerald-400':'fa-times text-rose-400') + '"></i><span class="text-slate-300">' + c.name + '</span><span class="ml-auto text-[9px] mono ' + (c.pass?'text-emerald-400':'text-rose-400') + '">' + (c.pass?'PASS':'MISSING') + '</span></div>'; }).join('') + '<a href="https://search.google.com/search-console" target="_blank" class="block w-full py-2 bg-sky-500 text-slate-950 font-black text-[11px] rounded-lg text-center mt-2">Google Search Console →</a></div>');
-}
-
-function generateTelegramBot() {
-  var instructions = '🤖 Telegram Bot Setup\n\n1. Telegram → @BotFather → /newbot → get token\n2. Add bot as admin to your channel\n3. Get channel ID via @userinfobot\n4. curl -X POST "https://api.telegram.org/botTOKEN/sendMessage" -d "chat_id=ID" -d "text=DataPulse: ' + location.origin + '"\n5. Post ONLY to your own channel.';
-  copyText(instructions);
-  showResults('🤖 Telegram Bot', '<div class="p-3 rounded-lg bg-slate-950 border border-emerald-500/40"><pre class="text-[10px] text-slate-300 whitespace-pre-wrap font-mono">' + esc(instructions) + '</pre></div><a href="https://t.me/BotFather" target="_blank" class="block w-full py-2 bg-emerald-500 text-slate-950 font-black text-[11px] rounded-lg text-center mt-2">Open BotFather →</a>');
-  toast('Instructions copied 📋','success');
-}
-
-
-/* ═══ ADMIN AI ASSISTANT ═══ */
-ADM.aiChat = ADM.aiChat || [];
-function vAdminAi() {
-  var stats = aggStats();
-  return '<div class="space-y-4 fade">' +
-    '<div class="bg-gradient-to-br from-purple-500/20 to-sky-500/10 border-2 border-purple-500/50 rounded-3xl p-5">' +
-      '<div class="flex items-center gap-3 mb-3"><div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-purple-400 to-purple-600 text-slate-950 flex items-center justify-center text-xl"><i class="fa-solid fa-robot"></i></div><div><h3 class="text-base font-black text-white">Admin AI Assistant</h3><p class="text-[11px] text-slate-400 mt-0.5">Ask about platform metrics, orgs, contracts, errors</p></div></div>' +
-      '<div class="grid grid-cols-2 md:grid-cols-4 gap-2">' +
-        '<div class="p-3 rounded-xl bg-slate-950/80 border border-purple-500/40"><div class="text-[9px] text-slate-400 mono uppercase">Orgs</div><div class="text-lg font-black text-purple-400 mono">' + stats.totalOrgs + '</div></div>' +
-        '<div class="p-3 rounded-xl bg-slate-950/80 border border-emerald-500/40"><div class="text-[9px] text-slate-400 mono uppercase">MRR</div><div class="text-lg font-black text-emerald-400 mono">' + ADM.currency.format(stats.mrr) + '</div></div>' +
-        '<div class="p-3 rounded-xl bg-slate-950/80 border border-amber-500/40"><div class="text-[9px] text-slate-400 mono uppercase">Records</div><div class="text-lg font-black text-amber-400 mono">' + stats.totalRecords + '</div></div>' +
-        '<div class="p-3 rounded-xl bg-slate-950/80 border border-sky-500/40"><div class="text-[9px] text-slate-400 mono uppercase">Audits</div><div class="text-lg font-black text-sky-400 mono">' + state.audits.length + '</div></div>' +
-      '</div>' +
-    '</div>' +
-    '<div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-4">' +
-      '<div id="admAiMessages" class="h-80 overflow-y-auto space-y-2 bg-slate-950 rounded-xl p-3 mb-3"></div>' +
-      '<div class="flex gap-2 mb-3">' +
-        '<input id="admAiInput" placeholder="Ask: how many orgs? errors? revenue? ..." onkeydown="if(event.key===\'Enter\'){event.preventDefault();admAiSend();}" class="flex-1 bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-purple-500">' +
-        '<button onclick="admAiSend()" class="px-5 py-3 bg-purple-500 text-slate-950 font-black text-xs rounded-xl"><i class="fa-solid fa-paper-plane"></i></button>' +
-      '</div>' +
-      '<div class="flex flex-wrap gap-2">' +
-        '<button onclick="admAiQ(\'how many orgs\')" class="ai-quick">Orgs</button>' +
-        '<button onclick="admAiQ(\'revenue\')" class="ai-quick">Revenue</button>' +
-        '<button onclick="admAiQ(\'errors\')" class="ai-quick">Errors</button>' +
-        '<button onclick="admAiQ(\'contracts\')" class="ai-quick">Contracts</button>' +
-        '<button onclick="admAiQ(\'feedback\')" class="ai-quick">Feedback</button>' +
-        '<button onclick="admAiQ(\'full auto\')" class="ai-quick">Full Auto</button>' +
-        '<button onclick="admAiQ(\'top orgs\')" class="ai-quick">Top Orgs</button>' +
-        '<button onclick="admAiQ(\'help\')" class="ai-quick">Help</button>' +
-      '</div>' +
-    '</div>' +
-  '</div>';
-}
-
-function admAiQ(q) {
-  var i = document.getElementById('admAiInput');
-  if (i) { i.value = q; admAiSend(); }
-}
-
-function admAiSend() {
-  var inp = document.getElementById('admAiInput');
-  if (!inp) return;
-  var q = inp.value.trim();
-  if (!q) return;
-  ADM.aiChat.push({ role:'user', text:q });
-  inp.value = '';
-  admAiRender();
-  setTimeout(function(){
-    var reply = ADM.aiAnswer(q);
-    ADM.aiChat.push({ role:'ai', text:reply });
-    admAiRender();
-    try { auditLog('ADMIN_AI_QUERY', q.slice(0,50)); } catch(e){}
-  }, 200);
-}
-
-function admAiRender() {
-  var el = document.getElementById('admAiMessages');
-  if (!el) return;
-  if (!ADM.aiChat.length) {
-    ADM.aiChat.push({ role:'ai', text:'👋 Hi Admin! I know everything about your platform.\n\nTry asking:\n• "how many orgs"\n• "revenue"\n• "errors"\n• "top orgs"\n• "feedback"\n• "help"' });
-  }
-  el.innerHTML = ADM.aiChat.map(function(m){
-    return '<div class="flex ' + (m.role==='user'?'justify-end':'justify-start') + '"><div class="ai-msg ' + m.role + '">' + esc(m.text) + '</div></div>';
-  }).join('');
-  el.scrollTop = el.scrollHeight;
-}
-
-ADM.aiAnswer = function(q) {
-  q = String(q||'').toLowerCase().trim();
-  var s = aggStats();
-  var feedback = LS.get('dp_feedback', []);
-  var npsList = feedback.filter(function(f){ return f.nps != null; });
-  var promoters = npsList.filter(function(f){ return f.nps >= 9; }).length;
-  var detractors = npsList.filter(function(f){ return f.nps <= 6; }).length;
-  var nps = npsList.length ? Math.round((promoters/npsList.length - detractors/npsList.length) * 100) : null;
-  var avgRating = feedback.length ? (feedback.reduce(function(a,f){ return a + (f.rating||0); }, 0) / feedback.length).toFixed(2) : '—';
-  var faOn = state.orgs.filter(function(o){ return fullAutoEnabled(o.id); }).length;
-  var errCount = (ADM.errors && ADM.errors.list) ? ADM.errors.list.length : 0;
-
-  if (/help|what can/.test(q)) return '🤖 I can answer:\n\n• Orgs: how many orgs\n• Revenue: MRR, ARR\n• Contracts: active, cancelled\n• Errors: current session\n• Feedback: total, rating, NPS\n• Full Auto: how many orgs\n• Top orgs: by records\n• Audit: recent actions';
-  if (/org|organization|how many/.test(q)) return '📊 Organizations:\n• Total: ' + s.totalOrgs + '\n• Active: ' + s.activeOrgs + '\n• Verified: ' + s.verifiedOrgs + '\n• Paid: ' + s.paidOrgs + '\n• Suspended: ' + s.suspendedOrgs;
-  if (/revenue|mrr|arr|money|income|earning/.test(q)) return '💰 Revenue:\n• MRR: ' + ADM.currency.format(s.mrr) + '\n• ARR: ' + ADM.currency.format(s.arr) + '\n• ARPU: ' + (s.paidOrgs > 0 ? ADM.currency.format(s.mrr/s.paidOrgs) : '—') + '\n• Paid orgs: ' + s.paidOrgs;
-  if (/contract/.test(q)) return '📝 Contracts:\n• Active: ' + s.activeContracts + '\n• Cancelled: ' + s.cancelledContracts + '\n• Total: ' + state.contracts.length;
-  if (/error|bug|crash/.test(q)) return '🐛 Errors:\n• Session: ' + errCount + '\n• All-time: ' + ((ADM.errors && ADM.errors.list) ? ADM.errors.list.length : 0) + '\n\nSentry: ' + (typeof SENTRY_DSN !== 'undefined' && SENTRY_DSN ? '✓ Connected' : '○ Not set');
-  if (/feedback|rating|nps/.test(q)) return '💬 Feedback:\n• Total: ' + feedback.length + '\n• Avg rating: ' + avgRating + '/5\n• NPS: ' + (nps != null ? nps : '—') + '\n• Promoters: ' + promoters + ' · Detractors: ' + detractors;
-  if (/full auto|automation|auto pipeline/.test(q)) return '⚡ Full Automation:\n• Orgs ON: ' + faOn + '/' + state.orgs.length + '\n• Actions per event: 57 (17 ops + 40 caps)';
-  if (/top org|biggest|largest/.test(q)) {
-    var top = state.orgs.slice().sort(function(a,b){ return (b.dataCount||0)-(a.dataCount||0); }).slice(0, 3);
-    return '🏆 Top orgs by records:\n' + top.map(function(o,i){ return (i+1) + '. ' + o.name + ' — ' + (o.dataCount||0) + ' records'; }).join('\n');
-  }
-  if (/audit|log|action/.test(q)) return '📋 Audit: ' + state.audits.length + ' entries\nRecent: ' + (state.audits.slice(0,3).map(function(a){ return a.action; }).join(', ') || 'none');
-  if (/data|records|dataset/.test(q)) return '📂 Data:\n• Total records: ' + s.totalRecords + '\n• Datasets: ' + Object.keys(state.records||{}).length + ' orgs';
-  if (/user/.test(q)) return '👥 Users: ' + state.orgs.length + ' (1 per org)';
-  if (/setting|config/.test(q)) return '⚙️ Go to Settings tab for configuration.';
-  if (/hi|hello|hey|selam/.test(q)) return '👋 Hi! Ask me about orgs, revenue, errors, feedback, or full automation.';
-  return '🤔 I am not sure. Try:\n• "how many orgs"\n• "revenue"\n• "errors"\n• "feedback"\n• "top orgs"\n• "help"';
-};
-
-/* ═══ LIVE BADGE — Feedback count ═══ */
-ADM.updateBadge = function() {
-  try {
-    var fb = LS.get('dp_feedback', []);
-    var newCount = fb.filter(function(f){ return !f.resolved && (!f.status || f.status === 'new'); }).length;
-    var tabs = document.querySelectorAll('[data-tab="feedback"]');
-    tabs.forEach(function(t){
-      var old = t.querySelector('.nav-badge');
-      if (old) old.remove();
-      if (newCount > 0) {
-        var b = document.createElement('span');
-        b.className = 'nav-badge';
-        b.textContent = newCount > 99 ? '99+' : newCount;
-        t.appendChild(b);
-      }
-    });
-    var mob = document.querySelectorAll('[data-tab="feedback"]');
-    // also mobile dock — same selector
-  } catch(e){}
-};
-
-/* Watch localStorage for feedback changes */
-ADM.startBadgeWatcher = function() {
-  if (window._badgeWatcher) return;
-  window._badgeWatcher = true;
-  ADM.updateBadge();
-  setInterval(ADM.updateBadge, 5000);
-  window.addEventListener('storage', ADM.updateBadge);
-};
-
-/* ═══ CHANGE ADMIN PASSWORD ═══ */
-ADM.changePassword = async function() {
-  if (!firebaseReady || !fbAuth || !fbAuth.currentUser) { toast('Firebase not connected', 'warn'); return; }
-  var cur = prompt('Current password:');
-  if (!cur) return;
-  var nw = prompt('New password (min 8 chars):');
-  if (!nw || nw.length < 8) { toast('Password too short', 'warn'); return; }
-  var confirm = prompt('Confirm new password:');
-  if (nw !== confirm) { toast('Passwords do not match', 'error'); return; }
-  try {
-    var user = fbAuth.currentUser;
-    var cred = firebase.auth.EmailAuthProvider.credential(user.email, cur);
-    await user.reauthenticateWithCredential(cred);
-    await user.updatePassword(nw);
-    toast('✅ Password changed!', 'success');
-    auditLog('ADMIN_PASSWORD_CHANGE', user.email);
-  } catch(e) {
-    var msg = e.message || 'Failed';
-    if (msg.includes('wrong-password')) msg = 'Current password is incorrect';
-    if (msg.includes('weak-password')) msg = 'New password too weak';
-    toast(msg, 'error');
-  }
-};
-
 /* ---------- INIT ---------- */
 window.addEventListener('DOMContentLoaded', () => {
   ADM.theme.init();
@@ -3651,83 +2962,6 @@ window.addEventListener('DOMContentLoaded', () => {
     checkBackendHealth(false);
   }, 500);
 });
-
-/* ═══ ADMIN GUIDE FAB (fix) ═══ */
-ADM.showGuide = function() {
-  var guide = [
-    { icon:'fa-gauge-high', title:'Overview', desc:'KPIs, plan distribution, recent activity.' },
-    { icon:'fa-building', title:'Organizations', desc:'Add, edit, delete orgs. Enable Full Auto per org.' },
-    { icon:'fa-users', title:'Users', desc:'Derived from org owners. Contact + status.' },
-    { icon:'fa-file-signature', title:'Contracts', desc:'Activate/cancel plans. Track MRR.' },
-    { icon:'fa-database', title:'Datasets', desc:'Per-org records. Push to Firestore.' },
-    { icon:'fa-bolt', title:'Full Automation', desc:'Toggle ⚡ per org. 17 ops + 40 caps auto-run.' },
-    { icon:'fa-comment-dots', title:'Feedback', desc:'Read user voices. Filter, reply, export.' },
-    { icon:'fa-chart-line', title:'Measure', desc:'Funnel, trends, AI priority actions.' },
-    { icon:'fa-bullhorn', title:'Marketing', desc:'Content, referral, testimonials, SEO.' },
-    { icon:'fa-robot', title:'AI Assistant', desc:'Ask: orgs? revenue? errors? feedback?' },
-    { icon:'fa-map-location-dot', title:'Data Map', desc:'3-layer storage architecture.' },
-    { icon:'fa-clipboard-list', title:'Audit Logs', desc:'Every action logged. Export CSV.' },
-    { icon:'fa-credit-card', title:'Payments', desc:'PayPal, EBC, TeleBirr.' },
-    { icon:'fa-cloud', title:'Cloud Sync', desc:'Firestore ⇄ Backend. Push/Pull.' },
-    { icon:'fa-sliders', title:'Settings', desc:'Backend URL, currency, AI config, backup.' }
-  ];
-  var html = '<div class="space-y-2">';
-  html += '<div class="p-3 rounded-xl bg-purple-500/10 border border-purple-500/40 mb-2"><div class="text-xs font-black text-purple-400">🎓 ADMIN GUIDE</div><div class="text-[10px] text-slate-400 mt-1">15 tabs · Full control · GDPR compliant</div></div>';
-  guide.forEach(function(g){
-    html += '<div class="flex items-start gap-3 p-3 rounded-xl bg-slate-950 border border-slate-800"><div class="w-9 h-9 rounded-lg bg-purple-500/20 text-purple-400 flex items-center justify-center shrink-0"><i class="fa-solid ' + g.icon + '"></i></div><div><div class="text-xs font-bold text-white">' + g.title + '</div><div class="text-[10px] text-slate-400 mt-0.5 leading-relaxed">' + g.desc + '</div></div></div>';
-  });
-  html += '<div class="p-3 rounded-lg bg-sky-500/10 border border-sky-500/30 mt-2"><div class="text-[10px] text-slate-300 leading-relaxed"><b class="text-sky-400">Shortcuts:</b> Ctrl+K command · Alt+F full auto · Alt+Shift+F enable all · Alt+G guide</div></div>';
-  html += '</div>';
-  if (typeof showResults === 'function') showResults('🎓 Admin Guide', html);
-};
-
-ADM.welcomeClose = ADM.welcomeClose || function() {
-  var w = document.getElementById('admWelcome'); if (w) w.classList.remove('on');
-  LS.set('dp_adm_welcome_seen', true);
-};
-
-ADM.showWelcome = ADM.showWelcome || function() {
-  if (LS.get('dp_adm_welcome_seen', false)) return;
-  var w = document.getElementById('admWelcome');
-  if (w) setTimeout(function(){ w.classList.add('on'); }, 800);
-};
-
-ADM.showReferralLeaderboard = ADM.showReferralLeaderboard || function() {
-  var shares = LS.get('dp_ref_shares', []);
-  var byPlatform = {};
-  shares.forEach(function(s){ byPlatform[s.platform] = (byPlatform[s.platform]||0) + 1; });
-  var top = Object.entries(byPlatform).sort(function(a,b){ return b[1]-a[1]; });
-  var html = '<div class="space-y-2">';
-  html += '<div class="p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/30"><div class="text-xs font-black text-emerald-400">📊 Total Shares: ' + shares.length + '</div></div>';
-  if (top.length) {
-    top.slice(0, 8).forEach(function(t, i){
-      var pct = Math.round(t[1] / shares.length * 100);
-      html += '<div class="p-2 rounded-lg bg-slate-950 border border-slate-800"><div class="flex justify-between items-center text-[11px] mb-1"><span class="text-slate-300"><b class="text-emerald-400">#' + (i+1) + '</b> ' + t[0] + '</span><span class="text-emerald-400 mono font-bold">' + t[1] + '</span></div><div class="h-1.5 rounded-full bg-slate-800 overflow-hidden"><div class="h-full bg-gradient-to-r from-emerald-500 to-emerald-400" style="width:' + pct + '%"></div></div></div>';
-    });
-  } else {
-    html += '<div class="p-4 text-center text-[11px] text-slate-500">No shares yet.</div>';
-  }
-  html += '</div>';
-  if (typeof showResults === 'function') showResults('🏆 Referral Leaderboard', html);
-};
-
-ADM.showUTMDashboard = ADM.showUTMDashboard || function() {
-  var utm = LS.get('dp_utm', null);
-  var html = '<div class="space-y-2">';
-  html += '<div class="p-3 rounded-lg bg-sky-500/10 border border-sky-500/30"><div class="text-xs font-black text-sky-400">📈 UTM Campaign Tracking</div></div>';
-  if (utm && utm.source) {
-    html += '<div class="p-3 rounded-lg bg-slate-950 border border-slate-800 text-[11px] space-y-1">';
-    html += '<div class="flex justify-between"><span class="text-slate-400">Source:</span><span class="text-white">' + (utm.source||'—') + '</span></div>';
-    if (utm.medium) html += '<div class="flex justify-between"><span class="text-slate-400">Medium:</span><span class="text-white">' + utm.medium + '</span></div>';
-    if (utm.campaign) html += '<div class="flex justify-between"><span class="text-slate-400">Campaign:</span><span class="text-white">' + utm.campaign + '</span></div>';
-    html += '</div>';
-  } else {
-    html += '<div class="p-4 text-center text-[11px] text-slate-500">No UTM campaigns tracked yet.</div>';
-  }
-  html += '</div>';
-  if (typeof showResults === 'function') showResults('📈 UTM Dashboard', html);
-};
-
 </script>
 </body>
 </html>
