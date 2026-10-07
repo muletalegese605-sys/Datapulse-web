@@ -1084,7 +1084,7 @@ const APP_ENV      = 'production';
 let firebaseReady = false, fbAuth = null, fbDb = null;
 
 DP.config = {
-  backendDefault: BACKEND_URL,
+  backendDefault: 'https://datapulse-web-rzon.onrender.com',
   requestTimeout: 12000, healthTimeout: 3000, freeTrialDays: 14,
   maxFileMB: 50, chunkSize: 500, largeDataThreshold: 2000,
   rateLimitAttempts: 5, rateLimitWindowMs: 60000,
@@ -1824,7 +1824,7 @@ DP.email = {
   provider: 'sandbox',
   config: {
     emailjs: { publicKey:'YOUR_EMAILJS_PUBLIC_KEY', serviceId:'YOUR_SERVICE_ID', templates:{ verification:'template_verify', welcome:'template_welcome', reset:'template_reset' } },
-    backendEndpoint: BACKEND_URL + '/api/send-email'
+    backendEndpoint: 'https://datapulse-web-rzon.onrender.com/api/send-email'
   },
   async init() {
     if (this.config.emailjs.publicKey && this.config.emailjs.publicKey !== 'YOUR_EMAILJS_PUBLIC_KEY') {
@@ -2841,7 +2841,19 @@ DP.data = {
     if (!data.length) throw new Error('No data');
     const k = kpis();
     const sigBlock = signatureDataUrl ? `<div style="margin-top:30px;padding-top:20px;border-top:1px solid #e2e8f0"><h3>Authorized Signature</h3><img src="${signatureDataUrl}" alt="Sig" style="max-width:200px;border:1px solid #e2e8f0;border-radius:8px;padding:8px"/><p style="font-size:12px;color:#64748b">Signed by: ${esc(meta.signerName||'—')} · ${esc(meta.signerTitle||'')}<br>Timestamp: ${meta.timestamp}<br>Verification: ${esc(meta.sigHash||'—')}</p></div>` : '';
-    const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>DataPulse Report</title><style>body{font-family:Arial,sans-serif;padding:40px;color:#0f172a}h1{color:#10b981}table{width:100%;border-collapse:collapse;margin-top:20px}th{background:#0f172a;color:white;padding:10px;text-align:left}td{padding:8px;border-bottom:1px solid #e2e8f0}.kpi{display:inline-block;padding:15px 25px;margin:5px;background:#f1f5f9;border-left:4px solid #10b981}.kpi b{display:block;font-size:22px;color:#10b981}.header{display:flex;align-items:center;gap:20px;margin-bottom:20px}</style></head><body><div class="header">${DP.LOGO_SVG}<div><h1 style="margin:0">DataPulse Executive Report</h1><p><b>Org:</b> ${esc(meta.org)} | <b>Generated:</b> ${meta.timestamp} | <b>ID:</b> ${meta.reportId}</p></div></div><div><div class="kpi">Gross Sales<b>${DP.currency.format(meta.sales/57.5)}</b></div><div class="kpi">Net Profit<b>${DP.currency.format(meta.profit/57.5)}</b></div><div class="kpi">Margin<b>${k.margin.toFixed(1)}%</b></div><div class="kpi">Records<b>${k.count}</b></div></div><h2>Inventory</h2><table><thead><tr>${Object.keys(data[0]).map(h=>`<th>${esc(h)}</th>`).join('')}</tr></thead><tbody>${data.map(r=>`<tr>${Object.values(r).map(v=>`<td>${esc(v)}</td>`).join('')}</tr>`).join('')}</tbody></table>${sigBlock}<p style="margin-top:30px;color:#64748b;font-size:12px">© ${new Date().getFullYear()} DataPulse Enterprise</p></body></html>`;
+    const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>DataPulse Report</title><style>body{font-family:Arial,sans-serif;padding:40px;color:#0f172a}h1{color:#10b981}table{width:100%;border-collapse:collapse;margin-top:20px}th{background:#0f172a;color:white;padding:10px;text-align:left}td{padding:8px;border-bottom:1px solid #e2e8f0}.kpi{display:inline-block;padding:15px 25px;margin:5px;background:#f1f5f9;border-left:4px solid #10b981}.kpi b{display:block;font-size:22px;color:#10b981}.header{display:flex;align-items:center;gap:20px;margin-bottom:20px}</style></head><body><div class="header">${DP.LOGO_SVG}<div><h1 style="margin:0">DataPulse Executive Report</h1><p><b>Org:</b> ${esc(meta.org)} | <b>Generated:</b> ${meta.timestamp} | <b>ID:</b> ${meta.reportId}</p></div></div><div><div class="kpi">Gross Sales<b>${DP.currency.format(meta.sales/57.5)}</b></div><div class="kpi">Net Profit<b>${DP.currency.format(meta.profit/57.5)}</b></div><div class="kpi">Margin<b>${k.margin.toFixed(1)}%</b></div><div class="kpi">Records<b>${k.count}</b></div></div><h2>Inventory</h2><table><thead><tr>${Object.keys(data[0]).map(h=>`<th>${esc(h)}</th>`).join('')}</tr></thead><tbody>${data.map(r=>`<tr>${Object.values(r).map(v=>`<td>${esc(v)}</td>`).join('')}</tr>`).join('')}</tbody></table>${sigBlock}<p style="margin-top:30px;color:#64748b;font-size:12px">© ${new Date().getFullYear()} DataPulse Enterprise</p>
+    <script>
+      window.addEventListener('load', () => {
+        if (window.DP && DP.config) {
+          DP.config.backendDefault = 'https://datapulse-web-rzon.onrender.com';
+          console.log('✅ Render Backend URL forcibly set:', DP.config.backendDefault);
+        }
+        // LocalStorage moofaa haqi
+        localStorage.removeItem('dp_backendUrl');
+        localStorage.removeItem('dp_backend_default');
+      });
+    </script>
+    </body></html>`;
     this._download(new Blob([html], { type:'text/html' }), filename);
   },
   async exportToDOCX(data, meta, filename='datapulse-report.doc') {
