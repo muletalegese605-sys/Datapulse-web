@@ -1,3 +1,6 @@
 .env
 node_modules/
 dp_prompt.txt
+*.bak
+*.log
+.DS_Store
