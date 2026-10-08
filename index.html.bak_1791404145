@@ -2862,7 +2862,7 @@ DP.ai = {
   mode:'local', endpoint:'', apiKey:'',
   _enc(s){ try { return btoa(String.fromCharCode(...new TextEncoder().encode(s))); } catch(e){ return ''; } },
   _dec(s){ try { return new TextDecoder().decode(Uint8Array.from(atob(s), c => c.charCodeAt(0))); } catch(e){ return ''; } },
-  init(){ this.mode = 'remote'; this.endpoint = 'https://datapulse-web-rzon.onrender.com/api/ai'; const enc = localStorage.getItem('dp_ai_key_enc') || ''; this.apiKey = enc ? this._dec(enc) : ''; },
+  init(){ this.mode = localStorage.getItem('dp_ai_mode') || 'local'; this.endpoint = localStorage.getItem('dp_ai_endpoint') || ''; const enc = localStorage.getItem('dp_ai_key_enc') || ''; this.apiKey = enc ? this._dec(enc) : ''; },
   async ask(q) {
     q = String(q||'').toLowerCase().trim(); if (!q) return '';
     if (this.mode === 'remote' && this.endpoint) {
@@ -2889,7 +2889,7 @@ DP.ai = {
     if (/price|payment|plan/.test(q)) return `💳 Free · Starter $29 · Pro $99 · Enterprise $499. 14-day free trial.`;
     if (/source|import|ingest/.test(q)) return `📥 12 sources: CSV, TSV, XLSX, XLS, JSON, JSONL, XML, Google Sheets, API, Webhook, IoT, Manual.`;
     if (/report|export/.test(q)) return `📄 8 formats: PDF, XLSX, CSV, JSON, DOCX, HTML, MD, XML.`;
-      // [FIXED] Greeting handled by backend AI
+    if (/hi|hello|hey|akkam/.test(q)) return `👋 Hello! Ask me about your data, KPIs, capabilities, or full automation.`;
     return `🤖 Overview:\n\n📊 ${k.count} records · ${DP.currency.format(k.sales/57.5)} · Margin ${k.margin.toFixed(1)}% · Low stock: ${k.low}\n\nFull Automation: ${DP.fullAuto.enabled?'ON':'OFF'} (${DP.fullAuto.stats.runs} runs)`;
   }
 };
@@ -4046,7 +4046,7 @@ async function submitFeedback(e) {
     userName: (typeof state !== 'undefined' && state.user?.name) || name || 'Anonymous',
     accountType: (typeof state !== 'undefined' && state.org?.accountType) || '—',
     plan: (typeof state !== 'undefined' && state.org?.plan) || 'free',
-    at: new Date().toISOString()(), timestamp: new Date().toISOString()(), url: location.href,
+    at: nowIso(), timestamp: nowIso(), url: location.href,
     userAgent: navigator.userAgent,
     lang: (typeof DP !== 'undefined' && DP.i18n?.current) || 'en',
     currency: (typeof DP !== 'undefined' && DP.currency?.get?.()) || 'USD',

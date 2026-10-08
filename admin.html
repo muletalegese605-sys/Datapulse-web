@@ -571,7 +571,7 @@ function esc(s) { return String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;',
 function fmtDate(iso) { try { return new Date(iso).toLocaleString(); } catch(e){ return '—'; } }
 function fmtDateShort(iso) { try { return new Date(iso).toLocaleDateString(); } catch(e){ return '—'; } }
 function fmtTime(iso) { try { return new Date(iso).toLocaleTimeString(); } catch(e){ return '—'; } }
-function nowIso() { return new Date().toISOString(); }
+function new Date().toISOString()() { return new Date().toISOString(); }
 
 const LS = {
   get(k,d){ try{ const v = localStorage.getItem(k); return v === null ? d : JSON.parse(v); }catch(e){ return d; } },
@@ -606,12 +606,12 @@ ADM.gdpr = {
   get() { return LS.get(this.key, null); },
   show() { const b = document.getElementById('gdprBanner'); if (b && !this.get()) setTimeout(() => b.classList.add('on'), 1500); },
   hide() { const b = document.getElementById('gdprBanner'); if (b) b.classList.remove('on'); },
-  accept() { LS.set(this.key, { analytics:true, errors:true, at:nowIso() }); this.hide(); ADM.analytics.init(); ADM.errors.init(); toast('Preferences saved ✓','success'); },
-  decline() { LS.set(this.key, { analytics:false, errors:false, at:nowIso() }); this.hide(); toast('Optional cookies declined','info'); },
+  accept() { LS.set(this.key, { analytics:true, errors:true, at:new Date().toISOString()() }); this.hide(); ADM.analytics.init(); ADM.errors.init(); toast('Preferences saved ✓','success'); },
+  decline() { LS.set(this.key, { analytics:false, errors:false, at:new Date().toISOString()() }); this.hide(); toast('Optional cookies declined','info'); },
   customize() {
     const a = confirm('Enable Analytics (anonymous usage stats)?');
     const e = confirm('Enable Error Monitoring (helps fix bugs)?');
-    LS.set(this.key, { analytics:a, errors:e, at:nowIso() });
+    LS.set(this.key, { analytics:a, errors:e, at:new Date().toISOString()() });
     this.hide();
     if (a) ADM.analytics.init();
     if (e) ADM.errors.init();
@@ -669,7 +669,7 @@ ADM.errors = {
       id:'E-'+Date.now().toString(36),
       msg: String(err && err.message || err || 'Unknown').slice(0, 300),
       stack: String(err && err.stack || '').slice(0, 600),
-      meta: meta || {}, at: nowIso(),
+      meta: meta || {}, at: new Date().toISOString()(),
       url: location.href, ua: navigator.userAgent
     };
     this.list.unshift(entry);
@@ -947,7 +947,7 @@ function cmdKeydown(e) { ADM.cmd.keydown(e); }
   for (var i = 0; i < state.orgs.length; i++) {
     var o = state.orgs[i];
     var cur = getFullAutoStats(o.id);
-    var updated = { enabled: willEnable, runs: cur.runs || 0, capsRun: willEnable ? 40 : 0, opsRun: willEnable ? 17 : 0, lastRun: cur.lastRun || null, updatedAt: nowIso(), enabledAt: willEnable ? nowIso() : null, enabledBy: state.admin.email, orgName: o.name };
+    var updated = { enabled: willEnable, runs: cur.runs || 0, capsRun: willEnable ? 40 : 0, opsRun: willEnable ? 17 : 0, lastRun: cur.lastRun || null, updatedAt: new Date().toISOString()(), enabledAt: willEnable ? new Date().toISOString()() : null, enabledBy: state.admin.email, orgName: o.name };
     state.fullAutoStats[o.id] = updated;
     LS.set('dp_full_auto_' + o.id, updated);
     if (firebaseReady) { try { await fbDb.collection('fullauto').doc(o.id).set(updated, { merge:true }); } catch(e){} }
@@ -1103,7 +1103,7 @@ function auditLog(action, target='N/A', payload=null) {
     id:'LOG-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,5),
     action, target: String(target).slice(0, 100),
     org:'ADMIN', status:'SUCCESS',
-    at: nowIso(), performed_at: nowIso(),
+    at: new Date().toISOString()(), performed_at: new Date().toISOString()(),
     item_id: String(target).slice(0,100),
     payload: payload || {}
   };
@@ -1158,7 +1158,7 @@ ADM.sync = {
     if (!firebaseReady || !orgId) return;
     const recs = state.records[orgId] || [];
     try {
-      await fbDb.collection('datasets').doc(orgId).set({ records: recs, updatedAt: nowIso(), orgName: state.orgs.find(o => o.id === orgId)?.name || '—' }, { merge:true });
+      await fbDb.collection('datasets').doc(orgId).set({ records: recs, updatedAt: new Date().toISOString()(), orgName: state.orgs.find(o => o.id === orgId)?.name || '—' }, { merge:true });
     } catch(e){ this.enqueue({ kind:'records', op:'upsert', id:orgId, data:recs }); }
   },
   async deleteOrgCloud(orgId) {
@@ -1305,7 +1305,7 @@ ADM.sync = {
       const res = await ADM.fetch(url + '/api/sync/bulk', {
         method:'POST',
         headers:{ 'Content-Type':'application/json' },
-        body: JSON.stringify({ ...payload, pushedAt: nowIso() }),
+        body: JSON.stringify({ ...payload, pushedAt: new Date().toISOString()() }),
         _timeout: 15000
       });
       return res.ok;
@@ -1460,8 +1460,8 @@ function isPaid(orgId) {
   return state.contracts.some(c => c.orgId === orgId && c.status === 'active' && c.plan !== 'free');
 }
 function markPaid(orgId) {
-  const t = getTrial(orgId) || { startedAt: nowIso(), endsAt: nowIso(), paid:false };
-  t.paid = true; t.paidAt = nowIso();
+  const t = getTrial(orgId) || { startedAt: new Date().toISOString()(), endsAt: new Date().toISOString()(), paid:false };
+  t.paid = true; t.paidAt = new Date().toISOString()();
   LS.set('dp_trial_'+orgId, t);
 }
 function unmarkPaid(orgId) {
@@ -1903,7 +1903,7 @@ function saveOrgModal() {
   if (id) {
     const o = state.orgs.find(x => x.id === id);
     if (!o) { toast('Organization not found','error'); return; }
-    Object.assign(o, { name, adminName, email, phone, accountType, plan, status, emailVerified, updatedAt: nowIso() });
+    Object.assign(o, { name, adminName, email, phone, accountType, plan, status, emailVerified, updatedAt: new Date().toISOString()() });
     if (plan !== 'free' && status !== 'suspended') markPaid(o.id);
     persistOrgs();
     ADM.sync.mirrorOrg(o);
@@ -1921,13 +1921,13 @@ function saveOrgModal() {
       id:'ORG-'+Date.now().toString().slice(-6), uid:null,
       name, adminName, email, phone, accountType,
       plan, status, emailVerified,
-      createdAt: nowIso(), updatedAt: nowIso(), dataCount:0,
+      createdAt: new Date().toISOString()(), updatedAt: new Date().toISOString()(), dataCount:0,
       apiKey:'dp_'+Math.random().toString(36).slice(2,14)
     };
     state.orgs.push(newOrg);
     state.records[newOrg.id] = [];
     LS.set('dp_records_'+newOrg.id, []);
-    LS.set('dp_trial_'+newOrg.id, { startedAt: nowIso(), endsAt: new Date(Date.now() + 14*86400000).toISOString(), paid:false });
+    LS.set('dp_trial_'+newOrg.id, { startedAt: new Date().toISOString()(), endsAt: new Date(Date.now() + 14*86400000).toISOString(), paid:false });
     persistOrgs();
     ADM.sync.mirrorOrg(newOrg);
     auditLog('ORG_CREATE', newOrg.id, { name });
@@ -2107,13 +2107,13 @@ function saveCtrModal() {
     usd: plan.usd, currency: ADM.currency.get(),
     displayAmount: plan.usd>0 ? ADM.currency.format(plan.usd) : 'Free',
     method, months, total: plan.usd*months, status:'active',
-    startedAt: nowIso(),
+    startedAt: new Date().toISOString()(),
     expiresAt: new Date(Date.now() + months*30*86400000).toISOString(),
-    updatedAt: nowIso()
+    updatedAt: new Date().toISOString()()
   };
   state.contracts.push(c);
   org.plan = plan.id;
-  org.updatedAt = nowIso();
+  org.updatedAt = new Date().toISOString()();
   if (plan.id !== 'free') markPaid(org.id);
   persistContracts(); persistOrgs();
   ADM.sync.mirrorContract(c);
@@ -2135,9 +2135,9 @@ function cancelContract(id) {
   const c = state.contracts.find(x => x.id === id);
   if (!c) return;
   openConfirm('Cancel Contract?', `Cancel ${c.id} for ${c.orgName}?`, () => {
-    c.status = 'cancelled'; c.cancelledAt = nowIso(); c.updatedAt = nowIso();
+    c.status = 'cancelled'; c.cancelledAt = new Date().toISOString()(); c.updatedAt = new Date().toISOString()();
     const org = state.orgs.find(o => o.id === c.orgId);
-    if (org) { org.plan = 'free'; org.updatedAt = nowIso(); unmarkPaid(org.id); }
+    if (org) { org.plan = 'free'; org.updatedAt = new Date().toISOString()(); unmarkPaid(org.id); }
     persistContracts(); persistOrgs();
     ADM.sync.mirrorContract(c);
     if (org) ADM.sync.mirrorOrg(org);
@@ -2151,7 +2151,7 @@ function deleteContract(id) {
     const c = state.contracts.find(x => x.id === id);
     if (c && c.status === 'active') {
       const org = state.orgs.find(o => o.id === c.orgId);
-      if (org) { org.plan = 'free'; org.updatedAt = nowIso(); unmarkPaid(org.id); persistOrgs(); ADM.sync.mirrorOrg(org); }
+      if (org) { org.plan = 'free'; org.updatedAt = new Date().toISOString()(); unmarkPaid(org.id); persistOrgs(); ADM.sync.mirrorOrg(org); }
     }
     state.contracts = state.contracts.filter(c => c.id !== id);
     persistContracts();
@@ -2251,7 +2251,7 @@ function vDatasets() {
   } else {
     if (!confirm('Disable Full Automation for "' + org.name + '"?')) return;
   }
-  var updated = { enabled: willEnable, runs: cur.runs || 0, capsRun: willEnable ? 40 : 0, opsRun: willEnable ? 17 : 0, lastRun: cur.lastRun || null, updatedAt: nowIso(), enabledAt: willEnable ? nowIso() : null, enabledBy: state.admin.email, orgName: org.name };
+  var updated = { enabled: willEnable, runs: cur.runs || 0, capsRun: willEnable ? 40 : 0, opsRun: willEnable ? 17 : 0, lastRun: cur.lastRun || null, updatedAt: new Date().toISOString()(), enabledAt: willEnable ? new Date().toISOString()() : null, enabledBy: state.admin.email, orgName: org.name };
   state.fullAutoStats[orgId] = updated;
   LS.set('dp_full_auto_' + orgId, updated);
   if (willEnable) LS.set('dp_full_auto', true);
@@ -2281,8 +2281,8 @@ async function runFullAuto(orgId) {
     runs: (cur.runs||0) + 1,
     capsRun: 40,
     opsRun: 17,
-    lastRun: nowIso(),
-    updatedAt: nowIso()
+    lastRun: new Date().toISOString()(),
+    updatedAt: new Date().toISOString()()
   };
   state.fullAutoStats[orgId] = updated;
   LS.set('dp_full_auto_'+orgId, updated);
@@ -2760,7 +2760,7 @@ function saveAiConfig() {
 function backupAllData() {
   try {
     const backup = {
-      exportedAt: nowIso(), version: '8.0',
+      exportedAt: new Date().toISOString()(), version: '8.0',
       data: { orgs: state.orgs, contracts: state.contracts, audits: state.audits, records: state.records, fullAutoStats: state.fullAutoStats,
         theme: ADM.theme.current(), currency: ADM.currency.get(), lang: ADM.i18n.current,
         backend: LS.get('dp_backend', BACKEND_URL) }
@@ -3207,7 +3207,7 @@ function saveWeeklyReview() {
   var review = {
     id: 'WR-' + Date.now().toString(36),
     week: (state.weeklyReviews || []).length + 1,
-    at: nowIso(),
+    at: new Date().toISOString()(),
     by: state.admin.email,
     orgs: s.totalOrgs, mrr: s.mrr, paidOrgs: s.paidOrgs, records: s.totalRecords,
     errors: ADM.errors.list.length,
@@ -3247,7 +3247,7 @@ function exportMeasurements() {
       { Metric:'Avg rating', Value: feedback.length ? (feedback.reduce(function(a,f){return a+(f.rating||0);},0)/feedback.length).toFixed(2) : '0' },
       { Metric:'NPS score', Value: npsScore },
       { Metric:'Errors', Value: ADM.errors.list.length },
-      { Metric:'Exported', Value: nowIso() }
+      { Metric:'Exported', Value: new Date().toISOString()() }
     ];
     var h = Object.keys(rows[0]);
     var csv = '\uFEFF' + [h.join(','), rows.map(function(r){ return h.map(function(k){ return '"' + String(r[k]||'').replace(/"/g,'""') + '"'; }).join(','); }).join('\n')].join('\n');
@@ -3280,7 +3280,7 @@ async function runFullAutoDiagnostics() {
   results.push({ name:'LocalStorage write/read', pass: (function(){ try { LS.set('_fa_test',{ok:1}); var v = LS.get('_fa_test',null); LS.del('_fa_test'); return v && v.ok === 1; } catch(e){ return false; } })() });
   await wait(300);
   var fsPass = false;
-  if (firebaseReady) { try { await fbDb.collection('_healthcheck').doc('admin').set({ at: nowIso() }, { merge:true }); fsPass = true; } catch(e){} }
+  if (firebaseReady) { try { await fbDb.collection('_healthcheck').doc('admin').set({ at: new Date().toISOString()() }, { merge:true }); fsPass = true; } catch(e){} }
   results.push({ name:'Firestore write', pass: fsPass });
   await wait(300);
   results.push({ name:'Full auto stats readable', pass: state.orgs.every(function(o){ var s = getFullAutoStats(o.id); return s && typeof s.enabled === 'boolean'; }) });
@@ -3389,7 +3389,7 @@ function openScheduler() {
   var when = prompt('When (YYYY-MM-DD HH:MM) or leave blank:', new Date(Date.now()+3600000).toISOString().slice(0,16).replace('T',' '));
   if (when === null) return;
   var sch = state.mkSchedule || [];
-  sch.unshift({ id:'SCH-'+Date.now().toString(36), content:txt, when:when || nowIso(), at:nowIso(), by:state.admin.email, status:when?'scheduled':'ready' });
+  sch.unshift({ id:'SCH-'+Date.now().toString(36), content:txt, when:when || new Date().toISOString()(), at:new Date().toISOString()(), by:state.admin.email, status:when?'scheduled':'ready' });
   state.mkSchedule = sch;
   LS.set('dp_mk_schedule', sch);
   copyText(txt);
@@ -3420,7 +3420,7 @@ function publishTestimonials() {
   var praise = fb.filter(function(f){ return f.type === 'praise' && f.rating >= 4 && (f.public || f.testimonialApproved); });
   if (!praise.length) { toast('No public praise','warn'); return; }
   LS.set('dp_testimonials', praise.slice(0, 12));
-  if (firebaseReady) { try { fbDb.collection('site').doc('testimonials').set({ items:praise.slice(0,12).map(function(p){ return { name:p.userName||p.name||'Anonymous', org:p.orgName||'', rating:p.rating, message:p.message, at:p.at }; }), updatedAt:nowIso() }); } catch(e){} }
+  if (firebaseReady) { try { fbDb.collection('site').doc('testimonials').set({ items:praise.slice(0,12).map(function(p){ return { name:p.userName||p.name||'Anonymous', org:p.orgName||'', rating:p.rating, message:p.message, at:p.at }; }), updatedAt:new Date().toISOString()() }); } catch(e){} }
   auditLog('MARKETING_TESTIMONIALS_PUBLISH', praise.length);
   toast('Testimonials published ✓','success');
 }
