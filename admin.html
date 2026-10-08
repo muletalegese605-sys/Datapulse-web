@@ -80,6 +80,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:#0b0f19;color:#e6edf3;m
 .status-badge.suspended{background:rgba(244,63,94,.15);color:#fb7185;border-color:rgba(244,63,94,.3)}
 .autobadge{padding:3px 8px;border-radius:6px;font-size:9px;font-weight:900;letter-spacing:.06em;background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#0b0f19;box-shadow:0 4px 10px rgba(251,191,36,.4);display:inline-block}
 .badge-worldclass{padding:3px 8px;border-radius:6px;font-size:9px;font-weight:900;letter-spacing:.06em;background:linear-gradient(135deg,#10b981,#34d399);color:#0b0f19;box-shadow:0 4px 10px rgba(16,185,129,.4);display:inline-block}
+.badge-special{padding:3px 8px;border-radius:6px;font-size:9px;font-weight:900;letter-spacing:.06em;background:linear-gradient(135deg,#a855f7,#c084fc);color:#0b0f19;box-shadow:0 4px 10px rgba(168,85,247,.4);display:inline-block}
 .btn{padding:8px 14px;border-radius:10px;font-size:11px;font-weight:700;cursor:pointer;border:1px solid transparent;transition:all .2s}
 .btn:hover{transform:translateY(-1px)}
 .btn-primary{background:#a855f7;color:#0b0f19;border-color:#a855f7}
@@ -179,6 +180,15 @@ html[dir="rtl"] .dp-table th,html[dir="rtl"] .dp-table td{text-align:right}
 html[dir="rtl"] .dp-table td::before{margin-right:0;margin-left:8px}
 .fa-step-card{position:relative;padding:16px;border-radius:16px;background:linear-gradient(135deg,rgba(251,191,36,.1),rgba(251,191,36,.02));border:1.5px solid rgba(251,191,36,.35);transition:all .3s}.fa-step-card:hover{transform:translateY(-3px);border-color:rgba(251,191,36,.7)}.fa-step-num{position:absolute;top:-12px;left:14px;width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#0b0f19;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:12px}.fa-verify-row{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;background:rgba(15,23,42,.7);border:1px solid #1e293b;transition:all .2s}.fa-verify-row:hover{border-color:rgba(16,185,129,.5)}.fa-verify-row.pass{border-color:rgba(16,185,129,.5);background:rgba(16,185,129,.08)}.fa-verify-row.fail{border-color:rgba(244,63,94,.5);background:rgba(244,63,94,.08)}.fa-verify-icon{width:32px;height:32px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:13px}.fa-guide-arrow{display:flex;align-items:center;justify-content:center;color:#475569;font-size:20px}.fa-screenshot-hint{padding:8px 12px;border-radius:10px;background:rgba(168,85,247,.1);border:1px dashed rgba(168,85,247,.5);font-size:10px;color:#c084fc;font-weight:700}@keyframes faEnableFlash{0%{box-shadow:0 0 0 0 rgba(251,191,36,.7)}50%{box-shadow:0 0 0 20px rgba(251,191,36,0)}100%{box-shadow:0 0 0 0 rgba(251,191,36,0)}}.fa-enabled-flash{animation:faEnableFlash 1.2s ease-out}@media(max-width:640px){.fa-guide-arrow{transform:rotate(90deg)}}
 .nav-badge{display:inline-block;margin-left:4px;padding:1px 6px;border-radius:8px;background:linear-gradient(135deg,#f43f5e,#dc2626);color:#fff;font-size:9px;font-weight:900;font-family:'JetBrains Mono',monospace;animation:badgePulse 1.5s infinite}.nav-badge.hidden{display:none}@keyframes badgePulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15);box-shadow:0 0 8px rgba(244,63,94,.6)}}.ai-msg{padding:10px 14px;border-radius:14px;font-size:12px;line-height:1.6;max-width:85%;white-space:pre-wrap;word-wrap:break-word}.ai-msg.user{background:linear-gradient(135deg,#a855f7,#7c3aed);color:#fff;margin-left:auto;text-align:right}.ai-msg.ai{background:#0e1626;border:1px solid #334155;color:#e6edf3}.ai-quick{padding:8px 12px;border-radius:10px;background:rgba(168,85,247,.15);border:1px solid rgba(168,85,247,.4);color:#c084fc;font-size:11px;font-weight:700;cursor:pointer;transition:all .2s}.ai-quick:hover{background:rgba(168,85,247,.3);transform:translateY(-1px)}
+.solution-tab{padding:6px 12px;border-radius:10px;font-size:10px;font-weight:700;border:1px solid #1e293b;background:#0e1626;color:#cbd5e1;cursor:pointer;transition:all .2s}
+.solution-tab.active{background:#a855f7;color:#0b0f19;border-color:#a855f7}
+.solution-tab:hover{border-color:rgba(168,85,247,.5);color:#c084fc}
+.pulse-ring{animation:pr 2s infinite}
+@keyframes pr{0%{box-shadow:0 0 0 0 rgba(251,191,36,.6)}70%{box-shadow:0 0 0 16px rgba(251,191,36,0)}100%{box-shadow:0 0 0 0 rgba(251,191,36,0)}}
+.ripple{position:relative;overflow:hidden}
+.ripple:active::after{content:'';position:absolute;inset:0;background:rgba(255,255,255,.1);animation:rp .5s}
+@keyframes rp{from{opacity:1}to{opacity:0}}
+.ltr-force{direction:ltr;text-align:left}
 #admWelcome{position:fixed;inset:0;z-index:9800;background:radial-gradient(circle at 50% 0%,rgba(168,85,247,.15),transparent 60%),#050810;display:none;align-items:center;justify-content:center;padding:16px;overflow-y:auto}#admWelcome.on{display:flex}#admWelcome .hero{background:linear-gradient(135deg,#0e1626,#0b0f19);border:2px solid rgba(168,85,247,.5);border-radius:32px;padding:32px;max-width:820px;width:100%;margin:20px auto;box-shadow:0 40px 120px rgba(168,85,247,.4);animation:mi .5s ease-out}#admWelcome h2{font-size:clamp(26px,4vw,38px);font-weight:900;color:#fff;text-align:center;margin:0 0 12px;line-height:1.15}#admWelcome .sub{font-size:14px;color:#94a3b8;text-align:center;max-width:520px;margin:0 auto 28px;line-height:1.6}#admFeat{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin-bottom:24px}#admFeat .f{padding:12px;border-radius:12px;background:rgba(15,23,42,.6);border:1px solid #1e293b;text-align:center}#admFeat .f b{font-size:20px;font-weight:900;color:#c084fc;font-family:'JetBrains Mono',monospace;display:block}#admFeat .f span{font-size:9px;color:#94a3b8;text-transform:uppercase;letter-spacing:.06em;margin-top:2px;display:block}#admFabGuide{position:fixed;left:18px;bottom:88px;z-index:60;width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#a855f7,#7c3aed);color:#fff;font-size:17px;border:none;box-shadow:0 12px 30px rgba(168,85,247,.5);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .3s}#admFabGuide:hover{transform:scale(1.12) rotate(-10deg)}
 </style>
 </head>
@@ -422,14 +432,13 @@ html[dir="rtl"] .dp-table td::before{margin-right:0;margin-left:8px}
   </div>
 </div>
 
-
 <div id="admWelcome" role="dialog">
   <div class="hero">
     <div style="width:88px;height:88px;border-radius:26px;background:linear-gradient(135deg,#a855f7,#7c3aed);display:flex;align-items:center;justify-content:center;color:#fff;font-size:42px;margin:0 auto 20px;box-shadow:0 20px 60px rgba(168,85,247,.5)"><i class="fa-solid fa-shield-halved"></i></div>
     <h2>Welcome, <span style="background:linear-gradient(135deg,#a855f7,#c084fc,#10b981);-webkit-background-clip:text;-webkit-text-fill-color:transparent">Admin</span> 👑</h2>
     <p class="sub">You have full control of the DataPulse platform. Manage organizations, monitor automation, review feedback, and drive growth.</p>
     <div id="admFeat">
-      <div class="f"><b>14</b><span>Admin Tabs</span></div>
+      <div class="f"><b>15</b><span>Admin Tabs</span></div>
       <div class="f"><b>40+17</b><span>Caps + Ops</span></div>
       <div class="f"><b>57</b><span>Auto Actions</span></div>
       <div class="f"><b>24h</b><span>Response SLA</span></div>
@@ -445,7 +454,6 @@ html[dir="rtl"] .dp-table td::before{margin-right:0;margin-left:8px}
 
 <div id="toasts" class="fixed top-3 right-3 left-3 sm:left-auto sm:top-4 sm:right-4 z-[100] flex flex-col gap-2 pointer-events-none items-end" role="status" aria-live="polite"></div>
 
-<!-- ★ RESULTS PANEL — bu'aa hojii battalaa (akkuma index.html) ★ -->
 <div id="resultsPanel" role="region" aria-label="Results panel">
   <div class="flex items-start justify-between mb-3">
     <div class="flex items-center gap-2">
@@ -460,7 +468,6 @@ html[dir="rtl"] .dp-table td::before{margin-right:0;margin-left:8px}
   <div id="resultsContent" class="space-y-3"></div>
 </div>
 
-<!-- ★ COMMAND PALETTE (Ctrl+K) ★ -->
 <div id="cmdPalette" role="dialog" aria-modal="true" aria-label="Command palette">
   <div class="cmd-box">
     <input type="text" id="cmdInput" class="cmd-input" placeholder="Type a command… (↑↓ navigate, Enter run, Esc close)" oninput="filterCmd(this.value)" onkeydown="cmdKeydown(event)">
@@ -523,8 +530,8 @@ const FIREBASE_ENABLED = !!(FIREBASE_CONFIG.apiKey && FIREBASE_CONFIG.apiKey !==
 
 const ADMIN_EMAIL = 'muletalegese605@gmail.com';
 const BACKEND_URL = 'https://datapulse-web-rzon.onrender.com';
-const ANALYTICS_ID = '';   // Same as index.html
-const SENTRY_DSN   = '';   // Same as index.html
+const ANALYTICS_ID = '';
+const SENTRY_DSN   = '';
 const APP_VERSION  = '8.0.0';
 const APP_ENV      = 'production';
 const UPTIME_URL   = 'https://datapulseapp-20237.web.app';
@@ -571,7 +578,8 @@ function esc(s) { return String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;',
 function fmtDate(iso) { try { return new Date(iso).toLocaleString(); } catch(e){ return '—'; } }
 function fmtDateShort(iso) { try { return new Date(iso).toLocaleDateString(); } catch(e){ return '—'; } }
 function fmtTime(iso) { try { return new Date(iso).toLocaleTimeString(); } catch(e){ return '—'; } }
-function new Date().toISOString()() { return new Date().toISOString(); }
+/* ✅ FIXED: helper nowISO() */ 
+function nowISO() { return new Date().toISOString(); }
 
 const LS = {
   get(k,d){ try{ const v = localStorage.getItem(k); return v === null ? d : JSON.parse(v); }catch(e){ return d; } },
@@ -587,7 +595,6 @@ function loadScript(src) {
   });
 }
 
-/* ★ FIXED: Chart.js safe loader (same pattern as index.html) ★ */
 ADM.loadChart = async () => {
   if (typeof window.Chart !== 'undefined') return window.Chart;
   try {
@@ -606,12 +613,12 @@ ADM.gdpr = {
   get() { return LS.get(this.key, null); },
   show() { const b = document.getElementById('gdprBanner'); if (b && !this.get()) setTimeout(() => b.classList.add('on'), 1500); },
   hide() { const b = document.getElementById('gdprBanner'); if (b) b.classList.remove('on'); },
-  accept() { LS.set(this.key, { analytics:true, errors:true, at:new Date().toISOString()() }); this.hide(); ADM.analytics.init(); ADM.errors.init(); toast('Preferences saved ✓','success'); },
-  decline() { LS.set(this.key, { analytics:false, errors:false, at:new Date().toISOString()() }); this.hide(); toast('Optional cookies declined','info'); },
+  accept() { LS.set(this.key, { analytics:true, errors:true, at: nowISO() }); this.hide(); ADM.analytics.init(); ADM.errors.init(); toast('Preferences saved ✓','success'); },
+  decline() { LS.set(this.key, { analytics:false, errors:false, at: nowISO() }); this.hide(); toast('Optional cookies declined','info'); },
   customize() {
     const a = confirm('Enable Analytics (anonymous usage stats)?');
     const e = confirm('Enable Error Monitoring (helps fix bugs)?');
-    LS.set(this.key, { analytics:a, errors:e, at:new Date().toISOString()() });
+    LS.set(this.key, { analytics:a, errors:e, at: nowISO() });
     this.hide();
     if (a) ADM.analytics.init();
     if (e) ADM.errors.init();
@@ -669,7 +676,7 @@ ADM.errors = {
       id:'E-'+Date.now().toString(36),
       msg: String(err && err.message || err || 'Unknown').slice(0, 300),
       stack: String(err && err.stack || '').slice(0, 600),
-      meta: meta || {}, at: new Date().toISOString()(),
+      meta: meta || {}, at: nowISO(),
       url: location.href, ua: navigator.userAgent
     };
     this.list.unshift(entry);
@@ -938,7 +945,7 @@ function openCmdPalette() { ADM.cmd.open(); }
 function filterCmd(v) { ADM.cmd.filter(v); }
 function cmdKeydown(e) { ADM.cmd.keydown(e); }
 
-/* ENHANCED */ async function toggleAllFullAuto() {
+async function toggleAllFullAuto() {
   if (!state.orgs.length) { toast('No orgs', 'warn'); return; }
   var anyOn = state.orgs.some(function(o){ return fullAutoEnabled(o.id); });
   var willEnable = !anyOn;
@@ -947,7 +954,7 @@ function cmdKeydown(e) { ADM.cmd.keydown(e); }
   for (var i = 0; i < state.orgs.length; i++) {
     var o = state.orgs[i];
     var cur = getFullAutoStats(o.id);
-    var updated = { enabled: willEnable, runs: cur.runs || 0, capsRun: willEnable ? 40 : 0, opsRun: willEnable ? 17 : 0, lastRun: cur.lastRun || null, updatedAt: new Date().toISOString()(), enabledAt: willEnable ? new Date().toISOString()() : null, enabledBy: state.admin.email, orgName: o.name };
+    var updated = { enabled: willEnable, runs: cur.runs || 0, capsRun: willEnable ? 40 : 0, opsRun: willEnable ? 17 : 0, lastRun: cur.lastRun || null, updatedAt: nowISO(), enabledAt: willEnable ? nowISO() : null, enabledBy: state.admin.email, orgName: o.name };
     state.fullAutoStats[o.id] = updated;
     LS.set('dp_full_auto_' + o.id, updated);
     if (firebaseReady) { try { await fbDb.collection('fullauto').doc(o.id).set(updated, { merge:true }); } catch(e){} }
@@ -964,6 +971,12 @@ function cmdKeydown(e) { ADM.cmd.keydown(e); }
     showResults(willEnable ? 'Full Auto Enabled' : 'Full Auto Disabled',
       '<div class="p-3 rounded-xl bg-gradient-to-r from-amber-500/20 to-amber-500/5 border border-amber-500/40"><div class="text-xs font-black text-amber-400 mb-2">📊 Summary</div><div class="grid grid-cols-2 gap-2 text-[11px]"><div class="p-2 rounded-lg bg-slate-950/60 border border-slate-800"><div class="text-slate-400 text-[9px]">Orgs</div><div class="text-amber-400 font-black mono">' + done + '</div></div><div class="p-2 rounded-lg bg-slate-950/60 border border-slate-800"><div class="text-slate-400 text-[9px]">Actions</div><div class="text-emerald-400 font-black mono">' + (done * 57) + '</div></div><div class="p-2 rounded-lg bg-slate-950/60 border border-slate-800"><div class="text-slate-400 text-[9px]">Cloud</div><div class="' + (firebaseReady?'text-emerald-400':'text-slate-500') + ' font-black mono">' + (firebaseReady?'✓ Done':'○ Local') + '</div></div><div class="p-2 rounded-lg bg-slate-950/60 border border-slate-800"><div class="text-slate-400 text-[9px]">Status</div><div class="' + (willEnable?'text-emerald-400':'text-slate-500') + ' font-black mono">' + (willEnable?'ON':'OFF') + '</div></div></div></div>');
   }, 300);
+}
+
+function celebrate() {
+  try {
+    if (navigator.vibrate) navigator.vibrate([40, 40, 80]);
+  } catch(e){}
 }
 
 /* ---------- THEME ---------- */
@@ -1065,6 +1078,7 @@ const state = {
   fbFilter: 'all',
   mkSchedule: LS.get('dp_mk_schedule', []),
   mkReferrals: LS.get('dp_referrals', []),
+  mkCopy: '',
   measureRange: '30d',
   measureChart: null,
   weeklyReviews: LS.get('dp_weekly_reviews', []),
@@ -1103,7 +1117,7 @@ function auditLog(action, target='N/A', payload=null) {
     id:'LOG-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,5),
     action, target: String(target).slice(0, 100),
     org:'ADMIN', status:'SUCCESS',
-    at: new Date().toISOString()(), performed_at: new Date().toISOString()(),
+    at: nowISO(), performed_at: nowISO(),
     item_id: String(target).slice(0,100),
     payload: payload || {}
   };
@@ -1158,7 +1172,7 @@ ADM.sync = {
     if (!firebaseReady || !orgId) return;
     const recs = state.records[orgId] || [];
     try {
-      await fbDb.collection('datasets').doc(orgId).set({ records: recs, updatedAt: new Date().toISOString()(), orgName: state.orgs.find(o => o.id === orgId)?.name || '—' }, { merge:true });
+      await fbDb.collection('datasets').doc(orgId).set({ records: recs, updatedAt: nowISO(), orgName: state.orgs.find(o => o.id === orgId)?.name || '—' }, { merge:true });
     } catch(e){ this.enqueue({ kind:'records', op:'upsert', id:orgId, data:recs }); }
   },
   async deleteOrgCloud(orgId) {
@@ -1305,7 +1319,7 @@ ADM.sync = {
       const res = await ADM.fetch(url + '/api/sync/bulk', {
         method:'POST',
         headers:{ 'Content-Type':'application/json' },
-        body: JSON.stringify({ ...payload, pushedAt: new Date().toISOString()() }),
+        body: JSON.stringify({ ...payload, pushedAt: nowISO() }),
         _timeout: 15000
       });
       return res.ok;
@@ -1460,8 +1474,8 @@ function isPaid(orgId) {
   return state.contracts.some(c => c.orgId === orgId && c.status === 'active' && c.plan !== 'free');
 }
 function markPaid(orgId) {
-  const t = getTrial(orgId) || { startedAt: new Date().toISOString()(), endsAt: new Date().toISOString()(), paid:false };
-  t.paid = true; t.paidAt = new Date().toISOString()();
+  const t = getTrial(orgId) || { startedAt: nowISO(), endsAt: nowISO(), paid:false };
+  t.paid = true; t.paidAt = nowISO();
   LS.set('dp_trial_'+orgId, t);
 }
 function unmarkPaid(orgId) {
@@ -1619,7 +1633,7 @@ const TABS = [
   { id:'audit',       key:'Audit Logs',   icon:'fa-clipboard-list' },
   { id:'payments',    key:'Payments',     icon:'fa-credit-card' },
   { id:'sync',        key:'Cloud Sync',   icon:'fa-cloud' },
-  { id:'feedback',   key:'Feedback',       icon:'fa-comment-dots' },
+  { id:'feedback',    key:'Feedback',     icon:'fa-comment-dots' },
   { id:'ai',          key:'AI Assistant',    icon:'fa-robot' },
   { id:'settings',    key:'Settings',     icon:'fa-sliders' }
 ];
@@ -1631,6 +1645,7 @@ function renderNav() {
       <i class="fa-solid ${t.icon} mr-1"></i>${esc(t.key)}${autoBadge}
     </button>
   `;}).join('');
+  try { ADM.updateBadge(); } catch(e){}
 }
 function renderDock() {
   const d = [
@@ -1702,13 +1717,13 @@ function render() {
       case 'datasets':   el.innerHTML = vDatasets(); break;
       case 'fullauto':   el.innerHTML = vFullAuto(); break;
       case 'measure':    el.innerHTML = vMeasure(); drawMeasureCharts(); break;
-      case 'marketing': el.innerHTML = vMarketing(); break;
+      case 'marketing':  el.innerHTML = vMarketing(); break;
       case 'datamap':    el.innerHTML = vDataMap(); break;
       case 'audit':      el.innerHTML = vAudit(); break;
       case 'payments':   el.innerHTML = vPayments(); break;
       case 'sync':       el.innerHTML = vSync(); break;
       case 'feedback':   el.innerHTML = vFeedback(); break;
-      case 'ai':         el.innerHTML = vAdminAi(); break;
+      case 'ai':         el.innerHTML = vAdminAi(); admAiRender(); break;
       case 'settings':   el.innerHTML = vSettings(); break;
       default:           el.innerHTML = vOverview(); drawOverviewCharts();
     }
@@ -1783,7 +1798,6 @@ function vOverview() {
   </div>`;
 }
 
-/* ★ FIXED: drawOverviewCharts with safe Chart loader ★ */
 async function drawOverviewCharts() {
   const ChartLib = await ADM.loadChart();
   if (!ChartLib) return;
@@ -1903,7 +1917,7 @@ function saveOrgModal() {
   if (id) {
     const o = state.orgs.find(x => x.id === id);
     if (!o) { toast('Organization not found','error'); return; }
-    Object.assign(o, { name, adminName, email, phone, accountType, plan, status, emailVerified, updatedAt: new Date().toISOString()() });
+    Object.assign(o, { name, adminName, email, phone, accountType, plan, status, emailVerified, updatedAt: nowISO() });
     if (plan !== 'free' && status !== 'suspended') markPaid(o.id);
     persistOrgs();
     ADM.sync.mirrorOrg(o);
@@ -1921,13 +1935,13 @@ function saveOrgModal() {
       id:'ORG-'+Date.now().toString().slice(-6), uid:null,
       name, adminName, email, phone, accountType,
       plan, status, emailVerified,
-      createdAt: new Date().toISOString()(), updatedAt: new Date().toISOString()(), dataCount:0,
+      createdAt: nowISO(), updatedAt: nowISO(), dataCount:0,
       apiKey:'dp_'+Math.random().toString(36).slice(2,14)
     };
     state.orgs.push(newOrg);
     state.records[newOrg.id] = [];
     LS.set('dp_records_'+newOrg.id, []);
-    LS.set('dp_trial_'+newOrg.id, { startedAt: new Date().toISOString()(), endsAt: new Date(Date.now() + 14*86400000).toISOString(), paid:false });
+    LS.set('dp_trial_'+newOrg.id, { startedAt: nowISO(), endsAt: new Date(Date.now() + 14*86400000).toISOString(), paid:false });
     persistOrgs();
     ADM.sync.mirrorOrg(newOrg);
     auditLog('ORG_CREATE', newOrg.id, { name });
@@ -2107,13 +2121,13 @@ function saveCtrModal() {
     usd: plan.usd, currency: ADM.currency.get(),
     displayAmount: plan.usd>0 ? ADM.currency.format(plan.usd) : 'Free',
     method, months, total: plan.usd*months, status:'active',
-    startedAt: new Date().toISOString()(),
+    startedAt: nowISO(),
     expiresAt: new Date(Date.now() + months*30*86400000).toISOString(),
-    updatedAt: new Date().toISOString()()
+    updatedAt: nowISO()
   };
   state.contracts.push(c);
   org.plan = plan.id;
-  org.updatedAt = new Date().toISOString()();
+  org.updatedAt = nowISO();
   if (plan.id !== 'free') markPaid(org.id);
   persistContracts(); persistOrgs();
   ADM.sync.mirrorContract(c);
@@ -2135,9 +2149,9 @@ function cancelContract(id) {
   const c = state.contracts.find(x => x.id === id);
   if (!c) return;
   openConfirm('Cancel Contract?', `Cancel ${c.id} for ${c.orgName}?`, () => {
-    c.status = 'cancelled'; c.cancelledAt = new Date().toISOString()(); c.updatedAt = new Date().toISOString()();
+    c.status = 'cancelled'; c.cancelledAt = nowISO(); c.updatedAt = nowISO();
     const org = state.orgs.find(o => o.id === c.orgId);
-    if (org) { org.plan = 'free'; org.updatedAt = new Date().toISOString()(); unmarkPaid(org.id); }
+    if (org) { org.plan = 'free'; org.updatedAt = nowISO(); unmarkPaid(org.id); }
     persistContracts(); persistOrgs();
     ADM.sync.mirrorContract(c);
     if (org) ADM.sync.mirrorOrg(org);
@@ -2151,7 +2165,7 @@ function deleteContract(id) {
     const c = state.contracts.find(x => x.id === id);
     if (c && c.status === 'active') {
       const org = state.orgs.find(o => o.id === c.orgId);
-      if (org) { org.plan = 'free'; org.updatedAt = new Date().toISOString()(); unmarkPaid(org.id); persistOrgs(); ADM.sync.mirrorOrg(org); }
+      if (org) { org.plan = 'free'; org.updatedAt = nowISO(); unmarkPaid(org.id); persistOrgs(); ADM.sync.mirrorOrg(org); }
     }
     state.contracts = state.contracts.filter(c => c.id !== id);
     persistContracts();
@@ -2218,10 +2232,8 @@ function vDatasets() {
   </div>`;
 }
 
-/* ============================================================
-   ★ FULL AUTOMATION MONITOR (upgraded)
-   ============================================================ */
-/* ENHANCED */ function vFullAuto() {
+/* ---------- FULL AUTOMATION MONITOR ---------- */
+function vFullAuto() {
   var rows = state.orgs.map(function(o){ return { org:o, stats:getFullAutoStats(o.id), enabled:fullAutoEnabled(o.id) }; }).sort(function(a,b){ return (b.stats.runs||0)-(a.stats.runs||0); });
   var on = rows.filter(function(r){ return r.enabled; }).length;
   var totalRuns = rows.reduce(function(a,r){ return a + (r.stats.runs||0); }, 0);
@@ -2241,7 +2253,7 @@ function vDatasets() {
   '</div>';
 }
 
-/* ENHANCED */ async function toggleFullAuto(orgId) {
+async function toggleFullAuto(orgId) {
   var org = state.orgs.find(function(o){ return o.id === orgId; });
   if (!org) { toast('Org not found', 'error'); return; }
   var cur = getFullAutoStats(orgId);
@@ -2251,7 +2263,7 @@ function vDatasets() {
   } else {
     if (!confirm('Disable Full Automation for "' + org.name + '"?')) return;
   }
-  var updated = { enabled: willEnable, runs: cur.runs || 0, capsRun: willEnable ? 40 : 0, opsRun: willEnable ? 17 : 0, lastRun: cur.lastRun || null, updatedAt: new Date().toISOString()(), enabledAt: willEnable ? new Date().toISOString()() : null, enabledBy: state.admin.email, orgName: org.name };
+  var updated = { enabled: willEnable, runs: cur.runs || 0, capsRun: willEnable ? 40 : 0, opsRun: willEnable ? 17 : 0, lastRun: cur.lastRun || null, updatedAt: nowISO(), enabledAt: willEnable ? nowISO() : null, enabledBy: state.admin.email, orgName: org.name };
   state.fullAutoStats[orgId] = updated;
   LS.set('dp_full_auto_' + orgId, updated);
   if (willEnable) LS.set('dp_full_auto', true);
@@ -2281,8 +2293,8 @@ async function runFullAuto(orgId) {
     runs: (cur.runs||0) + 1,
     capsRun: 40,
     opsRun: 17,
-    lastRun: new Date().toISOString()(),
-    updatedAt: new Date().toISOString()()
+    lastRun: nowISO(),
+    updatedAt: nowISO()
   };
   state.fullAutoStats[orgId] = updated;
   LS.set('dp_full_auto_'+orgId, updated);
@@ -2304,9 +2316,7 @@ async function runFullAuto(orgId) {
   render();
 }
 
-/* ============================================================
-   ★ DATA STORAGE MAP (NEW — matches index.html v8.0)
-   ============================================================ */
+/* ---------- DATA STORAGE MAP ---------- */
 function vDataMap() {
   const totalRecords = Object.values(state.records).reduce((s, r) => s + r.length, 0);
   const fsReady = firebaseReady;
@@ -2478,7 +2488,7 @@ function showOrgLocation(orgId) {
           <div class="loc-icon bg-purple-500/20 text-purple-400"><i class="fa-solid fa-file-signature"></i></div>
           <div class="flex-1 min-w-0">
             <div class="text-[11px] font-bold text-white">Firestore Contract</div>
-            <div class="text-[9px] mono text-slate-400 truncate ltr-force">contracts/{orgId}-*</div>
+            <div class="text-[9px] mono text-slate-400 truncate ltr-force">contracts/${orgId}-*</div>
           </div>
           <div class="text-[9px] font-bold text-emerald-400">${state.contracts.filter(c => c.orgId === orgId).length} rows</div>
         </div>
@@ -2760,7 +2770,7 @@ function saveAiConfig() {
 function backupAllData() {
   try {
     const backup = {
-      exportedAt: new Date().toISOString()(), version: '8.0',
+      exportedAt: nowISO(), version: '8.0',
       data: { orgs: state.orgs, contracts: state.contracts, audits: state.audits, records: state.records, fullAutoStats: state.fullAutoStats,
         theme: ADM.theme.current(), currency: ADM.currency.get(), lang: ADM.i18n.current,
         backend: LS.get('dp_backend', BACKEND_URL) }
@@ -2903,15 +2913,13 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
-
-/* ═══ vFeedback — Admin Feedback Dashboard ═══ */
+/* ═══ Feedback Dashboard ═══ */
 function vFeedback() {
   var list = LS.get('dp_feedback', []);
   list.sort(function(a,b){ return new Date(b.at||0) - new Date(a.at||0); });
   var filter = state.fbFilter || 'all';
   var npsList = list.filter(function(f){ return f.nps != null && f.nps !== ''; });
   var promoters  = npsList.filter(function(f){ return f.nps >= 9; }).length;
-  var passives   = npsList.filter(function(f){ return f.nps >= 7 && f.nps <= 8; }).length;
   var detractors = npsList.filter(function(f){ return f.nps <= 6; }).length;
   var nps = npsList.length ? Math.round((promoters - detractors) / npsList.length * 100) : null;
   var avg = list.length ? (list.reduce(function(s,f){ return s + (f.rating||0); }, 0) / list.length).toFixed(2) : '0.00';
@@ -3042,13 +3050,12 @@ ADM.feedbackPullFromCloud = async function() {
   }
 };
 
-
+/* ═══ MEASURE ═══ */
 function vMeasure() {
   var range = state.measureRange || '30d';
   var rangeDays = range === '7d' ? 7 : range === '30d' ? 30 : range === '90d' ? 90 : 3650;
   var since = Date.now() - rangeDays * 86400000;
   var feedback = LS.get('dp_feedback', []);
-  var audQueue = LS.get('dp_analytics_queue', []);
   var errCount = (ADM.errors && ADM.errors.list) ? ADM.errors.list.length : 0;
   var s = aggStats();
   var recentAudits = state.audits.filter(function(a){ return new Date(a.at || a.performed_at).getTime() >= since; });
@@ -3066,7 +3073,6 @@ function vMeasure() {
   var ltv = arpu * 12;
   var npsList = feedback.filter(function(f){ return f.nps != null; });
   var npsPromoters = npsList.filter(function(f){ return f.nps >= 9; }).length;
-  var npsPassives = npsList.filter(function(f){ return f.nps >= 7 && f.nps <= 8; }).length;
   var npsDetractors = npsList.filter(function(f){ return f.nps <= 6; }).length;
   var npsScore = npsList.length ? Math.round((npsPromoters/npsList.length - npsDetractors/npsList.length) * 100) : null;
   var avgRating = feedback.length ? (feedback.reduce(function(a,f){ return a + (f.rating||0); }, 0) / feedback.length).toFixed(2) : '—';
@@ -3095,7 +3101,7 @@ function vMeasure() {
       '<div class="flex flex-col sm:flex-row items-start gap-3 mb-4">' +
         '<div class="flex items-center gap-3 w-full sm:w-auto">' +
         '<div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-sky-400 to-sky-600 text-slate-950 flex items-center justify-center font-black text-2xl shrink-0"><i class="fa-solid fa-chart-line"></i></div>' +
-        '<div class="flex-1 min-w-0"><div class="flex items-center gap-2 flex-wrap"><h3 class="text-lg sm:text-xl font-black text-white">Measure & Improve</h3><span class="badge-worldclass">WORLD-CLASS</span><span class="sync-badge ' + (typeof DP !== "undefined" && DP.analytics && DP.analytics.ready_ga ? 'synced' : 'offline') + '"><i class="fa-solid fa-signal"></i>GA4 ' + (typeof DP !== "undefined" && DP.analytics && DP.analytics.ready_ga ? 'LIVE' : 'QUEUED') + '</span><span class="sync-badge ' + (errCount === 0 ? 'synced' : 'error') + '"><i class="fa-solid fa-bug"></i>' + errCount + '</span></div><p class="text-xs text-slate-300 mt-1">Track metrics, fix problems, ship improvements.</p></div>' +
+        '<div class="flex-1 min-w-0"><div class="flex items-center gap-2 flex-wrap"><h3 class="text-lg sm:text-xl font-black text-white">Measure & Improve</h3><span class="badge-worldclass">WORLD-CLASS</span><span class="sync-badge offline"><i class="fa-solid fa-signal"></i>GA4 QUEUED</span><span class="sync-badge ' + (errCount === 0 ? 'synced' : 'error') + '"><i class="fa-solid fa-bug"></i>' + errCount + '</span></div><p class="text-xs text-slate-300 mt-1">Track metrics, fix problems, ship improvements.</p></div>' +
         '<div class="flex gap-2 flex-wrap"><select onchange="state.measureRange=this.value;render()" class="input !w-auto !text-[10px] !py-1.5"><option value="7d" ' + (range==='7d'?'selected':'') + '>7d</option><option value="30d" ' + (range==='30d'?'selected':'') + '>30d</option><option value="90d" ' + (range==='90d'?'selected':'') + '>90d</option><option value="all" ' + (range==='all'?'selected':'') + '>All</option></select><button onclick="openWeeklyReview()" class="btn btn-primary !text-[10px]"><i class="fa-solid fa-clipboard-check mr-1"></i>New Review</button><button onclick="exportMeasurements()" class="btn btn-ghost !text-[10px]"><i class="fa-solid fa-download"></i></button></div>' +
       '</div>' +
       '<div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-2">' +
@@ -3121,7 +3127,7 @@ function vMeasure() {
 
     '<div class="grid grid-cols-1 md:grid-cols-3 gap-3">' +
       '<div class="bg-slate-900/90 border border-emerald-500/40 rounded-2xl p-4"><div class="flex items-center gap-2 mb-3"><i class="fa-solid fa-heart-pulse text-emerald-400 text-lg"></i><span class="text-xs font-bold text-white">Uptime</span></div><div class="space-y-1 text-[10px] mono"><div class="flex justify-between"><span class="text-slate-400">Backend:</span><span class="' + (state.backendOnline?'text-emerald-400':'text-rose-400') + '">' + (state.backendOnline?'✓ Online':'○ Offline') + '</span></div><div class="flex justify-between"><span class="text-slate-400">Network:</span><span class="' + (navigator.onLine?'text-emerald-400':'text-rose-400') + '">' + (navigator.onLine?'✓ Online':'○ Offline') + '</span></div><div class="flex justify-between"><span class="text-slate-400">Firestore:</span><span class="' + (firebaseReady?'text-emerald-400':'text-rose-400') + '">' + (firebaseReady?'✓ Connected':'○ Offline') + '</span></div></div><a href="https://uptimerobot.com" target="_blank" class="block w-full mt-3 py-2 bg-slate-950 border border-emerald-500/40 text-emerald-400 font-bold text-[10px] rounded-lg text-center"><i class="fa-solid fa-external-link-alt mr-1"></i>UptimeRobot</a></div>' +
-      '<div class="bg-slate-900/90 border border-sky-500/40 rounded-2xl p-4"><div class="flex items-center gap-2 mb-3"><i class="fa-solid fa-chart-simple text-sky-400 text-lg"></i><span class="text-xs font-bold text-white">GA4</span></div><div class="space-y-1 text-[10px] mono"><div class="flex justify-between"><span class="text-slate-400">Status:</span><span class="' + (typeof DP !== "undefined" && DP.analytics && DP.analytics.ready_ga ?'text-emerald-400':'text-amber-400') + '">' + (typeof DP !== "undefined" && DP.analytics && DP.analytics.ready_ga ?'✓ LIVE':'○ Queued') + '</span></div><div class="flex justify-between"><span class="text-slate-400">GA ID:</span><span class="text-white truncate">' + (ANALYTICS_ID || '—') + '</span></div><div class="flex justify-between"><span class="text-slate-400">Queue:</span><span class="text-amber-400">' + audQueue.length + '</span></div></div><a href="https://analytics.google.com" target="_blank" class="block w-full mt-3 py-2 bg-slate-950 border border-sky-500/40 text-sky-400 font-bold text-[10px] rounded-lg text-center"><i class="fa-solid fa-external-link-alt mr-1"></i>GA4</a></div>' +
+      '<div class="bg-slate-900/90 border border-sky-500/40 rounded-2xl p-4"><div class="flex items-center gap-2 mb-3"><i class="fa-solid fa-chart-simple text-sky-400 text-lg"></i><span class="text-xs font-bold text-white">GA4</span></div><div class="space-y-1 text-[10px] mono"><div class="flex justify-between"><span class="text-slate-400">Status:</span><span class="text-amber-400">○ Queued</span></div><div class="flex justify-between"><span class="text-slate-400">GA ID:</span><span class="text-white truncate">' + (ANALYTICS_ID || '—') + '</span></div></div><a href="https://analytics.google.com" target="_blank" class="block w-full mt-3 py-2 bg-slate-950 border border-sky-500/40 text-sky-400 font-bold text-[10px] rounded-lg text-center"><i class="fa-solid fa-external-link-alt mr-1"></i>GA4</a></div>' +
       '<div class="bg-slate-900/90 border border-purple-500/40 rounded-2xl p-4"><div class="flex items-center gap-2 mb-3"><i class="fa-solid fa-clipboard-check text-purple-400 text-lg"></i><span class="text-xs font-bold text-white">Weekly Reviews</span></div><div class="space-y-1 text-[10px] mono"><div class="flex justify-between"><span class="text-slate-400">Total:</span><span class="text-white">' + reviews.length + '</span></div><div class="flex justify-between"><span class="text-slate-400">Last:</span><span class="text-white">' + (reviews.length ? fmtDateShort(reviews[0].at) : '—') + '</span></div></div><button onclick="openWeeklyReview()" class="w-full mt-3 py-2 bg-slate-950 border border-purple-500/40 text-purple-400 font-bold text-[10px] rounded-lg"><i class="fa-solid fa-plus mr-1"></i>New Review</button></div>' +
     '</div>' +
   '</div>';
@@ -3207,7 +3213,7 @@ function saveWeeklyReview() {
   var review = {
     id: 'WR-' + Date.now().toString(36),
     week: (state.weeklyReviews || []).length + 1,
-    at: new Date().toISOString()(),
+    at: nowISO(),
     by: state.admin.email,
     orgs: s.totalOrgs, mrr: s.mrr, paidOrgs: s.paidOrgs, records: s.totalRecords,
     errors: ADM.errors.list.length,
@@ -3247,7 +3253,7 @@ function exportMeasurements() {
       { Metric:'Avg rating', Value: feedback.length ? (feedback.reduce(function(a,f){return a+(f.rating||0);},0)/feedback.length).toFixed(2) : '0' },
       { Metric:'NPS score', Value: npsScore },
       { Metric:'Errors', Value: ADM.errors.list.length },
-      { Metric:'Exported', Value: new Date().toISOString()() }
+      { Metric:'Exported', Value: nowISO() }
     ];
     var h = Object.keys(rows[0]);
     var csv = '\uFEFF' + [h.join(','), rows.map(function(r){ return h.map(function(k){ return '"' + String(r[k]||'').replace(/"/g,'""') + '"'; }).join(','); }).join('\n')].join('\n');
@@ -3256,7 +3262,6 @@ function exportMeasurements() {
     toast('Metrics exported ✓','success');
   } catch(e){ toast('Export failed: ' + e.message,'error'); }
 }
-
 
 function renderVerificationRows() {
   var checks = [
@@ -3280,7 +3285,7 @@ async function runFullAutoDiagnostics() {
   results.push({ name:'LocalStorage write/read', pass: (function(){ try { LS.set('_fa_test',{ok:1}); var v = LS.get('_fa_test',null); LS.del('_fa_test'); return v && v.ok === 1; } catch(e){ return false; } })() });
   await wait(300);
   var fsPass = false;
-  if (firebaseReady) { try { await fbDb.collection('_healthcheck').doc('admin').set({ at: new Date().toISOString()() }, { merge:true }); fsPass = true; } catch(e){} }
+  if (firebaseReady) { try { await fbDb.collection('_healthcheck').doc('admin').set({ at: nowISO() }, { merge:true }); fsPass = true; } catch(e){} }
   results.push({ name:'Firestore write', pass: fsPass });
   await wait(300);
   results.push({ name:'Full auto stats readable', pass: state.orgs.every(function(o){ var s = getFullAutoStats(o.id); return s && typeof s.enabled === 'boolean'; }) });
@@ -3300,7 +3305,6 @@ async function runFullAutoDiagnostics() {
   auditLog('FULL_AUTO_DIAG_COMPLETE', passCount + '/' + total);
 }
 
-
 /* FA_SHORTCUTS_ADDED */
 (function(){
   setInterval(function(){
@@ -3316,7 +3320,7 @@ async function runFullAutoDiagnostics() {
   });
 })();
 
-
+/* ═══ MARKETING ═══ */
 function vMarketing() {
   var feedback = LS.get('dp_feedback', []);
   var praise = feedback.filter(function(f){ return f.type === 'praise' && f.rating >= 4; });
@@ -3349,6 +3353,18 @@ function vMarketing() {
     '<div class="bg-slate-900/80 border border-amber-500/40 rounded-2xl p-5"><h4 class="text-sm font-bold text-white mb-3"><i class="fa-solid fa-robot text-amber-400 mr-2"></i>Auto-Post Integration</h4><p class="text-[11px] text-slate-400 mb-3">DataPulse sends webhooks. Connect to Buffer/Zapier/Make for auto-post to YOUR accounts.</p><div class="grid grid-cols-2 md:grid-cols-4 gap-2"><a href="https://buffer.com" target="_blank" class="p-3 rounded-xl bg-slate-950 border border-slate-800 text-center"><i class="fa-solid fa-layer-group text-sky-400 text-xl mb-1"></i><div class="text-[10px] font-bold text-white">Buffer</div><div class="text-[9px] text-slate-500">Free 3 channels</div></a><a href="https://zapier.com" target="_blank" class="p-3 rounded-xl bg-slate-950 border border-slate-800 text-center"><i class="fa-solid fa-bolt text-amber-400 text-xl mb-1"></i><div class="text-[10px] font-bold text-white">Zapier</div><div class="text-[9px] text-slate-500">Free 100 tasks</div></a><a href="https://www.make.com" target="_blank" class="p-3 rounded-xl bg-slate-950 border border-slate-800 text-center"><i class="fa-solid fa-diagram-project text-purple-400 text-xl mb-1"></i><div class="text-[10px] font-bold text-white">Make</div><div class="text-[9px] text-slate-500">Free 1000 ops</div></a><button onclick="generateTelegramBot()" class="p-3 rounded-xl bg-slate-950 border border-slate-800 text-center"><i class="fa-brands fa-telegram text-emerald-400 text-xl mb-1"></i><div class="text-[10px] font-bold text-white">Telegram</div><div class="text-[9px] text-slate-500">Auto-post</div></button></div></div>' +
     '<div class="bg-gradient-to-r from-rose-500/10 to-amber-500/10 border border-rose-500/40 rounded-2xl p-4"><div class="flex items-start gap-3"><i class="fa-solid fa-triangle-exclamation text-rose-400 text-xl mt-0.5"></i><div class="text-[11px] text-slate-300 leading-relaxed"><b class="text-rose-400">⚠️ Legal:</b> No spam, mass DM, fake reviews, scraping. GDPR · CCPA · CAN-SPAM compliant. Only consent-based sharing.</div></div></div>' +
   '</div>';
+}
+
+function copyText(text) {
+  try {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text);
+    } else {
+      const ta = document.createElement('textarea');
+      ta.value = text; document.body.appendChild(ta);
+      ta.select(); document.execCommand('copy'); ta.remove();
+    }
+  } catch(e){}
 }
 
 function openMarketingHub() {
@@ -3389,7 +3405,7 @@ function openScheduler() {
   var when = prompt('When (YYYY-MM-DD HH:MM) or leave blank:', new Date(Date.now()+3600000).toISOString().slice(0,16).replace('T',' '));
   if (when === null) return;
   var sch = state.mkSchedule || [];
-  sch.unshift({ id:'SCH-'+Date.now().toString(36), content:txt, when:when || new Date().toISOString()(), at:new Date().toISOString()(), by:state.admin.email, status:when?'scheduled':'ready' });
+  sch.unshift({ id:'SCH-'+Date.now().toString(36), content:txt, when:when || nowISO(), at: nowISO(), by:state.admin.email, status:when?'scheduled':'ready' });
   state.mkSchedule = sch;
   LS.set('dp_mk_schedule', sch);
   copyText(txt);
@@ -3420,7 +3436,7 @@ function publishTestimonials() {
   var praise = fb.filter(function(f){ return f.type === 'praise' && f.rating >= 4 && (f.public || f.testimonialApproved); });
   if (!praise.length) { toast('No public praise','warn'); return; }
   LS.set('dp_testimonials', praise.slice(0, 12));
-  if (firebaseReady) { try { fbDb.collection('site').doc('testimonials').set({ items:praise.slice(0,12).map(function(p){ return { name:p.userName||p.name||'Anonymous', org:p.orgName||'', rating:p.rating, message:p.message, at:p.at }; }), updatedAt:new Date().toISOString()() }); } catch(e){} }
+  if (firebaseReady) { try { fbDb.collection('site').doc('testimonials').set({ items:praise.slice(0,12).map(function(p){ return { name:p.userName||p.name||'Anonymous', org:p.orgName||'', rating:p.rating, message:p.message, at:p.at }; }), updatedAt: nowISO() }); } catch(e){} }
   auditLog('MARKETING_TESTIMONIALS_PUBLISH', praise.length);
   toast('Testimonials published ✓','success');
 }
@@ -3447,7 +3463,6 @@ function generateTelegramBot() {
   showResults('🤖 Telegram Bot', '<div class="p-3 rounded-lg bg-slate-950 border border-emerald-500/40"><pre class="text-[10px] text-slate-300 whitespace-pre-wrap font-mono">' + esc(instructions) + '</pre></div><a href="https://t.me/BotFather" target="_blank" class="block w-full py-2 bg-emerald-500 text-slate-950 font-black text-[11px] rounded-lg text-center mt-2">Open BotFather →</a>');
   toast('Instructions copied 📋','success');
 }
-
 
 /* ═══ ADMIN AI ASSISTANT ═══ */
 ADM.aiChat = ADM.aiChat || [];
@@ -3547,7 +3562,7 @@ ADM.aiAnswer = function(q) {
   return '🤔 I am not sure. Try:\n• "how many orgs"\n• "revenue"\n• "errors"\n• "feedback"\n• "top orgs"\n• "help"';
 };
 
-/* ═══ LIVE BADGE — Feedback count ═══ */
+/* ═══ LIVE BADGE ═══ */
 ADM.updateBadge = function() {
   try {
     var fb = LS.get('dp_feedback', []);
@@ -3563,12 +3578,9 @@ ADM.updateBadge = function() {
         t.appendChild(b);
       }
     });
-    var mob = document.querySelectorAll('[data-tab="feedback"]');
-    // also mobile dock — same selector
   } catch(e){}
 };
 
-/* Watch localStorage for feedback changes */
 ADM.startBadgeWatcher = function() {
   if (window._badgeWatcher) return;
   window._badgeWatcher = true;
@@ -3584,8 +3596,8 @@ ADM.changePassword = async function() {
   if (!cur) return;
   var nw = prompt('New password (min 8 chars):');
   if (!nw || nw.length < 8) { toast('Password too short', 'warn'); return; }
-  var confirm = prompt('Confirm new password:');
-  if (nw !== confirm) { toast('Passwords do not match', 'error'); return; }
+  var confirmPw = prompt('Confirm new password:');
+  if (nw !== confirmPw) { toast('Passwords do not match', 'error'); return; }
   try {
     var user = fbAuth.currentUser;
     var cred = firebase.auth.EmailAuthProvider.credential(user.email, cur);
@@ -3601,7 +3613,47 @@ ADM.changePassword = async function() {
   }
 };
 
-/* ---------- INIT ---------- */
+/* ═══ ADMIN GUIDE FAB ═══ */
+ADM.showGuide = function() {
+  var guide = [
+    { icon:'fa-gauge-high', title:'Overview', desc:'KPIs, plan distribution, recent activity.' },
+    { icon:'fa-building', title:'Organizations', desc:'Add, edit, delete orgs. Enable Full Auto per org.' },
+    { icon:'fa-users', title:'Users', desc:'Derived from org owners. Contact + status.' },
+    { icon:'fa-file-signature', title:'Contracts', desc:'Activate/cancel plans. Track MRR.' },
+    { icon:'fa-database', title:'Datasets', desc:'Per-org records. Push to Firestore.' },
+    { icon:'fa-bolt', title:'Full Automation', desc:'Toggle ⚡ per org. 17 ops + 40 caps auto-run.' },
+    { icon:'fa-comment-dots', title:'Feedback', desc:'Read user voices. Filter, reply, export.' },
+    { icon:'fa-chart-line', title:'Measure', desc:'Funnel, trends, AI priority actions.' },
+    { icon:'fa-bullhorn', title:'Marketing', desc:'Content, referral, testimonials, SEO.' },
+    { icon:'fa-robot', title:'AI Assistant', desc:'Ask: orgs? revenue? errors? feedback?' },
+    { icon:'fa-map-location-dot', title:'Data Map', desc:'3-layer storage architecture.' },
+    { icon:'fa-clipboard-list', title:'Audit Logs', desc:'Every action logged. Export CSV.' },
+    { icon:'fa-credit-card', title:'Payments', desc:'PayPal, EBC, TeleBirr.' },
+    { icon:'fa-cloud', title:'Cloud Sync', desc:'Firestore ⇄ Backend. Push/Pull.' },
+    { icon:'fa-sliders', title:'Settings', desc:'Backend URL, currency, AI config, backup.' }
+  ];
+  var html = '<div class="space-y-2">';
+  html += '<div class="p-3 rounded-xl bg-purple-500/10 border border-purple-500/40 mb-2"><div class="text-xs font-black text-purple-400">🎓 ADMIN GUIDE</div><div class="text-[10px] text-slate-400 mt-1">15 tabs · Full control · GDPR compliant</div></div>';
+  guide.forEach(function(g){
+    html += '<div class="flex items-start gap-3 p-3 rounded-xl bg-slate-950 border border-slate-800"><div class="w-9 h-9 rounded-lg bg-purple-500/20 text-purple-400 flex items-center justify-center shrink-0"><i class="fa-solid ' + g.icon + '"></i></div><div><div class="text-xs font-bold text-white">' + g.title + '</div><div class="text-[10px] text-slate-400 mt-0.5 leading-relaxed">' + g.desc + '</div></div></div>';
+  });
+  html += '<div class="p-3 rounded-lg bg-sky-500/10 border border-sky-500/30 mt-2"><div class="text-[10px] text-slate-300 leading-relaxed"><b class="text-sky-400">Shortcuts:</b> Ctrl+K command · Alt+F full auto · Alt+Shift+F enable all · Alt+G guide</div></div>';
+  html += '</div>';
+  if (typeof showResults === 'function') showResults('🎓 Admin Guide', html);
+};
+
+ADM.welcomeClose = ADM.welcomeClose || function() {
+  var w = document.getElementById('admWelcome'); if (w) w.classList.remove('on');
+  LS.set('dp_adm_welcome_seen', true);
+};
+
+ADM.showWelcome = ADM.showWelcome || function() {
+  if (LS.get('dp_adm_welcome_seen', false)) return;
+  var w = document.getElementById('admWelcome');
+  if (w) setTimeout(function(){ w.classList.add('on'); }, 800);
+};
+
+/* ═══ INIT ═══ */
 window.addEventListener('DOMContentLoaded', () => {
   ADM.theme.init();
   ADM.i18n.init();
@@ -3651,82 +3703,6 @@ window.addEventListener('DOMContentLoaded', () => {
     checkBackendHealth(false);
   }, 500);
 });
-
-/* ═══ ADMIN GUIDE FAB (fix) ═══ */
-ADM.showGuide = function() {
-  var guide = [
-    { icon:'fa-gauge-high', title:'Overview', desc:'KPIs, plan distribution, recent activity.' },
-    { icon:'fa-building', title:'Organizations', desc:'Add, edit, delete orgs. Enable Full Auto per org.' },
-    { icon:'fa-users', title:'Users', desc:'Derived from org owners. Contact + status.' },
-    { icon:'fa-file-signature', title:'Contracts', desc:'Activate/cancel plans. Track MRR.' },
-    { icon:'fa-database', title:'Datasets', desc:'Per-org records. Push to Firestore.' },
-    { icon:'fa-bolt', title:'Full Automation', desc:'Toggle ⚡ per org. 17 ops + 40 caps auto-run.' },
-    { icon:'fa-comment-dots', title:'Feedback', desc:'Read user voices. Filter, reply, export.' },
-    { icon:'fa-chart-line', title:'Measure', desc:'Funnel, trends, AI priority actions.' },
-    { icon:'fa-bullhorn', title:'Marketing', desc:'Content, referral, testimonials, SEO.' },
-    { icon:'fa-robot', title:'AI Assistant', desc:'Ask: orgs? revenue? errors? feedback?' },
-    { icon:'fa-map-location-dot', title:'Data Map', desc:'3-layer storage architecture.' },
-    { icon:'fa-clipboard-list', title:'Audit Logs', desc:'Every action logged. Export CSV.' },
-    { icon:'fa-credit-card', title:'Payments', desc:'PayPal, EBC, TeleBirr.' },
-    { icon:'fa-cloud', title:'Cloud Sync', desc:'Firestore ⇄ Backend. Push/Pull.' },
-    { icon:'fa-sliders', title:'Settings', desc:'Backend URL, currency, AI config, backup.' }
-  ];
-  var html = '<div class="space-y-2">';
-  html += '<div class="p-3 rounded-xl bg-purple-500/10 border border-purple-500/40 mb-2"><div class="text-xs font-black text-purple-400">🎓 ADMIN GUIDE</div><div class="text-[10px] text-slate-400 mt-1">15 tabs · Full control · GDPR compliant</div></div>';
-  guide.forEach(function(g){
-    html += '<div class="flex items-start gap-3 p-3 rounded-xl bg-slate-950 border border-slate-800"><div class="w-9 h-9 rounded-lg bg-purple-500/20 text-purple-400 flex items-center justify-center shrink-0"><i class="fa-solid ' + g.icon + '"></i></div><div><div class="text-xs font-bold text-white">' + g.title + '</div><div class="text-[10px] text-slate-400 mt-0.5 leading-relaxed">' + g.desc + '</div></div></div>';
-  });
-  html += '<div class="p-3 rounded-lg bg-sky-500/10 border border-sky-500/30 mt-2"><div class="text-[10px] text-slate-300 leading-relaxed"><b class="text-sky-400">Shortcuts:</b> Ctrl+K command · Alt+F full auto · Alt+Shift+F enable all · Alt+G guide</div></div>';
-  html += '</div>';
-  if (typeof showResults === 'function') showResults('🎓 Admin Guide', html);
-};
-
-ADM.welcomeClose = ADM.welcomeClose || function() {
-  var w = document.getElementById('admWelcome'); if (w) w.classList.remove('on');
-  LS.set('dp_adm_welcome_seen', true);
-};
-
-ADM.showWelcome = ADM.showWelcome || function() {
-  if (LS.get('dp_adm_welcome_seen', false)) return;
-  var w = document.getElementById('admWelcome');
-  if (w) setTimeout(function(){ w.classList.add('on'); }, 800);
-};
-
-ADM.showReferralLeaderboard = ADM.showReferralLeaderboard || function() {
-  var shares = LS.get('dp_ref_shares', []);
-  var byPlatform = {};
-  shares.forEach(function(s){ byPlatform[s.platform] = (byPlatform[s.platform]||0) + 1; });
-  var top = Object.entries(byPlatform).sort(function(a,b){ return b[1]-a[1]; });
-  var html = '<div class="space-y-2">';
-  html += '<div class="p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/30"><div class="text-xs font-black text-emerald-400">📊 Total Shares: ' + shares.length + '</div></div>';
-  if (top.length) {
-    top.slice(0, 8).forEach(function(t, i){
-      var pct = Math.round(t[1] / shares.length * 100);
-      html += '<div class="p-2 rounded-lg bg-slate-950 border border-slate-800"><div class="flex justify-between items-center text-[11px] mb-1"><span class="text-slate-300"><b class="text-emerald-400">#' + (i+1) + '</b> ' + t[0] + '</span><span class="text-emerald-400 mono font-bold">' + t[1] + '</span></div><div class="h-1.5 rounded-full bg-slate-800 overflow-hidden"><div class="h-full bg-gradient-to-r from-emerald-500 to-emerald-400" style="width:' + pct + '%"></div></div></div>';
-    });
-  } else {
-    html += '<div class="p-4 text-center text-[11px] text-slate-500">No shares yet.</div>';
-  }
-  html += '</div>';
-  if (typeof showResults === 'function') showResults('🏆 Referral Leaderboard', html);
-};
-
-ADM.showUTMDashboard = ADM.showUTMDashboard || function() {
-  var utm = LS.get('dp_utm', null);
-  var html = '<div class="space-y-2">';
-  html += '<div class="p-3 rounded-lg bg-sky-500/10 border border-sky-500/30"><div class="text-xs font-black text-sky-400">📈 UTM Campaign Tracking</div></div>';
-  if (utm && utm.source) {
-    html += '<div class="p-3 rounded-lg bg-slate-950 border border-slate-800 text-[11px] space-y-1">';
-    html += '<div class="flex justify-between"><span class="text-slate-400">Source:</span><span class="text-white">' + (utm.source||'—') + '</span></div>';
-    if (utm.medium) html += '<div class="flex justify-between"><span class="text-slate-400">Medium:</span><span class="text-white">' + utm.medium + '</span></div>';
-    if (utm.campaign) html += '<div class="flex justify-between"><span class="text-slate-400">Campaign:</span><span class="text-white">' + utm.campaign + '</span></div>';
-    html += '</div>';
-  } else {
-    html += '<div class="p-4 text-center text-[11px] text-slate-500">No UTM campaigns tracked yet.</div>';
-  }
-  html += '</div>';
-  if (typeof showResults === 'function') showResults('📈 UTM Dashboard', html);
-};
 
 </script>
 </body>

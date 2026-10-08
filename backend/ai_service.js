@@ -1,8 +1,8 @@
 const axios = require('axios');
 
 // Mirkaneessi .env kee keessatti API_KEY jiraachuu isaa
-const AI_API_KEY = process.env.AI_API_KEY || 'YOUR_API_KEY_AS_BAKKAA_GALCHI';
-const AI_API_URL = process.env.AI_API_URL || 'https://api.openai.com/v1/chat/completions'; // Ykn Gemini URL
+const AI_API_KEY = process.env.GROQ_API_KEY || 'YOUR_API_KEY_AS_BAKKAA_GALCHI';
+const AI_API_URL = process.env.AI_API_URL || 'https://api.groq.com/openai/v1/chat/completions'; // Ykn Gemini URL
 
 async function getAIResponse(userMessage) {
     try {
@@ -17,7 +17,7 @@ async function getAIResponse(userMessage) {
 
         // API-tti ergaa (Request to AI)
         const response = await axios.post(AI_API_URL, {
-            model: "gpt-3.5-turbo", // Ykn "gemini-pro", ykn "deepseek-chat"
+            model: "llama3-8b-8192", // Ykn "gemini-pro", ykn "deepseek-chat"
             messages: [
                 { role: "system", content: "Ati DataPulse AI Assistant dha. Yaada maamilaa hubattee, seera fi hojiidhaan deebii kenni." },
                 { role: "user", content: userMessage }
