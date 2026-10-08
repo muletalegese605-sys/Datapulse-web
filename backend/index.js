@@ -290,26 +290,27 @@ app.post("/api/pipeline/run", async (req, res) => {
   res.json({ status: "pipeline ran", ts: Date.now() });
 });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`DataPulse backend on port ${PORT}`));
-
 // Route yaada maamilaa fudhatee deebii AI kennu
 app.post('/api/chat', async (req, res) => {
     try {
         // 1. Yaada maamilaa fudhachuu
         const userMessage = req.body.message;
-        
+
         // 2. Deebii AI argachuu
         const aiReply = await getAIResponse(userMessage);
-        
+
         // 3. Deebii maamilaa tti deebisuu
         res.json({ reply: aiReply });
-        
+
     } catch (error) {
         // Yoo rakkoon uumame, app akka hin dhaabbannetti ittisuu
         console.error("Chat Route Error:", error.message);
-        res.status(500).json({ 
-            reply: "Dhiifama, tajaajilli AI amma rakkoo qaba. Maaloo irra deebi'ii yaali." 
+        res.status(500).json({
+            reply: "Dhiifama, tajaajilli AI amma rakkoo qaba. Maaloo irra deebi'ii yaali."
         });
     }
 });
+
+// DHUMAAN: app.listen
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`DataPulse backend on port ${PORT}`));
